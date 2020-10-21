@@ -30,7 +30,7 @@ const pullTrends = () => {
   }
 };
 
-const articleSearch = () => {
+const articleSearch = async () => {
   let q = "trump";
   let startDate = "20060101";
   let endDate = "20061231";
@@ -50,18 +50,15 @@ const articleSearch = () => {
       "&api-key=" +
       apikey;
 
-    $.getJSON(searchedArticles, function (data) {
+    await $.getJSON(searchedArticles, function (data) {
       articleList.push(...data.response.docs);
       console.log(articleList);
     });
   }
 
   //figure out time stamp between two dates
-  // let articles = data.response.docs;
-  //get date of every article
   let months = [];
   for (i in articleList) {
-    console.log("hello");
     let str = articleList[i].pub_date,
       delimiter = "-",
       start = 2,
