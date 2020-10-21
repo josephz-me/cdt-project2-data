@@ -32,11 +32,13 @@ const pullTrends = () => {
 };
 
 const articleSearch = async () => {
+  //q will be each trend
   let q = "trump";
   let startDate = "20150101";
   let endDate = "20151231";
   let pages = 3;
   let articleList = [];
+
   for (let i = 1; i < pages + 1; i++) {
     let searchedArticles =
       "https://api.nytimes.com/svc/search/v2/articlesearch.json?" +
@@ -74,22 +76,48 @@ const articleSearch = async () => {
   let earliestMonth = Math.min(...months);
   //duration of this trend
   let totalDuration = lastestMonth - earliestMonth;
+
+  //MAP TIME BACK TO THE RELATED GOOGLE TREND
 };
 
-//currently pulls books based on date
+//pull books based on set date
 const getBooks = () => {
   let publishedDate = "2015-06-02";
-  let bestSellers =
-    "https://api.nytimes.com/svc/books/v3/lists.json?list=combined-print-and-e-book-fiction" +
-    "&published-date=" +
-    publishedDate +
-    "&api-key=" +
-    apikey;
-  $.getJSON(bestSellers, function (data) {
-    let bookNum = 3;
-    for (i = 0; i < bookNum; i++) {
-      bookTitle = data.results[i].book_details[0].title;
-      console.log(bookTitle + "(" + data.results[i].published_date + ")");
-    }
-  });
+  let bookCategories = [
+    "combined-print-and-e-book-fiction",
+    "combined-print-and-e-book-nonfiction",
+  ];
+  let bookList = [];
+  // let bestSellers =
+  //   "https://api.nytimes.com/svc/books/v3/lists.json?list=combined-print-and-e-book-fiction" +
+  //   "&published-date=" +
+  //   publishedDate +
+  //   "&api-key=" +
+  //   apikey;
+
+  for (let i = 0; i < bookCategories.length; i++) {
+    let bestSellers =
+      "https://api.nytimes.com/svc/books/v3/lists.json?list=" +
+      bookCategories[i] +
+      "&published-date=" +
+      publishedDate +
+      "&api-key=" +
+      apikey;
+
+    let bookNum = 5;
+    $.getJSON(bestSellers, function (data) {
+      for (let k = 0; k < bookNum; k++) {
+        let bookTitle = data.results[k].book_details[0].title;
+        bookList.push(bookTitle);
+        $(".bookList").append(
+          "<p>" +
+            bookTitle +
+            "(" +
+            data.results[i].published_date +
+            ") " +
+            "</p>"
+        );
+      }
+    });
+  }
 };

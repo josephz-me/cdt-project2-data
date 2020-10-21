@@ -28,13 +28,6 @@ $left-label-width: 60px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-main {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 30px;
-  margin-left: $left-label-width;
-}
-
 .label {
   height: 100%;
   width: $left-label-width;
@@ -43,7 +36,6 @@ main {
   top: 0;
   left: 0;
   overflow-x: hidden;
-  background: yellow;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -64,8 +56,27 @@ h2 {
   margin-bottom: 20px;
 }
 
+.container {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  padding: 30px;
+  position: relative;
+  margin-left: $left-label-width;
+}
+
+.trendList,
+.bookList {
+  overflow: auto;
+  height: auto;
+  padding: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+
 .trendList {
   flex: 1;
+  height: 100vh;
 
   p {
     margin-bottom: 20px;
@@ -74,4 +85,5 @@ h2 {
 
 .bookList {
   flex: 2;
+  height: 100vh;
 }
