@@ -13,6 +13,7 @@ $.getJSON("trends.json", function (json) {
   trends = json.trends;
   pullTrends();
   articleSearch();
+  getBooks();
 });
 
 //pull list of trends from JSON list
@@ -32,8 +33,8 @@ const pullTrends = () => {
 
 const articleSearch = async () => {
   let q = "trump";
-  let startDate = "20060101";
-  let endDate = "20061231";
+  let startDate = "20150101";
+  let endDate = "20151231";
   let pages = 3;
   let articleList = [];
   for (let i = 1; i < pages + 1; i++) {
@@ -52,7 +53,7 @@ const articleSearch = async () => {
 
     await $.getJSON(searchedArticles, function (data) {
       articleList.push(...data.response.docs);
-      console.log(articleList);
+      // console.log(articleList);
     });
   }
 
@@ -68,62 +69,27 @@ const articleSearch = async () => {
     //convert to num
     let integer = parseInt(result2, 10);
     months.push(integer);
-
-    // if(integer > lastestArticle)
   }
-  let lastestArticle = Math.max(...months);
-  let earliestArticle = Math.min(...months);
+  let lastestMonth = Math.max(...months);
+  let earliestMonth = Math.min(...months);
   //duration of this trend
-  let totalDuration = lastestArticle - earliestArticle;
-  console.log("done", totalDuration);
+  let totalDuration = lastestMonth - earliestMonth;
 };
 
-//currently pulls books
+//currently pulls books based on date
 const getBooks = () => {
+  let publishedDate = "2015-06-02";
   let bestSellers =
-    "https://api.nytimes.com/svc/books/v3/lists.json?list=combined-print-and-e-book-fiction&api-key=" +
+    "https://api.nytimes.com/svc/books/v3/lists.json?list=combined-print-and-e-book-fiction" +
+    "&published-date=" +
+    publishedDate +
+    "&api-key=" +
     apikey;
-  // loadJSON(bestSellers, getBooks);
   $.getJSON(bestSellers, function (data) {
-    console.log(data);
+    let bookNum = 3;
+    for (i = 0; i < bookNum; i++) {
+      bookTitle = data.results[i].book_details[0].title;
+      console.log(bookTitle + "(" + data.results[i].published_date + ")");
+    }
   });
 };
-
-// —----------------------
-// function setup() {
-//   noCanvas();
-//   // loadJSON(url, gotData);
-// }
-
-// //different categories on best sellers list: https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=dPxVkGTEZ2h4KpgLTnwr6TziqqeoQspR
-// function preload() {
-//   let q = "trump";
-//   let apikey = "dPxVkGTEZ2h4KpgLTnwr6TziqqeoQspR";
-//   let howmany = 1; // total article num = howmany * 10;
-//   for (let i = 0; i < howmany; i++) {
-//     // let url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + q + "&page=" + i + "&api-key=" + apikey;
-//     let articleSearch =
-//       "https://api.nytimes.com/svc/search/v2/articlesearch.json?" +
-//       "&page=" +
-//       i +
-//       "&api-key=" +
-//       apikey;
-//     // let bestSellers = 'https://api.nytimes.com/svc/books/v3/lists.json?list=combined-print-and-e-book-fiction&bestsellers-date=2020-01-01' + "&api-key=" + apikey;
-//   }
-//   let bestSellers =
-//     "https://api.nytimes.com/svc/books/v3/lists.json?list=combined-print-and-e-book-fiction&api-key=" +
-//     apikey;
-//   // loadJSON(bestSellers, getBooks);
-// }
-
-// const getBooks = (data) => {
-//   var books = data.results;
-//   for (var i = 0; i < books.length; i++) {
-//     let bookTitle = books[i].book_details[0].title;
-//     let bookDescription = books[i].book_details[0].description;
-//     let bookReviews = books[i].reviews;
-//     // console.log(bookTitle);
-//     // console.log(bookDescription);
-//     console.log(bookReviews);
-//   }
-// };
