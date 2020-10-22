@@ -1,0 +1,66 @@
+{
+  "trends": {
+    "2006": {
+      "Movies": [
+        { "title": "Idiocracy Showtimes" },
+        { "title": "Cars Showtimes" },
+        { "title": "Borat Showtimes" }
+      ],
+      "Tickets": [
+        { "title": "Cheetah Girls Tickets" },
+        { "title": "Mets Playoff Tickets" },
+        { "title": "The Fray Tickets" }
+      ]
+    },
+
+    "2007": {
+      "It's_the_Economy": [
+        { "title": "What is Love" },
+        { "title": "What is Autism" },
+        { "title": "What is RSS" }
+      ],
+      "Who is": [
+        { "title": "Who is God" },
+        { "title": "Who is Who" },
+        { "title": "Who is Lookup" }
+      ],
+      "Lawsuits": [
+        { "title": "Borat Lawsuit" },
+        { "title": "Vonage Lawsuit" },
+        { "title": "Iphone Lawsuit" }
+      ]
+    },
+
+    "2008": {
+      "It's_the_Economy": [
+        { "title": "Financial Crisis " },
+        { "title": "Depression" },
+        { "title": "Bailout" },
+        { "title": "Mortgage Crisis" },
+        { "title": "Wall Street" },
+        { "title": "Oil" },
+        { "title": "Stock Market" },
+        { "title": "Subprime" },
+        { "title": "Credit Crisis" },
+        { "title": "Housing Crisis" }
+      ]
+    },
+    "2009": {
+      "Google": [
+        { "title": "Twitter" },
+        { "title": "Michael Jackson" },
+        { "title": "Facebook" }
+      ],
+      "News_Search": [
+        { "title": "Swine Flu" },
+        { "title": "Susan Boyle" },
+        { "title": "Jon and Kate" }
+      ],
+      "Mobile_Search": [
+        { "title": "Twitter" },
+        { "title": "Michael Jackson" },
+        { "title": "Facebook" }
+      ]
+    }
+  }
+}

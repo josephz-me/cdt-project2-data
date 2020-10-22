@@ -9,57 +9,30 @@ let url =
   "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=50IV9hFSR6GnG0NFbsvUYiCsep70Fu0n";
 
 //copy JSON data into object
-$.getJSON("trends.json", function (json) {
+$.getJSON("trends2.json", function (json) {
+  console.log("hello");
   trends = json.trends;
-  pullTrends();
-  articleSearch();
-  getBooks();
+  let movies = trends[2006].Movies;
+  console.log(movies);
+  for (movie in movies) {
+    let movieTitle = movies[movie].title;
+    articleSearch(movieTitle);
+  }
+
+  //   pullTrends();
+  // articleSearch();
+  //   getBooks();
 });
 
-//pull list of trends from JSON list
-const pullTrends = () => {
-  for (var i = 0; i < trends.length; i++) {
-    $(".trendList").append("<h1>" + trends[i].Year + "</h1>");
-    for (key in trends[i]) {
-      if (key !== "Year") {
-        $(".trendList").append("<h2>" + key + "</h2>");
-        for (value in trends[i][key]) {
-          $(".trendList").append("<p>" + trends[i][key][value] + "</p>");
-        }
-      }
-    }
-  }
-};
+function afterPull(data) {
+  console.log(data);
 
-const articleSearch = async () => {
-  //q will be each trend
-  let q = "trump";
-  let startDate = "20150101";
-  let endDate = "20151231";
-  let pages = 3;
-  let articleList = [];
+  // if data is error
+  // return; // do nothing
 
-  for (let i = 1; i < pages + 1; i++) {
-    let searchedArticles =
-      "https://api.nytimes.com/svc/search/v2/articlesearch.json?" +
-      "begin_date=" +
-      startDate +
-      "&end_date=" +
-      endDate +
-      "&page=" +
-      i +
-      "&q=" +
-      q +
-      "&api-key=" +
-      apikey;
-
-    await $.getJSON(searchedArticles, function (data) {
-      articleList.push(...data.response.docs);
-      // console.log(articleList);
-    });
-  }
-
-  //figure out time stamp between two dates
+  // articleList.push(...data.response.docs);
+  /*
+	//figure out time stamp between two dates
   let months = [];
   for (i in articleList) {
     let str = articleList[i].pub_date,
@@ -76,9 +49,52 @@ const articleSearch = async () => {
   let earliestMonth = Math.min(...months);
   //duration of this trend
   let totalDuration = lastestMonth - earliestMonth;
-  console.log(articleList);
+  console.log("hello");
   //MAP TIME BACK TO THE RELATED GOOGLE TREND
+	*/
+}
+
+//pull list of trends from JSON list
+const pullTrends = () => {
+  for (var i = 0; i < trends.length; i++) {
+    $(".trendList").append("<h1>" + trends[i].Year + "</h1>");
+    for (key in trends[i]) {
+      if (key !== "Year") {
+        $(".trendList").append("<h2>" + key + "</h2>");
+        for (value in trends[i][key]) {
+          $(".trendList").append("<p>" + trends[i][key][value] + "</p>");
+        }
+      }
+    }
+  }
 };
+
+function articleSearch(movieTitle) {
+  //q will be each trend
+  let q = movieTitle;
+  let startDate = "20150101";
+  let endDate = "20151231";
+  let pages = 1;
+  20150101;
+  let articleList = [];
+
+  for (let i = 1; i < pages + 1; i++) {
+    let searchedArticles =
+      "https://api.nytimes.com/svc/search/v2/articlesearch.json?" +
+      "begin_date=" +
+      startDate +
+      "&end_date=" +
+      endDate +
+      "&page=" +
+      i +
+      "&q=" +
+      q +
+      "&api-key=" +
+      apikey;
+
+    $.getJSON(searchedArticles, () => afterPull(searchedArticles));
+  }
+}
 
 //pull books based on set date
 const getBooks = () => {
