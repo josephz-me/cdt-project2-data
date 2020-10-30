@@ -1,4 +1,7 @@
 //Books API — https://developer.nytimes.com/docs/books-product/1/routes/lists.json/get
+// https://developers.google.com/books/docs/v1/reference/?apix=true#volume
+// https://developers.google.com/books/docs/v1/using#PerformingSearch
+// https://www.googleapis.com/books/v1/volumes?q=Ruthless%20American%20Marriage
 
 let articleObjs = [];
 let articleList = [];
@@ -42,37 +45,37 @@ let csvs = [
 ];
 
 let keywordTable;
+let books;
+
 function preload() {
   //load trend-keywords
   keywordTable = loadTable("trends/trend-keywords.csv", "csv");
-  let rows = keywordTable.rows;
 
   //load actual trends
   for (let i = 0; i < csvs.length; i++) {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
+  //load books
+  $.getJSON("books.json", (data) => {
+    books = data;
+    console.log;
+  });
 }
 
 let trendToKeywords = {};
 function setup() {
-  csvToDict();
   createCanvas(800, 4000);
-  for (year in trends) {
-    trends[year].render();
-  }
 
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
-    // for (let c = 0; c < keywordTable.getColumnCount(); c++) {
-    // print(keywordTable.getString(r, 1));
-    // }
     let key = keywordTable.getString(r, 0);
     let value = keywordTable.getString(r, 1);
     trendToKeywords[key] = value;
   }
-  // (console.log(trendToKeywords);
-
-  // console.log(trends);
+  csvToDict();
+  for (year in trends) {
+    trends[year].render();
+  }
 }
 
 function csvToDict() {
@@ -87,24 +90,16 @@ function csvToDict() {
       let trendArr = [];
       for (let j = 0; j < trendNameArr.length; j++) {
         trendName = trendNameArr[j];
-        let trendObj = { name: trendName, val: null };
-        // console.log(Object.keys(trendToKeywords));
-
-        console.log(trendToKeywords);
-        // for (k in trendToKeywords) {
-        //   console.log(trendToKeywords);
-        // }
+        let trendObj = { name: trendName, val: "null" };
         if (trendName in trendToKeywords) {
-          console.log("Found");
           trendObj.val = trendToKeywords[trendName];
         }
         trendArr.push(trendObj);
       }
       dict.set(cols[i], trendArr);
     }
-    trends[years[h]] = new Trend(years[h], key, dict);
+    trends[years[h]] = new TrendYear(years[h], key, dict);
   }
-  trendsLength = Object.keys(trends).length;
 }
 
 function getVals(d, s) {
@@ -115,7 +110,7 @@ function getVals(d, s) {
   return temp;
 }
 
-class Trend {
+class TrendYear {
   constructor(y, k, d) {
     this.id = y;
     this.vals = d;
@@ -186,54 +181,3 @@ class Trend {
   //     }
   //   }
 }
-
-//pull books based on set date
-const getBooks = (year) => {
-  for (let month = 1; month < 13; month++) {
-    for (let day = 1; day < 30; day += 8) {
-      if (month == 2 && day > 29) {
-        day = 28;
-      }
-      let publishedDate =
-        year + "-" + ("0" + month).slice(-2) + "-" + ("0" + day).slice(-2);
-
-      let bookCategories = [
-        "combined-print-and-e-book-fiction",
-        // "combined-print-and-e-book-nonfiction",
-      ];
-      let bookList = [];
-      // let bestSellers =
-      //   "https://api.nytimes.com/svc/books/v3/lists.json?list=combined-print-and-e-book-fiction" +
-      //   "&published-date=" +
-      //   publishedDate +
-      //   "&api-key=" +
-      //   apikey;
-
-      for (let i = 0; i < bookCategories.length; i++) {
-        let bestSellers =
-          "https://api.nytimes.com/svc/books/v3/lists.json?list=" +
-          bookCategories[i] +
-          "&published-date=" +
-          publishedDate +
-          "&api-key=" +
-          apikey;
-
-        let bookNum = 1;
-        $.getJSON(bestSellers, function (data) {
-          for (let k = 0; k < bookNum; k++) {
-            let bookTitle = data.results[k].book_details[0].title;
-            bookList.push(bookTitle);
-            $(".bookList").append(
-              "<p>" +
-                bookTitle +
-                "(" +
-                data.results[i].published_date +
-                ") " +
-                "</p>"
-            );
-          }
-        });
-      }
-    }
-  }
-};
