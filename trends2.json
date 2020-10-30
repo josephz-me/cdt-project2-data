@@ -2,7 +2,9 @@
   "trends": {
     "2006": {
       "Movies": [
-        { "title": "Idiocracy Showtimes" },
+        {
+          "title": "Idiocracy Showtimes"
+        },
         { "title": "Cars Showtimes" },
         { "title": "Borat Showtimes" }
       ],
