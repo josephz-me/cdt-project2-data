@@ -41,38 +41,32 @@ let csvs = [
   "2019.csv",
 ];
 
-let keywordTable;
-function preload() {
-  //load trend-keywords
-  keywordTable = loadTable("trends/trend-keywords.csv", "csv");
-  let rows = keywordTable.rows;
+let books;
 
-  //load actual trends
+function preload() {
+  //trends
   for (let i = 0; i < csvs.length; i++) {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
+
+  $.getJSON("books.json", (data) => {
+    books = data;
+  });
+
+  //load books
+  //   for (let topic in bookTopics.length) {
+  //     bookTable = loadTable("trends/" + bookTopics[topic], "csv", "header");
+  //   }
 }
 
-let trendToKeywords = {};
 function setup() {
   csvToDict();
   createCanvas(800, 4000);
-  for (year in trends) {
-    trends[year].render();
-  }
-
-  for (let r = 0; r < keywordTable.getRowCount(); r++) {
-    // for (let c = 0; c < keywordTable.getColumnCount(); c++) {
-    // print(keywordTable.getString(r, 1));
-    // }
-    let key = keywordTable.getString(r, 0);
-    let value = keywordTable.getString(r, 1);
-    trendToKeywords[key] = value;
-  }
-  // (console.log(trendToKeywords);
-
-  // console.log(trends);
+  //   for (year in trends) {
+  //     trends[year].render();
+  //   }
+  console.log(trends);
 }
 
 function csvToDict() {
@@ -83,28 +77,21 @@ function csvToDict() {
     let dict = new Map(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
     let key = new Map();
     for (let i = 0; i < cols.length; i++) {
-      let trendNameArr = table.getColumn(cols[i]);
-      let trendArr = [];
-      for (let j = 0; j < trendNameArr.length; j++) {
-        trendName = trendNameArr[j];
-        let trendObj = { name: trendName, val: null };
-        // console.log(Object.keys(trendToKeywords));
-
-        console.log(trendToKeywords);
-        // for (k in trendToKeywords) {
-        //   console.log(trendToKeywords);
-        // }
-        if (trendName in trendToKeywords) {
-          console.log("Found");
-          trendObj.val = trendToKeywords[trendName];
-        }
-        trendArr.push(trendObj);
-      }
-      dict.set(cols[i], trendArr);
+      let t = table.getColumn(cols[i]);
+      dict.set(cols[i], t);
     }
-    trends[years[h]] = new Trend(years[h], key, dict);
+    trends[years[h]] = years[h];
+    // trends[years[h]] = new Trend(years[h], key, dict);
+    // trends.push(new Trend(years[h], key, dict));
+    // trends[yearLookingFor]
+    // trends.yearLookingFor
+    // array[index] -> array is [1,2,3,4], array[0] = 1
+    // dictionary is { 0: 500 }, d[0] = 500
+    // lets say i want to access a specific year
+    // loop through all of trends until trends.year == yearLookingFor
   }
   trendsLength = Object.keys(trends).length;
+  console.log(trends);
 }
 
 function getVals(d, s) {
@@ -126,7 +113,7 @@ class Trend {
     for (let key of this.vals) {
       $(".trendList").append("<h3>" + key[0] + "</h3>");
       for (let value in key[1]) {
-        $(".trendList").append("<p>" + key[1][value].name + "</p>");
+        $(".trendList").append("<p>" + key[1][value] + "</p>");
       }
     }
     //get books
