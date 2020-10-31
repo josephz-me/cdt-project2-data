@@ -2,7 +2,6 @@
 // https://developers.google.com/books/docs/v1/reference/?apix=true#volume
 // https://developers.google.com/books/docs/v1/using#PerformingSearch
 // https://www.googleapis.com/books/v1/volumes?q=Ruthless%20American%20Marriage
-
 let articleObjs = [];
 let articleList = [];
 let counter = 0;
@@ -60,13 +59,28 @@ function preload() {
   $.getJSON("books.json", (data) => {
     books = data;
     console.log;
+    for (let i = 0; i < 100; i++) {
+      $(".grid").append(
+        "<img class='grid-item' src='https://books.google.com/books/content?id=fc8PDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'/>"
+      );
+    }
   });
 }
 
 let trendToKeywords = {};
 function setup() {
-  createCanvas(800, 4000);
+  var $grid = $(".grid").imagesLoaded(function () {
+    // init Masonry after all images have loaded
+    $grid.masonry({
+      // options...
+      itemSelector: ".grid-item",
+      columnWidth: 135,
+    });
+  });
 
+  // createCanvas(800, 4000);
+
+  //trender trends in left column
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
     let key = keywordTable.getString(r, 0);
     let value = keywordTable.getString(r, 1);

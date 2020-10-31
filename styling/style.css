@@ -42,39 +42,75 @@ h1 {
   margin-bottom: 20px;
 }
 
-h2 {
-  margin-bottom: 20px;
+h3 {
+  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .container {
   display: flex;
   overflow: hidden;
   flex-wrap: wrap;
-  padding: 30px;
   position: relative;
   margin-left: 60px;
 }
 
 .trendList,
-.bookList {
+.grid {
   overflow: auto;
-  height: auto;
   padding: 0.5rem;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
 }
 
+.trendList::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.trendList {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.grid {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
 .trendList {
   flex: 1;
   height: 100vh;
+  margin-top: 40px;
 }
 .trendList p {
-  margin-bottom: 20px;
+  padding: 10px 0 10px 5px;
+  transition: 0.2s;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.trendList p:hover {
+  background: #c9c9c9;
 }
 
-.bookList {
+.grid {
   flex: 2;
-  height: 100vh;
+  position: relative !important;
+  height: auto !important;
+  overflow: auto !important;
+  padding-bottom: 40px;
+}
+.grid .grid-item {
+  margin-bottom: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */
