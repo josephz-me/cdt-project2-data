@@ -1,6 +1,7 @@
 //Books API — https://developer.nytimes.com/docs/books-product/1/routes/lists.json/get
 // https://developers.google.com/books/docs/v1/reference/?apix=true#volume
 // https://developers.google.com/books/docs/v1/using#PerformingSearch
+
 // https://www.googleapis.com/books/v1/volumes?q=Ruthless%20American%20Marriage
 let articleObjs = [];
 let articleList = [];
@@ -58,14 +59,117 @@ function preload() {
   //load books
   $.getJSON("books.json", (data) => {
     books = data;
-    console.log;
+    downloadBookData();
     for (let i = 0; i < 100; i++) {
-      $(".grid").append(
-        "<img class='grid-item' src='https://books.google.com/books/content?id=fc8PDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'/>"
-      );
+      let card = document.createElement("div");
+      // card.addClass("card");
+      var node = document.createTextNode("This is new.");
+      // para.appendChild(node);
+
+      // $(".grid").append(
+      //   "<img class='grid-item' src='https://books.google.com/books/content?id=fc8PDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'/>"
+      // );
+      createTiles();
     }
+    // $(".grid").append("<br><br/>");
+    // $(".grid").append("<br><br/>");
+    // $(".grid").append("<br><br/>");
+    // $(".grid").append("<br><br/>");
+
+    //gets each individual book
+    // console.log(books.nonfiction[2006][0]);
   });
 }
+
+const createTiles = () => {
+  var card = document.createElement("div");
+  var content = document.createElement("p");
+  $(card).addClass("card grid-item");
+  $(content).addClass("bookTitle");
+  $(content).text("hello");
+  card.appendChild(content);
+  $(".grid").append(card);
+};
+
+let bookData = [];
+const downloadBookData = async () => {
+  // UNCOMMENT IF NEEDING TO UPDATE BOOK DATA
+  // for (csv in csvs) {
+  //   let year = csvs[csv].substr(0, csvs[csv].indexOf("."));
+  //   // for (let i = 0; i < 2; i++) {
+  //   for (let i = 0; i < books.nonfiction[year].length; i++) {
+  //     let bookName = books.nonfiction[year][i];
+  //     await $.getJSON(
+  //       "https://www.googleapis.com/books/v1/volumes?q=" + bookName,
+  //       (data) => {
+  //         let thumbnailContent = data.items[0].volumeInfo.imageLinks.thumbnail;
+  //         let titleContent = data.items[0].volumeInfo.title;
+  //         let descriptionContent = data.items[0].volumeInfo.description;
+  //         let authorContent = data.items[0].volumeInfo.authors[0];
+  //         let bookInfo = {
+  //           author: authorContent,
+  //           year: year,
+  //           genre: "nonfiction",
+  //           title: titleContent,
+  //           description: descriptionContent,
+  //           thumbnail: thumbnailContent,
+  //         };
+  //         bookData.push(bookInfo);
+  //         console.log(bookData);
+  //       }
+  //     );
+  //     await wait(1500);
+  //   }
+  //   for (let i = 0; i < books.fiction[year].length; i++) {
+  //     let bookName = books.fiction[year][i];
+  //     await $.getJSON(
+  //       "https://www.googleapis.com/books/v1/volumes?q=" + bookName,
+  //       (data) => {
+  //         let thumbnailContent = data.items[0].volumeInfo.imageLinks.thumbnail;
+  //         let titleContent = data.items[0].volumeInfo.title;
+  //         let descriptionContent = data.items[0].volumeInfo.description;
+  //         let authorContent = data.items[0].volumeInfo.authors[0];
+  //         // console.log(data.items[0].volumeInfo);
+  //         let bookInfo = {
+  //           author: authorContent,
+  //           year: year,
+  //           genre: "fiction",
+  //           title: titleContent,
+  //           description: descriptionContent,
+  //           thumbnail: thumbnailContent,
+  //         };
+  //         bookData.push(bookInfo);
+  //         console.log(bookData);
+  //       }
+  //     );
+  //     await wait(800);
+  //   }
+  // }
+  // let CSVBookData = Papa.unparse(bookData);
+  // console.log(Papa.unparse(bookData));
+  // var exportedFilename = "OrganizedBookData.csv";
+  // var blob = new Blob([CSVBookData], { type: "text/csv;charset=utf-8;" });
+  // if (navigator.msSaveBlob) {
+  //   // IE 10+
+  //   navigator.msSaveBlob(blob, exportedFilename);
+  // } else {
+  //   var link = document.createElement("a");
+  //   if (link.download !== undefined) {
+  //     // feature detection
+  //     // Browsers that support HTML5 download attribute
+  //     var url = URL.createObjectURL(blob);
+  //     link.setAttribute("href", url);
+  //     link.setAttribute("download", exportedFilename);
+  //     link.style.visibility = "hidden";
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   }
+  // }
+};
+
+const wait = (amount = 0) =>
+  new Promise((resolve) => setTimeout(resolve, amount));
 
 let trendToKeywords = {};
 function setup() {
@@ -74,7 +178,8 @@ function setup() {
     $grid.masonry({
       // options...
       itemSelector: ".grid-item",
-      columnWidth: 135,
+      columnWidth: 170,
+      // fitWidth: true,
     });
   });
 
@@ -90,6 +195,8 @@ function setup() {
   for (year in trends) {
     trends[year].render();
   }
+  $(".trendList").append("<br><br/>");
+  $(".trendList").append("<br><br/>");
 }
 
 function csvToDict() {
@@ -130,68 +237,31 @@ class TrendYear {
     this.vals = d;
   }
   render() {
+    $(".trendList").append("<br><br/>");
     let year = this.id;
     $(".trendList").append("<h1>" + year + "</1>");
     for (let key of this.vals) {
       $(".trendList").append("<h3>" + key[0] + "</h3>");
       for (let value in key[1]) {
-        $(".trendList").append("<p>" + key[1][value].name + "</p>");
+        $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
       }
     }
-    //get books
-    // getBooks(year);
   }
-  //   articleSearch(movieTitle, year) {
-  //     //q will be each trend
-  //     let q = movieTitle.split(" ").join("%20");
-  //     let startDate = year + "0101";
-  //     let endDate = year + "1231";
-  //     let pages = 1;
-
-  //     for (let i = 1; i < pages + 1; i++) {
-  //       let searchedArticles =
-  //         "https://api.nytimes.com/svc/search/v2/articlesearch.json?" +
-  //         "begin_date=" +
-  //         startDate +
-  //         "&end_date=" +
-  //         endDate +
-  //         "&page=" +
-  //         i +
-  //         "&q=" +
-  //         q +
-  //         "&api-key=" +
-  //         apikey;
-
-  //       // https://hackernoon.com/limiting-your-api-requests-the-right-way-9608b661a0ce
-  //https://en.wikipedia.org/wiki/The_New_York_Times_Fiction_Best_Sellers_of_2019
-  //       $.getJSON(searchedArticles, (data) => this.afterPull(data));
-  //     }
-  //   }
-  //   afterPull(data) {
-  //     articleList.push(...data.response.docs);
-  //     //figure out time stamp between two dates
-  //     let months = [];
-  //     for (let i in articleList) {
-  //       let str = articleList[i].pub_date,
-  //         delimiter = "-",
-  //         start = 2,
-  //         tokens2 = str.split(delimiter).slice(1, start),
-  //         result2 = tokens2.join(); // this
-
-  //       //convert to num
-  //       let integer = parseInt(result2, 10);
-  //       months.push(integer);
-  //     }
-  //     let lastestMonth = Math.max(...months);
-  //     let earliestMonth = Math.min(...months);
-
-  //     //duration of this trend
-  //     let totalDuration = lastestMonth - earliestMonth;
-  //     if (isFinite(totalDuration)) {
-  //       // console.log(this.id);
-  //       this.dates = earliestMonth;
-  //       console.log(trends);
-  //       //MAP TIME BACK TO THE RELATED GOOGLE TRENDs
-  //     }
-  //   }
 }
+
+// var settings = {
+//   async: true,
+//   crossDomain: true,
+//   url:
+//     "https://twinword-text-classification.p.rapidapi.com/classify/?text=Hello my name is brown.",
+//   // "https://twinword-text-classification.p.rapidapi.com/classify/?text=Protect%20your%20back%20with%20these%20ergonomic%20office%20chairs.%20These%20adjustable%20chairs%20are%20cushioned%20and%20molded%20to%20ensure%20comfort%20over%20long%20hours.%20Some%20options%20feature%20breathable%20backs%20that%20let%20air%20flow%20through%20to%20keep%20you%20cool%20and%20add%20to%20your%20comfort%20level%20on%20hot%20days.",
+//   method: "GET",
+//   headers: {
+//     "x-rapidapi-host": "twinword-text-classification.p.rapidapi.com",
+//     "x-rapidapi-key": "478cb95cdbmsh9a77a762c498ce5p1d12a5jsn63fa6aa77acc",
+//   },
+// };
+
+// $.ajax(settings).done(function (response) {
+//   console.log(response);
+// });
