@@ -118,7 +118,7 @@ const downloadBookData = async () => {
   //         console.log(bookData);
   //       }
   //     );
-  //     await wait(1500);
+  //     await wait(800);
   //   }
   //   for (let i = 0; i < books.fiction[year].length; i++) {
   //     let bookName = books.fiction[year][i];
@@ -144,28 +144,28 @@ const downloadBookData = async () => {
   //     );
   //     await wait(800);
   //   }
-  // }
-  // let CSVBookData = Papa.unparse(bookData);
-  // console.log(Papa.unparse(bookData));
-  // var exportedFilename = "OrganizedBookData.csv";
-  // var blob = new Blob([CSVBookData], { type: "text/csv;charset=utf-8;" });
-  // if (navigator.msSaveBlob) {
-  //   // IE 10+
-  //   navigator.msSaveBlob(blob, exportedFilename);
-  // } else {
-  //   var link = document.createElement("a");
-  //   if (link.download !== undefined) {
-  //     // feature detection
-  //     // Browsers that support HTML5 download attribute
-  //     var url = URL.createObjectURL(blob);
-  //     link.setAttribute("href", url);
-  //     link.setAttribute("download", exportedFilename);
-  //     link.style.visibility = "hidden";
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     document.body.removeChild(link);
-  //   }
-  // }
+  }
+  let CSVBookData = Papa.unparse(bookData);
+  console.log(Papa.unparse(bookData));
+  var exportedFilename = "OrganizedBookData.csv";
+  var blob = new Blob([CSVBookData], { type: "text/csv;charset=utf-8;" });
+  if (navigator.msSaveBlob) {
+    // IE 10+
+    navigator.msSaveBlob(blob, exportedFilename);
+  } else {
+    var link = document.createElement("a");
+    if (link.download !== undefined) {
+      // feature detection
+      // Browsers that support HTML5 download attribute
+      var url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", exportedFilename);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
 };
 
 const wait = (amount = 0) =>
@@ -197,6 +197,7 @@ function setup() {
   }
   $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
+  console.log(trends);
 }
 
 function csvToDict() {
