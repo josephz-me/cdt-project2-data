@@ -57,47 +57,43 @@ function preload() {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
-  //convert books into data
-  $.getJSON("books.json", (data) => {
-    books = data;
-    console.log(books);
-    // downloadBookData();
-    let bookDescriptions = "books/book-description.csv";
-
-    for (let i = 0; i < 100; i++) {
-      getRandomInt(0, 4);
-      createTiles();
-    }
-  });
+  // convert books into data
+  // $.getJSON("books/books.json", (data) => {
+  //   // books = data;
+  //   // downloadBookData();
+  //   for (let i = 0; i < 300; i++) {
+  //     getRandomInt(1, 3, 2);
+  //     createTiles("hello");
+  //   }
+  // });
 
   $.getJSON("books/book-description.json", (data) => {
-    booksWithDescriptions = data;
+    // booksWithDescriptions = data;
+    // console.log(booksWithDescriptions[0].title);
+    for (let i = 0; i < 300; i++) {
+      getRandomInt(1, 3, 2);
+      createTiles("hello");
+    }
   });
 }
 
-const getRandomInt = (min, max) => {
+const getRandomInt = (min, max, target) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   let randomNum = Math.floor(Math.random() * (max - min) + min);
-  if (randomNum === 2) {
-    // var card = document.createElement("div");
-    // $(card).addClass("card-blank grid-item");
-    // $(".grid").append(card);
-    // console.log("matched");
+  if (randomNum === target) {
     var card = document.createElement("div");
-    var content = document.createElement("p");
     $(card).addClass("card-blank grid-item");
     $(".grid").append(card);
   }
-  console.log(randomNum);
 };
 
-const createTiles = () => {
+const createTiles = (bookNames) => {
   var card = document.createElement("div");
   var content = document.createElement("p");
   $(card).addClass("card grid-item");
   $(content).addClass("bookTitle");
-  $(content).text("hello");
+  $(content).text(bookNames);
   card.appendChild(content);
   $(".grid").append(card);
 };
@@ -265,19 +261,51 @@ class TrendYear {
   }
 }
 
-// var settings = {
-//   async: true,
-//   crossDomain: true,
-//   url:
-//     "https://twinword-text-classification.p.rapidapi.com/classify/?text=Hello my name is brown.",
-//   // "https://twinword-text-classification.p.rapidapi.com/classify/?text=Protect%20your%20back%20with%20these%20ergonomic%20office%20chairs.%20These%20adjustable%20chairs%20are%20cushioned%20and%20molded%20to%20ensure%20comfort%20over%20long%20hours.%20Some%20options%20feature%20breathable%20backs%20that%20let%20air%20flow%20through%20to%20keep%20you%20cool%20and%20add%20to%20your%20comfort%20level%20on%20hot%20days.",
-//   method: "GET",
-//   headers: {
-//     "x-rapidapi-host": "twinword-text-classification.p.rapidapi.com",
-//     "x-rapidapi-key": "478cb95cdbmsh9a77a762c498ce5p1d12a5jsn63fa6aa77acc",
-//   },
-// };
+//FILTER BOOK
+filterSelection("all");
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("filterDiv");
+  if (c == "all") c = "";
+  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+  for (i = 0; i < x.length; i++) {
+    RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
+  }
+}
 
-// $.ajax(settings).done(function (response) {
-//   console.log(response);
-// });
+// Show filtered elements
+function AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {
+      element.className += " " + arr2[i];
+    }
+  }
+}
+
+// Hide elements that are not selected
+function RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);
+    }
+  }
+  element.className = arr1.join(" ");
+}
+
+// Add active class to the current control button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function () {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
