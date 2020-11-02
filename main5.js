@@ -46,6 +46,7 @@ let csvs = [
 
 let keywordTable;
 let books;
+let booksWithDescriptions;
 
 function preload() {
   //load trend-keywords
@@ -56,30 +57,40 @@ function preload() {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
-  //load books
+  //convert books into data
   $.getJSON("books.json", (data) => {
     books = data;
-    downloadBookData();
-    for (let i = 0; i < 100; i++) {
-      let card = document.createElement("div");
-      // card.addClass("card");
-      var node = document.createTextNode("This is new.");
-      // para.appendChild(node);
+    console.log(books);
+    // downloadBookData();
+    let bookDescriptions = "books/book-description.csv";
 
-      // $(".grid").append(
-      //   "<img class='grid-item' src='https://books.google.com/books/content?id=fc8PDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'/>"
-      // );
+    for (let i = 0; i < 100; i++) {
+      getRandomInt(0, 4);
       createTiles();
     }
-    // $(".grid").append("<br><br/>");
-    // $(".grid").append("<br><br/>");
-    // $(".grid").append("<br><br/>");
-    // $(".grid").append("<br><br/>");
+  });
 
-    //gets each individual book
-    // console.log(books.nonfiction[2006][0]);
+  $.getJSON("books/book-description.json", (data) => {
+    booksWithDescriptions = data;
   });
 }
+
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  let randomNum = Math.floor(Math.random() * (max - min) + min);
+  if (randomNum === 2) {
+    // var card = document.createElement("div");
+    // $(card).addClass("card-blank grid-item");
+    // $(".grid").append(card);
+    // console.log("matched");
+    var card = document.createElement("div");
+    var content = document.createElement("p");
+    $(card).addClass("card-blank grid-item");
+    $(".grid").append(card);
+  }
+  console.log(randomNum);
+};
 
 const createTiles = () => {
   var card = document.createElement("div");
@@ -91,62 +102,63 @@ const createTiles = () => {
   $(".grid").append(card);
 };
 
+//convert bookData into CSV
 let bookData = [];
 const downloadBookData = async () => {
   // UNCOMMENT IF NEEDING TO UPDATE BOOK DATA
-  // for (csv in csvs) {
-  //   let year = csvs[csv].substr(0, csvs[csv].indexOf("."));
-  //   // for (let i = 0; i < 2; i++) {
-  //   for (let i = 0; i < books.nonfiction[year].length; i++) {
-  //     let bookName = books.nonfiction[year][i];
-  //     await $.getJSON(
-  //       "https://www.googleapis.com/books/v1/volumes?q=" + bookName,
-  //       (data) => {
-  //         let thumbnailContent = data.items[0].volumeInfo.imageLinks.thumbnail;
-  //         let titleContent = data.items[0].volumeInfo.title;
-  //         let descriptionContent = data.items[0].volumeInfo.description;
-  //         let authorContent = data.items[0].volumeInfo.authors[0];
-  //         let bookInfo = {
-  //           author: authorContent,
-  //           year: year,
-  //           genre: "nonfiction",
-  //           title: titleContent,
-  //           description: descriptionContent,
-  //           thumbnail: thumbnailContent,
-  //         };
-  //         bookData.push(bookInfo);
-  //         console.log(bookData);
-  //       }
-  //     );
-  //     await wait(800);
-  //   }
-  //   for (let i = 0; i < books.fiction[year].length; i++) {
-  //     let bookName = books.fiction[year][i];
-  //     await $.getJSON(
-  //       "https://www.googleapis.com/books/v1/volumes?q=" + bookName,
-  //       (data) => {
-  //         let thumbnailContent = data.items[0].volumeInfo.imageLinks.thumbnail;
-  //         let titleContent = data.items[0].volumeInfo.title;
-  //         let descriptionContent = data.items[0].volumeInfo.description;
-  //         let authorContent = data.items[0].volumeInfo.authors[0];
-  //         // console.log(data.items[0].volumeInfo);
-  //         let bookInfo = {
-  //           author: authorContent,
-  //           year: year,
-  //           genre: "fiction",
-  //           title: titleContent,
-  //           description: descriptionContent,
-  //           thumbnail: thumbnailContent,
-  //         };
-  //         bookData.push(bookInfo);
-  //         console.log(bookData);
-  //       }
-  //     );
-  //     await wait(800);
-  //   }
+  for (csv in csvs) {
+    let year = csvs[csv].substr(0, csvs[csv].indexOf("."));
+    // for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < books.nonfiction[year].length; i++) {
+      let bookName = books.nonfiction[year][i];
+      await $.getJSON(
+        "https://www.googleapis.com/books/v1/volumes?q=" + bookName,
+        (data) => {
+          let thumbnailContent = data.items[0].volumeInfo.imageLinks.thumbnail;
+          let titleContent = data.items[0].volumeInfo.title;
+          let descriptionContent = data.items[0].volumeInfo.description;
+          let authorContent = data.items[0].volumeInfo.authors[0];
+          let bookInfo = {
+            author: authorContent,
+            year: year,
+            genre: "nonfiction",
+            title: titleContent,
+            description: descriptionContent,
+            thumbnail: thumbnailContent,
+          };
+          bookData.push(bookInfo);
+          // console.log(bookData);
+        }
+      );
+      await wait(800);
+    }
+    for (let i = 0; i < books.fiction[year].length; i++) {
+      let bookName = books.fiction[year][i];
+      await $.getJSON(
+        "https://www.googleapis.com/books/v1/volumes?q=" + bookName,
+        (data) => {
+          let thumbnailContent = data.items[0].volumeInfo.imageLinks.thumbnail;
+          let titleContent = data.items[0].volumeInfo.title;
+          let descriptionContent = data.items[0].volumeInfo.description;
+          let authorContent = data.items[0].volumeInfo.authors[0];
+          // console.log(data.items[0].volumeInfo);
+          let bookInfo = {
+            author: authorContent,
+            year: year,
+            genre: "fiction",
+            title: titleContent,
+            description: descriptionContent,
+            thumbnail: thumbnailContent,
+          };
+          bookData.push(bookInfo);
+          // console.log(bookData);
+        }
+      );
+      await wait(800);
+    }
   }
   let CSVBookData = Papa.unparse(bookData);
-  console.log(Papa.unparse(bookData));
+  // console.log(Papa.unparse(bookData));
   var exportedFilename = "OrganizedBookData.csv";
   var blob = new Blob([CSVBookData], { type: "text/csv;charset=utf-8;" });
   if (navigator.msSaveBlob) {
@@ -172,6 +184,7 @@ const wait = (amount = 0) =>
   new Promise((resolve) => setTimeout(resolve, amount));
 
 let trendToKeywords = {};
+
 function setup() {
   var $grid = $(".grid").imagesLoaded(function () {
     // init Masonry after all images have loaded
@@ -183,21 +196,23 @@ function setup() {
     });
   });
 
-  // createCanvas(800, 4000);
-
   //trender trends in left column
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
     let key = keywordTable.getString(r, 0);
-    let value = keywordTable.getString(r, 1);
+    let value = keywordTable.getString(r, 1).split(",");
     trendToKeywords[key] = value;
   }
   csvToDict();
+
+  //in each year
   for (year in trends) {
     trends[year].render();
+    // console.log(trends[year]);
   }
   $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
-  console.log(trends);
+  // console.log(trendToKeywords);
+  // console.log(trends);
 }
 
 function csvToDict() {

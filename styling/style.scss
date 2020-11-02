@@ -154,6 +154,14 @@ h3 {
   }
 }
 
+.card-blank {
+  // border: 1.5px solid $main-color;
+  width: 159px;
+  height: 229px;
+  // transition: 0.2s;
+  pointer-events: none;
+}
+
 .card:hover .bookTitle {
   color: white;
 }

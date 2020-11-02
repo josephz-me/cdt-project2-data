@@ -136,6 +136,12 @@ h3 {
   color: #53c279;
 }
 
+.card-blank {
+  width: 159px;
+  height: 229px;
+  pointer-events: none;
+}
+
 .card:hover .bookTitle {
   color: white;
 }
