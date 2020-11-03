@@ -66,15 +66,14 @@ function preload() {
     //   createTiles("hello");
     // }
   });
-
   $.getJSON("books/book-description.json", (data) => {
-    // booksWithDescriptions = data;
-    // console.log(booksWithDescriptions[0].title);
-    for (let i = 0; i < 300; i++) {
+    booksWithDescriptions = data;
+
+    for (let i = 0; i < booksWithDescriptions.length; i++) {
+      let bookTitle = booksWithDescriptions[i].title.replace(",", "");
       getRandomInt(1, 3, 2);
-      createTiles("hello");
+      createTiles(bookTitle);
     }
-    console.log("hello");
   });
 }
 
@@ -98,6 +97,31 @@ const createTiles = (bookNames) => {
   card.appendChild(content);
   $(".grid").append(card);
 };
+
+const wait = (amount = 0) =>
+  new Promise((resolve) => setTimeout(resolve, amount));
+
+let trendToKeywords = {};
+
+function setup() {
+  //trender trends in left column
+  for (let r = 0; r < keywordTable.getRowCount(); r++) {
+    let key = keywordTable.getString(r, 0);
+    let value = keywordTable.getString(r, 1).split(",");
+    trendToKeywords[key] = value;
+  }
+  csvToDict();
+
+  //in each year
+  for (year in trends) {
+    trends[year].render();
+    // console.log(trends[year]);
+  }
+  $(".trendList").append("<br><br/>");
+  $(".trendList").append("<br><br/>");
+  // console.log(trendToKeywords);
+  // console.log(trends);
+}
 
 //convert bookData into CSV
 let bookData = [];
@@ -176,41 +200,6 @@ const downloadBookData = async () => {
     }
   }
 };
-
-const wait = (amount = 0) =>
-  new Promise((resolve) => setTimeout(resolve, amount));
-
-let trendToKeywords = {};
-
-function setup() {
-  var $grid = $(".grid").imagesLoaded(function () {
-    // init Masonry after all images have loaded
-    $grid.masonry({
-      // options...
-      itemSelector: ".grid-item",
-      columnWidth: 170,
-      // fitWidth: true,
-    });
-  });
-
-  //trender trends in left column
-  for (let r = 0; r < keywordTable.getRowCount(); r++) {
-    let key = keywordTable.getString(r, 0);
-    let value = keywordTable.getString(r, 1).split(",");
-    trendToKeywords[key] = value;
-  }
-  csvToDict();
-
-  //in each year
-  for (year in trends) {
-    trends[year].render();
-    // console.log(trends[year]);
-  }
-  $(".trendList").append("<br><br/>");
-  $(".trendList").append("<br><br/>");
-  // console.log(trendToKeywords);
-  // console.log(trends);
-}
 
 function csvToDict() {
   for (let h = 0; h < tables.length; h++) {

@@ -84,16 +84,31 @@ h3 {
 }
 
 .nav {
-  padding: 20px 0 0 0;
+  border-bottom: 1.5px solid $main-color;
+  padding: 20px 0 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 
   h1 {
     margin-bottom: 0px;
   }
+
+  .left {
+    grid-column-start: 1;
+    justify-items: flex-start;
+  }
+
+  .right {
+    grid-column-start: 3;
+    // justify-items: flex-end;
+  }
 }
 
 .trendList,
-.grid {
+.bookList {
   overflow: auto;
+
   // height: 100vh;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
@@ -103,19 +118,13 @@ h3 {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.trendList {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  // border-top: 1px solid $main-color;
-}
-
-.grid::-webkit-scrollbar {
+.bookList::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.grid {
+.bookList {
+  flex: 2;
+  height: 90vh;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -124,6 +133,8 @@ h3 {
   flex: 1;
   height: 90vh;
   // margin-top: 40px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
   p {
     // margin-bottom: 20px;
@@ -144,13 +155,14 @@ h3 {
   width: 159px;
   height: 229px;
   transition: 0.2s;
+  display: table;
 
   .bookTitle {
     text-align: center;
     vertical-align: middle;
-    line-height: 229px;
     text-transform: uppercase;
     color: $main-color;
+    display: table-cell;
   }
 }
 
@@ -198,12 +210,12 @@ h3 {
 }
 
 .grid {
-  flex: 2;
-  position: relative !important;
-  height: auto !important;
-  overflow: auto !important;
   // gap: 10px;
-  padding-bottom: 40px;
+  // padding-bottom: 40p
+
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 168px);
 
   .grid-item {
     margin-bottom: 10px;

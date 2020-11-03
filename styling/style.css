@@ -69,14 +69,25 @@ h3 {
 }
 
 .nav {
-  padding: 20px 0 0 0;
+  border-bottom: 1.5px solid #53c279;
+  padding: 20px 0 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 .nav h1 {
   margin-bottom: 0px;
 }
+.nav .left {
+  grid-column-start: 1;
+  justify-items: flex-start;
+}
+.nav .right {
+  grid-column-start: 3;
+}
 
 .trendList,
-.grid {
+.bookList {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
@@ -86,20 +97,13 @@ h3 {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.trendList {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-.grid::-webkit-scrollbar {
+.bookList::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.grid {
+.bookList {
+  flex: 2;
+  height: 90vh;
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
@@ -109,6 +113,10 @@ h3 {
 .trendList {
   flex: 1;
   height: 90vh;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 .trendList p {
   padding: 10px 0 10px 5px;
@@ -127,13 +135,14 @@ h3 {
   width: 159px;
   height: 229px;
   transition: 0.2s;
+  display: table;
 }
 .card .bookTitle {
   text-align: center;
   vertical-align: middle;
-  line-height: 229px;
   text-transform: uppercase;
   color: #53c279;
+  display: table-cell;
 }
 
 /* The "show" class is added to the filtered elements */
@@ -173,11 +182,9 @@ h3 {
 }
 
 .grid {
-  flex: 2;
-  position: relative !important;
-  height: auto !important;
-  overflow: auto !important;
-  padding-bottom: 40px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 168px);
 }
 .grid .grid-item {
   margin-bottom: 10px;
