@@ -68,11 +68,13 @@ function preload() {
   });
   $.getJSON("books/book-description.json", (data) => {
     booksWithDescriptions = data;
+    console.log(booksWithDescriptions);
 
     for (let i = 0; i < booksWithDescriptions.length; i++) {
       let bookTitle = booksWithDescriptions[i].title.replace(",", "");
+      let bookType = booksWithDescriptions[i].type;
       getRandomInt(1, 3, 2);
-      createTiles(bookTitle);
+      createTiles(bookTitle, bookType);
     }
   });
 }
@@ -83,15 +85,15 @@ const getRandomInt = (min, max, target) => {
   let randomNum = Math.floor(Math.random() * (max - min) + min);
   if (randomNum === target) {
     var card = document.createElement("div");
-    $(card).addClass("card-blank grid-item");
+    $(card).addClass("card-blank");
     $(".grid").append(card);
   }
 };
 
-const createTiles = (bookNames) => {
+const createTiles = (bookNames, bookType) => {
   var card = document.createElement("div");
   var content = document.createElement("p");
-  $(card).addClass("card grid-item");
+  $(card).addClass("card all " + bookType);
   $(content).addClass("bookTitle");
   $(content).text(bookNames);
   card.appendChild(content);
@@ -115,12 +117,9 @@ function setup() {
   //in each year
   for (year in trends) {
     trends[year].render();
-    // console.log(trends[year]);
   }
   $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
-  // console.log(trendToKeywords);
-  // console.log(trends);
 }
 
 //convert bookData into CSV
@@ -252,50 +251,51 @@ class TrendYear {
 }
 
 //FILTER BOOK
-// filterSelection("all");
-// function filterSelection(c) {
-//   var x, i;
-//   x = document.getElementsByClassName("filterDiv");
-//   if (c == "all") c = "";
-//   // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
-//   for (i = 0; i < x.length; i++) {
-//     RemoveClass(x[i], "show");
-//     if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
-//   }
-// }
+//https://www.w3schools.com/howto/howto_js_filter_elements.asp
 
-// // Show filtered elements
-// function AddClass(element, name) {
-//   var i, arr1, arr2;
-//   arr1 = element.className.split(" ");
-//   arr2 = name.split(" ");
-//   for (i = 0; i < arr2.length; i++) {
-//     if (arr1.indexOf(arr2[i]) == -1) {
-//       element.className += " " + arr2[i];
-//     }
-//   }
-// }
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("card");
+  if (c == "all") c = "";
+  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+  for (i = 0; i < x.length; i++) {
+    RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
+  }
+}
 
-// // Hide elements that are not selected
-// function RemoveClass(element, name) {
-//   var i, arr1, arr2;
-//   arr1 = element.className.split(" ");
-//   arr2 = name.split(" ");
-//   for (i = 0; i < arr2.length; i++) {
-//     while (arr1.indexOf(arr2[i]) > -1) {
-//       arr1.splice(arr1.indexOf(arr2[i]), 1);
-//     }
-//   }
-//   element.className = arr1.join(" ");
-// }
+// Show filtered elements
+function AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {
+      element.className += " " + arr2[i];
+    }
+  }
+}
 
-// // Add active class to the current control button (highlight it)
-// var btnContainer = document.getElementById("myBtnContainer");
-// var btns = btnContainer.getElementsByClassName("btn");
-// for (var i = 0; i < btns.length; i++) {
-//   btns[i].addEventListener("click", function () {
-//     var current = document.getElementsByClassName("active");
-//     current[0].className = current[0].className.replace(" active", "");
-//     this.className += " active";
-//   });
-// }
+// Hide elements that are not selected
+function RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);
+    }
+  }
+  element.className = arr1.join(" ");
+}
+
+// Add active class to the current control button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function () {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}

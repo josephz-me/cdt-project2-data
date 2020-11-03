@@ -150,26 +150,6 @@ h3 {
     color: $secondary-color;
   }
 }
-.card {
-  border: 1.5px solid $main-color;
-  width: 159px;
-  height: 229px;
-  transition: 0.2s;
-  display: table;
-
-  .bookTitle {
-    text-align: center;
-    vertical-align: middle;
-    text-transform: uppercase;
-    color: $main-color;
-    display: table-cell;
-  }
-}
-
-/* The "show" class is added to the filtered elements */
-// .show {
-//   display: inline;
-// }
 
 /* Style the buttons */
 .btn {
@@ -212,12 +192,31 @@ h3 {
 .grid {
   // gap: 10px;
   // padding-bottom: 40p
+  padding-top: 20px;
 
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fill, 168px);
 
-  .grid-item {
+  .card {
+    border: 1.5px solid $main-color;
+    width: 159px;
+    height: 229px;
+    transition: 0.2s;
+    display: table;
     margin-bottom: 10px;
+
+    .bookTitle {
+      text-align: center;
+      vertical-align: middle;
+      text-transform: uppercase;
+      color: $main-color;
+      display: table-cell;
+    }
+  }
+
+  /* The "show" class is added to the filtered elements */
+  .show {
+    display: grid;
   }
 }

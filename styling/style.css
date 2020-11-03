@@ -130,22 +130,6 @@ h3 {
   color: #535fc2;
 }
 
-.card {
-  border: 1.5px solid #53c279;
-  width: 159px;
-  height: 229px;
-  transition: 0.2s;
-  display: table;
-}
-.card .bookTitle {
-  text-align: center;
-  vertical-align: middle;
-  text-transform: uppercase;
-  color: #53c279;
-  display: table-cell;
-}
-
-/* The "show" class is added to the filtered elements */
 /* Style the buttons */
 .btn {
   border: none;
@@ -182,12 +166,29 @@ h3 {
 }
 
 .grid {
+  padding-top: 20px;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fill, 168px);
+  /* The "show" class is added to the filtered elements */
 }
-.grid .grid-item {
+.grid .card {
+  border: 1.5px solid #53c279;
+  width: 159px;
+  height: 229px;
+  transition: 0.2s;
+  display: table;
   margin-bottom: 10px;
+}
+.grid .card .bookTitle {
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+  color: #53c279;
+  display: table-cell;
+}
+.grid .show {
+  display: grid;
 }
 
 /*# sourceMappingURL=style.css.map */

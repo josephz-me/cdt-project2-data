@@ -24,9 +24,11 @@ sass --watch style.scss:style.css
   </head>
   <body>
     <!-- <div class="label"><p>Trends</p></div> -->
+
     <div class="nav">
       <h1 class="left">Trends by Year</h1>
       <div class="right">
+        <button class="btn active" onclick="filterSelection('all')">All</button>
         <button class="btn active" onclick="filterSelection('fiction')">
           Fiction
         </button>
