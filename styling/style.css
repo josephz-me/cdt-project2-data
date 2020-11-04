@@ -26,6 +26,7 @@
 body {
   margin-left: 60px;
   margin-right: 60px;
+  background: #d3ffea;
 }
 
 .label {
@@ -48,7 +49,7 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: 18px;
-  color: #53c279;
+  color: #3547a4;
 }
 
 h3 {
@@ -58,7 +59,7 @@ h3 {
   text-transform: uppercase;
   font-weight: 400;
   font-size: 18px;
-  color: #53c279;
+  color: #3547a4;
 }
 
 .container {
@@ -68,7 +69,7 @@ h3 {
 }
 
 .nav {
-  border-bottom: 1.5px solid #53c279;
+  border-bottom: 1.5px solid #3547a4;
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -101,7 +102,7 @@ h3 {
 }
 
 .bookList {
-  flex: 2;
+  flex: 3;
   height: 90vh;
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -110,6 +111,7 @@ h3 {
 }
 
 .trendList {
+  border-right: 1.5px solid #3547a4;
   flex: 1;
   height: 90vh;
   -ms-overflow-style: none;
@@ -119,28 +121,30 @@ h3 {
 }
 .trendList p {
   padding: 10px 0 10px 5px;
-  color: #53c279;
+  color: #3547a4;
   font-size: 18px;
   transition: 0.2s;
   border-radius: 4px;
   cursor: pointer;
 }
 .trendList p:hover {
-  color: #535fc2;
+  color: #3547a4;
 }
 
 /* Style the buttons */
 .btn {
-  border: none;
-  outline: none;
+  border: 1.5px solid #3547a4;
   padding: 12px 16px;
-  background-color: #f1f1f1;
+  background-color: #3547a4;
   cursor: pointer;
+  color: white;
 }
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-  background-color: #ddd;
+  background-color: #d3ffea;
+  color: #3547a4;
+  border: 1.5px solid #3547a4;
 }
 
 /* Add a dark background to the active button */
@@ -155,29 +159,20 @@ h3 {
   pointer-events: none;
 }
 
-.card:hover .bookTitle {
-  color: white;
-}
-
-.card:hover {
-  background: #535fc2;
-  cursor: pointer;
-}
-
 .grid {
+  margin-left: 60px;
   padding-top: 20px;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, 169px);
+  grid-template-columns: repeat(auto-fill, 159px);
   grid-column-start: 0;
   grid-column-end: 2;
   /* The "hide" class is added to the filtered elements */
 }
 .grid .card {
-  border: 1.5px solid #53c279;
+  border: 1.5px solid #3547a4;
   width: 159px;
   height: 229px;
-  transition: 0.2s;
   display: table;
   margin-bottom: 10px;
 }
@@ -185,8 +180,15 @@ h3 {
   text-align: center;
   vertical-align: middle;
   text-transform: uppercase;
-  color: #53c279;
+  color: #3547a4;
   display: table-cell;
+}
+.grid .card:hover .bookTitle {
+  color: white;
+}
+.grid .card:hover {
+  background: #3547a4;
+  cursor: pointer;
 }
 .grid .hide {
   display: none;

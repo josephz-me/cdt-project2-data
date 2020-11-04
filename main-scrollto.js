@@ -83,7 +83,6 @@ function preload() {
         `[data-bookyear='${years[year]}']`
       );
       firstYearElement.id = `${years[year]}`;
-      console.log(firstYearElement);
     }
   });
 }
@@ -129,6 +128,8 @@ function setup() {
   for (year in trends) {
     trends[year].render();
   }
+  $(".trendList").append("<br><br/>");
+  $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
 }
@@ -209,7 +210,6 @@ const downloadBookData = async () => {
 
 document.addEventListener("DOMContentLoaded", function (event) {
   // document.addEventListener("scroll", function (e) {
-  //   console.log(e);
   // });
   $(".trendList").scroll(function () {
     filterBooks();
@@ -222,16 +222,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 const scrollToPos = () => {
-  let desiredElement = $("#2007");
-  desiredElement.position().top = 30;
-  console.log(desiredElement.position().top);
-  //   console.log($("bookList"));
-  // $("bookList").scrollTop(
-  //   $("bookList").scrollTop() + desiredElement.position().top
-  // );
+  let desiredElement = $("#2006");
+  $(".bookList").animate(
+    {
+      scrollTop:
+        $(".bookList").scrollTop() + desiredElement.position().top + -50,
+    },
+    1000
+  );
 };
 
-let yearDisplayed;
+let yearDisplayed = 2006;
 let previousDisplayed = [];
 let count;
 const filterBooks = () => {
@@ -239,11 +240,6 @@ const filterBooks = () => {
   let yearPos;
 
   for (year in years) {
-    // $(years[year]).scroll(function () {
-    //   // $( "#log" ).append( "<div>Handler for .scroll() called.</div>" );
-    //   console.log("scrolled!");
-    // });
-    // let dataYear = $(".trendList").find(`[data-year='${year}']`);
     let yearString = years[year].textContent;
     let desiredYearElement = document.querySelector(
       `h1[data-year="${yearString}"]`
@@ -252,35 +248,49 @@ const filterBooks = () => {
     if (desiredYearElement) {
       yearPos = desiredYearElement.getBoundingClientRect().top;
       // console.log(yearPos);
-      if (yearPos < 105 && yearPos) {
+      if (yearPos < 120 && yearPos > 110 && yearPos) {
         yearDisplayed = yearString;
       }
     }
   }
-  targetBooks = document.querySelectorAll(`[data-bookyear='${yearDisplayed}']`);
-  //hides books by year
-  for (book in targetBooks) {
-    if (typeof targetBooks[book] === "object") {
-      // console.log(typeof targetBooks[book]);
-      targetBooks[book].classList.remove("hide");
-    }
-  }
-  // console.log(previousDisplayed[previousDisplayed.length - 1], yearDisplayed);
-  if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
-    // selects all books that need to be removed
-    let removedBooks = document.querySelectorAll(
-      `[data-bookyear='${previousDisplayed[previousDisplayed.length - 1]}']`
-    );
 
-    for (book in removedBooks) {
-      if (typeof removedBooks[book] === "object") {
-        removedBooks[book].classList.add("hide");
-        console.log("done!");
-      }
-    }
+  if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
     previousDisplayed.push(yearDisplayed);
-    // console.log(previousDisplayed);
+    console.log(previousDisplayed);
+    let desiredElement = $(`#${yearDisplayed}`);
+    $(".bookList").animate(
+      {
+        scrollTop:
+          $(".bookList").scrollTop() + desiredElement.position().top + -50,
+      },
+      1000
+    );
   }
+
+  //   targetBooks = document.querySelectorAll(`[data-bookyear='${yearDisplayed}']`);
+  //   //hides books by year
+  //   for (book in targetBooks) {
+  //     if (typeof targetBooks[book] === "object") {
+  //       // console.log(typeof targetBooks[book]);
+  //       targetBooks[book].classList.remove("hide");
+  //     }
+  //   }
+  //   // console.log(previousDisplayed[previousDisplayed.length - 1], yearDisplayed);
+  //   if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
+  //     // selects all books that need to be removed
+  //     let removedBooks = document.querySelectorAll(
+  //       `[data-bookyear='${previousDisplayed[previousDisplayed.length - 1]}']`
+  //     );
+
+  //     for (book in removedBooks) {
+  //       if (typeof removedBooks[book] === "object") {
+  //         removedBooks[book].classList.add("hide");
+  //         console.log("done!");
+  //       }
+  //     }
+  //     previousDisplayed.push(yearDisplayed);
+  //     // console.log(previousDisplayed);
+  //   }
 
   // console.log("running!");
 };
@@ -333,7 +343,6 @@ class TrendYear {
         $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
       }
     }
-
     // console.log(dataYear);
   }
 }

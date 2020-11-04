@@ -8,8 +8,8 @@
 // sass --watch style.scss style.css
 
 $left-label-width: 60px;
-$main-color: #53c279;
-$secondary-color: #535fc2;
+$main-color: #d3ffea;
+$secondary-color: #3547a4;
 $body-size: 18px;
 
 * {
@@ -37,6 +37,7 @@ $body-size: 18px;
 body {
   margin-left: $left-label-width;
   margin-right: $left-label-width;
+  background: #d3ffea;
 }
 
 .label {
@@ -62,7 +63,7 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: $body-size;
-  color: $main-color;
+  color: $secondary-color;
 }
 
 h3 {
@@ -72,7 +73,7 @@ h3 {
   text-transform: uppercase;
   font-weight: 400;
   font-size: $body-size;
-  color: $main-color;
+  color: $secondary-color;
 }
 
 .container {
@@ -84,7 +85,7 @@ h3 {
 }
 
 .nav {
-  border-bottom: 1.5px solid $main-color;
+  border-bottom: 1.5px solid $secondary-color;
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -123,13 +124,14 @@ h3 {
 }
 
 .bookList {
-  flex: 2;
+  flex: 3;
   height: 90vh;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
 
 .trendList {
+  border-right: 1.5px solid $secondary-color;
   flex: 1;
   height: 90vh;
   // margin-top: 40px;
@@ -139,7 +141,7 @@ h3 {
   p {
     // margin-bottom: 20px;
     padding: 10px 0 10px 5px;
-    color: $main-color;
+    color: $secondary-color;
     font-size: $body-size;
     transition: 0.2s;
     border-radius: 4px;
@@ -153,16 +155,18 @@ h3 {
 
 /* Style the buttons */
 .btn {
-  border: none;
-  outline: none;
+  border: 1.5px solid $secondary-color;
   padding: 12px 16px;
-  background-color: #f1f1f1;
+  background-color: $secondary-color;
   cursor: pointer;
+  color: white;
 }
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-  background-color: #ddd;
+  background-color: $main-color;
+  color: $secondary-color;
+  border: 1.5px solid $secondary-color;
 }
 
 /* Add a dark background to the active button */
@@ -172,40 +176,29 @@ h3 {
 }
 
 .card-blank {
-  // border: 1.5px solid $main-color;
   width: 159px;
   height: 229px;
   // transition: 0.2s;
   pointer-events: none;
 }
 
-.card:hover .bookTitle {
-  color: white;
-}
-
-.card:hover {
-  // border: 1.5px solid $secondary-color;
-  background: $secondary-color;
-  cursor: pointer;
-}
-
 .grid {
   // gap: 10px;
-  // padding-bottom: 40p
+  margin-left: 60px;
   padding-top: 20px;
 
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, 169px);
+  grid-template-columns: repeat(auto-fill, 159px);
 
   grid-column-start: 0;
   grid-column-end: 2;
 
   .card {
-    border: 1.5px solid $main-color;
+    border: 1.5px solid $secondary-color;
     width: 159px;
     height: 229px;
-    transition: 0.2s;
+    // transition: 0.2s;
     display: table;
     margin-bottom: 10px;
 
@@ -213,9 +206,19 @@ h3 {
       text-align: center;
       vertical-align: middle;
       text-transform: uppercase;
-      color: $main-color;
+      color: $secondary-color;
       display: table-cell;
     }
+  }
+
+  .card:hover .bookTitle {
+    color: white;
+  }
+
+  .card:hover {
+    // border: 1.5px solid $secondary-color;
+    background: $secondary-color;
+    cursor: pointer;
   }
 
   /* The "hide" class is added to the filtered elements */
