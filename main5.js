@@ -66,15 +66,15 @@ function preload() {
     //   createTiles("hello");
     // }
   });
+
   $.getJSON("books/book-description.json", (data) => {
     booksWithDescriptions = data;
-    console.log(booksWithDescriptions);
-
     for (let i = 0; i < booksWithDescriptions.length; i++) {
       let bookTitle = booksWithDescriptions[i].title.replace(",", "");
       let bookType = booksWithDescriptions[i].type;
+      let bookYear = booksWithDescriptions[i].year;
       getRandomInt(1, 3, 2);
-      createTiles(bookTitle, bookType);
+      createTiles(bookTitle, bookType, bookYear);
     }
   });
 }
@@ -90,10 +90,11 @@ const getRandomInt = (min, max, target) => {
   }
 };
 
-const createTiles = (bookNames, bookType) => {
+const createTiles = (bookNames, bookType, bookYear) => {
   var card = document.createElement("div");
   var content = document.createElement("p");
-  $(card).addClass("card all " + bookType);
+  $(card).addClass("card show all " + bookType);
+  $(card).attr("data-bookYear", bookYear);
   $(content).addClass("bookTitle");
   $(content).text(bookNames);
   card.appendChild(content);
@@ -147,7 +148,6 @@ const downloadBookData = async () => {
             thumbnail: thumbnailContent,
           };
           bookData.push(bookInfo);
-          // console.log(bookData);
         }
       );
       await wait(800);
@@ -161,7 +161,6 @@ const downloadBookData = async () => {
           let titleContent = data.items[0].volumeInfo.title;
           let descriptionContent = data.items[0].volumeInfo.description;
           let authorContent = data.items[0].volumeInfo.authors[0];
-          // console.log(data.items[0].volumeInfo);
           let bookInfo = {
             author: authorContent,
             year: year,
@@ -171,14 +170,12 @@ const downloadBookData = async () => {
             thumbnail: thumbnailContent,
           };
           bookData.push(bookInfo);
-          // console.log(bookData);
         }
       );
       await wait(800);
     }
   }
   let CSVBookData = Papa.unparse(bookData);
-  // console.log(Papa.unparse(bookData));
   var exportedFilename = "OrganizedBookData.csv";
   var blob = new Blob([CSVBookData], { type: "text/csv;charset=utf-8;" });
   if (navigator.msSaveBlob) {
@@ -200,11 +197,65 @@ const downloadBookData = async () => {
   }
 };
 
+document.addEventListener("DOMContentLoaded", function (event) {
+  // document.addEventListener("scroll", function (e) {
+  //   console.log(e);
+  // });
+  $(".trendList").scroll(function () {
+    filterBooks();
+  });
+});
+
+let yearDisplayed;
+let count;
+const filterBooks = () => {
+  let years = document.getElementsByClassName("year");
+  let yearPos;
+
+  for (year in years) {
+    // $(years[year]).scroll(function () {
+    //   // $( "#log" ).append( "<div>Handler for .scroll() called.</div>" );
+    //   console.log("scrolled!");
+    // });
+    // let dataYear = $(".trendList").find(`[data-year='${year}']`);
+    let yearString = years[year].textContent;
+    let desiredYearElement = document.querySelector(
+      `h1[data-year="${yearString}"]`
+    );
+
+    if (desiredYearElement) {
+      yearPos = desiredYearElement.getBoundingClientRect().top;
+      // console.log(yearPos);
+      if (yearPos < 105 && yearPos) {
+        yearDisplayed = yearString;
+      }
+    }
+  }
+  targetBooks = $(`[data-bookyear="${yearDisplayed}"]`);
+  // console.log(targetBooks);
+
+  //shows books by year
+  for (book in targetBooks) {
+    //remove all books that have show
+    if (count > 0) {
+      let needToRemove = document.querySelectorAll(".show");
+      for (books in needToRemove) {
+        needToRemove[book].classList.add("show");
+        console.log("running");
+      }
+    }
+
+    if (targetBooks[book] || typeof targetBooks[book] !== "undefined") {
+      targetBooks[book].classList.remove("show");
+      count++;
+    }
+  }
+};
+
 function csvToDict() {
   for (let h = 0; h < tables.length; h++) {
     table = tables[h];
     let cols = table.findRow().table.columns;
-    // console.log(cols);
     let dict = new Map(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
     let key = new Map();
     for (let i = 0; i < cols.length; i++) {
@@ -220,7 +271,7 @@ function csvToDict() {
       }
       dict.set(cols[i], trendArr);
     }
-    trends[years[h]] = new TrendYear(years[h], key, dict);
+    trends[years[h]] = new TrendYear(years[h], dict);
   }
 }
 
@@ -233,20 +284,24 @@ function getVals(d, s) {
 }
 
 class TrendYear {
-  constructor(y, k, d) {
+  constructor(y, d) {
     this.id = y;
     this.vals = d;
   }
   render() {
     $(".trendList").append("<br><br/>");
     let year = this.id;
-    $(".trendList").append("<h1>" + year + "</1>");
+    $(".trendList").append(
+      "<h1 class='year' data-year=" + year + ">" + year + "</h1>"
+    );
     for (let key of this.vals) {
       $(".trendList").append("<h3>" + key[0] + "</h3>");
       for (let value in key[1]) {
         $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
       }
     }
+
+    // console.log(dataYear);
   }
 }
 
@@ -290,12 +345,12 @@ function RemoveClass(element, name) {
 }
 
 // Add active class to the current control button (highlight it)
-var btnContainer = document.getElementById("myBtnContainer");
-var btns = btnContainer.getElementsByClassName("btn");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function () {
-    var current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-  });
-}
+// var btnContainer = document.getElementById("myBtnContainer");
+// var btns = btnContainer.getElementsByClassName("btn");
+// for (var i = 0; i < btns.length; i++) {
+//   btns[i].addEventListener("click", function () {
+//     var current = document.getElementsByClassName("active");
+//     current[0].className = current[0].className.replace(" active", "");
+//     this.className += " active";
+//   });
+// }
