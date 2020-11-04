@@ -69,12 +69,21 @@ function preload() {
 
   $.getJSON("books/book-description.json", (data) => {
     booksWithDescriptions = data;
-    for (let i = 0; i < booksWithDescriptions.length / 10; i++) {
+
+    for (let i = 0; i < booksWithDescriptions.length; i++) {
       let bookTitle = booksWithDescriptions[i].title.replace(",", "");
       let bookType = booksWithDescriptions[i].type;
       let bookYear = booksWithDescriptions[i].year;
       getRandomInt(1, 3, 2, bookYear);
       createTiles(bookTitle, bookType, bookYear);
+    }
+
+    for (year in years) {
+      let firstYearElement = document.querySelector(
+        `[data-bookyear='${years[year]}']`
+      );
+      firstYearElement.id = `${years[year]}`;
+      console.log(firstYearElement);
     }
   });
 }
@@ -94,7 +103,7 @@ const getRandomInt = (min, max, target) => {
 const createTiles = (bookNames, bookType, bookYear) => {
   var card = document.createElement("div");
   var content = document.createElement("p");
-  $(card).addClass("card hide all " + bookType);
+  $(card).addClass("card all " + bookType);
   $(card).attr("data-bookYear", bookYear);
   $(content).addClass("bookTitle");
   $(content).text(bookNames);
@@ -205,7 +214,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
   $(".trendList").scroll(function () {
     filterBooks();
   });
+  $(".bookList").scroll(function () {
+    // let desiredElement = $("#2007");
+    // console.log(desiredElement);
+    // console.log(desiredElement.position().top);
+  });
 });
+
+const scrollToPos = () => {
+  let desiredElement = $("#2007");
+  desiredElement.position().top = 30;
+  console.log(desiredElement.position().top);
+  //   console.log($("bookList"));
+  // $("bookList").scrollTop(
+  //   $("bookList").scrollTop() + desiredElement.position().top
+  // );
+};
 
 let yearDisplayed;
 let previousDisplayed = [];
@@ -236,15 +260,6 @@ const filterBooks = () => {
   targetBooks = document.querySelectorAll(`[data-bookyear='${yearDisplayed}']`);
   //hides books by year
   for (book in targetBooks) {
-    //remove all books that have hide
-    // if (count > 0) {
-    //   let needToRemove = document.querySelectorAll(".hide");
-    //   for (books in needToRemove) {
-    //     needToRemove[book].classList.add("hide");
-    //     console.log("running");
-    //   }
-    // }
-
     if (typeof targetBooks[book] === "object") {
       // console.log(typeof targetBooks[book]);
       targetBooks[book].classList.remove("hide");
@@ -326,41 +341,41 @@ class TrendYear {
 //FILTER BOOK
 //https://www.w3schools.com/howto/howto_js_filter_elements.asp
 
-function filterSelection(c) {
-  var x, i;
-  x = document.getElementsByClassName("card");
-  if (c == "all") c = "";
-  // Add the "hide" class (display:block) to the filtered elements, and remove the "hide" class from the elements that are not selected
-  for (i = 0; i < x.length; i++) {
-    RemoveClass(x[i], "hide");
-    if (x[i].className.indexOf(c) > -1) AddClass(x[i], "hide");
-  }
-}
+// function filterSelection(c) {
+//   var x, i;
+//   x = document.getElementsByClassName("card");
+//   if (c == "all") c = "";
+//   // Add the "hide" class (display:block) to the filtered elements, and remove the "hide" class from the elements that are not selected
+//   for (i = 0; i < x.length; i++) {
+//     RemoveClass(x[i], "hide");
+//     if (x[i].className.indexOf(c) > -1) AddClass(x[i], "hide");
+//   }
+// }
 
-// hide filtered elements
-function AddClass(element, name) {
-  var i, arr1, arr2;
-  arr1 = element.className.split(" ");
-  arr2 = name.split(" ");
-  for (i = 0; i < arr2.length; i++) {
-    if (arr1.indexOf(arr2[i]) == -1) {
-      element.className += " " + arr2[i];
-    }
-  }
-}
+// // hide filtered elements
+// function AddClass(element, name) {
+//   var i, arr1, arr2;
+//   arr1 = element.className.split(" ");
+//   arr2 = name.split(" ");
+//   for (i = 0; i < arr2.length; i++) {
+//     if (arr1.indexOf(arr2[i]) == -1) {
+//       element.className += " " + arr2[i];
+//     }
+//   }
+// }
 
-// Hide elements that are not selected
-function RemoveClass(element, name) {
-  var i, arr1, arr2;
-  arr1 = element.className.split(" ");
-  arr2 = name.split(" ");
-  for (i = 0; i < arr2.length; i++) {
-    while (arr1.indexOf(arr2[i]) > -1) {
-      arr1.splice(arr1.indexOf(arr2[i]), 1);
-    }
-  }
-  element.className = arr1.join(" ");
-}
+// // Hide elements that are not selected
+// function RemoveClass(element, name) {
+//   var i, arr1, arr2;
+//   arr1 = element.className.split(" ");
+//   arr2 = name.split(" ");
+//   for (i = 0; i < arr2.length; i++) {
+//     while (arr1.indexOf(arr2[i]) > -1) {
+//       arr1.splice(arr1.indexOf(arr2[i]), 1);
+//     }
+//   }
+//   element.className = arr1.join(" ");
+// }
 
 // Add active class to the current control button (highlight it)
 // var btnContainer = document.getElementById("myBtnContainer");

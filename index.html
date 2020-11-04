@@ -29,10 +29,8 @@ sass --watch style.scss:style.css
     <div class="nav">
       <h1 class="left">Trends by Year</h1>
       <div class="right">
-        <button class="btn active" onclick="filterSelection('all')">All</button>
-        <button class="btn active" onclick="filterSelection('fiction')">
-          Fiction
-        </button>
+        <!-- <button class="btn active" onclick="filterSelection('all')">All</button> -->
+        <button class="btn active" onclick="scrollToPos()">Fiction</button>
         <button class="btn" onclick="filterSelection('nonfiction')">
           Nonfiction
         </button>
@@ -46,5 +44,5 @@ sass --watch style.scss:style.css
       </div>
     </main>
   </body>
-  <script type="text/javascript" src="main5.js"></script>
+  <script type="text/javascript" src="main-scrollto.js"></script>
 </html>
