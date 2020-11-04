@@ -101,26 +101,6 @@ const getRandomInt = (min, max, target) => {
 
 const createTiles = (bookNames, bookType, bookYear) => {
   let card = document.createElement("div");
-  card.onclick = function (e) {
-    let allExpanded = document.getElementsByClassName("expand");
-    if (allExpanded.length > 0) {
-      for (expanded in allExpanded) {
-        if (typeof allExpanded[expanded] === "object") {
-          allExpanded[expanded].classList.remove("expand");
-          console.log(allExpanded);
-        }
-      }
-    }
-    //add new content to each card
-    $(card).empty();
-
-    var author = document.createElement("p");
-    $(author).text("hello");
-    card.appendChild(author);
-
-    card.classList.add("expand");
-  };
-
   var content = document.createElement("p");
   $(card).addClass("card all " + bookType);
   $(card).attr("data-bookYear", bookYear);
@@ -128,6 +108,51 @@ const createTiles = (bookNames, bookType, bookYear) => {
   $(content).text(bookNames);
   card.appendChild(content);
   $(".grid").append(card);
+
+  card.onclick = function (e) {
+    let allExpanded = document.getElementsByClassName("expand");
+    if (allExpanded.length > 0) {
+      let originalBookTitle = card.querySelector(".bookTitle");
+      $(originalBookTitle).removeClass("hidden");
+      for (expanded in allExpanded) {
+        if (typeof allExpanded[expanded] === "object") {
+          $(".hidden").removeClass("hidden");
+
+          //   $(allExpanded[expanded]).removeClass(".expand");
+          //   console.log(allExpanded[expanded].classList);
+          allExpanded[expanded].classList.remove("expand");
+          console.log(allExpanded);
+
+          $(allExpanded[expanded]).remove(".card-container");
+          $(allExpanded[expanded]).remove(".inner");
+        }
+      }
+    }
+    //add new content to each card
+    let originalBookTitle = card.querySelector(".bookTitle");
+    //remove original title
+    $(originalBookTitle).addClass("hidden");
+
+    var expandedTitle = document.createElement("h1");
+    $(expandedTitle).addClass("expanded-bookTitle inner");
+    $(expandedTitle).text("Into the Wild");
+
+    var expandedAuthor = document.createElement("h2");
+    $(expandedAuthor).addClass("expanded-bookAuthor inner");
+    $(expandedAuthor).text("John Z");
+
+    var expandedDescription = document.createElement("p");
+    $(expandedDescription).addClass("expanded-bookDescription inner");
+    $(expandedDescription).text(
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec feugiat felis in sem vestibulum, in maximus justo sodales. Integer efficitur non quam eget molestie. Interdum et malesuada fames ac ante"
+    );
+    card.appendChild(expandedTitle);
+    card.appendChild(expandedAuthor);
+    card.appendChild(expandedDescription);
+    $(".inner").wrapAll("<div class='card-container'></div>");
+
+    card.classList.add("expand");
+  };
 };
 
 const wait = (amount = 0) =>
@@ -234,13 +259,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
   });
   //   $(".bookList").scroll(function () {
   //     // let desiredElement = $("#2007");
-  //     // console.log(desiredElement);
-  //     // console.log(desiredElement.position().top);
   //   });
 
-  //   console.log(document.querySelector(".card"));
   //   document.querySelectorAll(".card").addEventListener("click", function () {
-  //     console.log("clicked");
   //   });
 });
 
@@ -270,7 +291,6 @@ const filterBooks = () => {
 
     if (desiredYearElement) {
       yearPos = desiredYearElement.getBoundingClientRect().top;
-      // console.log(yearPos);
       if (yearPos < 120 && yearPos > 110 && yearPos) {
         yearDisplayed = yearString;
       }
@@ -279,7 +299,6 @@ const filterBooks = () => {
 
   if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
     previousDisplayed.push(yearDisplayed);
-    console.log(previousDisplayed);
     let desiredElement = $(`#${yearDisplayed}`);
     $(".bookList").animate(
       {
@@ -294,11 +313,9 @@ const filterBooks = () => {
   //   //hides books by year
   //   for (book in targetBooks) {
   //     if (typeof targetBooks[book] === "object") {
-  //       // console.log(typeof targetBooks[book]);
   //       targetBooks[book].classList.remove("hide");
   //     }
   //   }
-  //   // console.log(previousDisplayed[previousDisplayed.length - 1], yearDisplayed);
   //   if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
   //     // selects all books that need to be removed
   //     let removedBooks = document.querySelectorAll(
@@ -308,14 +325,10 @@ const filterBooks = () => {
   //     for (book in removedBooks) {
   //       if (typeof removedBooks[book] === "object") {
   //         removedBooks[book].classList.add("hide");
-  //         console.log("done!");
   //       }
   //     }
   //     previousDisplayed.push(yearDisplayed);
-  //     // console.log(previousDisplayed);
   //   }
-
-  // console.log("running!");
 };
 
 function csvToDict() {
@@ -366,7 +379,6 @@ class TrendYear {
         $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
       }
     }
-    // console.log(dataYear);
   }
 }
 
@@ -398,22 +410,17 @@ function hideCard(element, name) {
 
 // Hide elements that are not selected
 function showCard(element, name) {
-  //   console.log("running");
   var i, arr1, arr2;
   arr1 = element.className.split(" ");
-  //   console.log(arr1);
 
   // gets hide class
   arr2 = name.split(" ");
-  console.log(arr2);
   for (i = 0; i < arr2.length; i++) {
     while (arr1.indexOf(arr2[i]) > -1) {
       arr1.splice(arr1.indexOf(arr2[i]), 1);
     }
   }
-  //   console.log(arr1.join(" "));
   element.className = arr1.join(" ");
-  //   console.log(element);
 }
 
 // Add active class to the current control button (highlight it)

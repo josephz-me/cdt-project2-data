@@ -209,4 +209,33 @@ h3 {
   opacity: 30%;
 }
 
+.expanded-bookTitle,
+.expanded-bookAuthor,
+.expanded-bookDescription {
+  color: white;
+}
+
+.expanded-bookTitle {
+  font-size: 36px;
+}
+
+.expanded-bookAuthor {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.expanded-bookDescription {
+  font-size: 18px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.card-container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
 /*# sourceMappingURL=style.css.map */
