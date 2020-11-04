@@ -199,9 +199,6 @@ const downloadBookData = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  // document.addEventListener("scroll", function (e) {
-  //   console.log(e);
-  // });
   $(".trendList").scroll(function () {
     filterBooks();
   });

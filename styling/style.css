@@ -135,22 +135,26 @@ h3 {
 .btn {
   border: 1.5px solid #3547a4;
   padding: 12px 16px;
-  background-color: #3547a4;
+  background-color: #d3ffea;
   cursor: pointer;
-  color: white;
+  color: #3547a4;
 }
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-  background-color: #d3ffea;
-  color: #3547a4;
+  background-color: #3547a4;
+  color: #d3ffea;
   border: 1.5px solid #3547a4;
 }
 
 /* Add a dark background to the active button */
-.btn:active {
-  background-color: #666;
+.btn.active {
+  background-color: #3547a4;
   color: white;
+}
+
+.btn.active:hover {
+  border: 1.5px solid #3547a4;
 }
 
 .card-blank {
@@ -160,7 +164,7 @@ h3 {
 }
 
 .grid {
-  margin-left: 60px;
+  padding-left: 60px;
   padding-top: 20px;
   display: grid;
   grid-gap: 10px;
@@ -171,10 +175,13 @@ h3 {
 }
 .grid .card {
   border: 1.5px solid #3547a4;
-  width: 159px;
-  height: 229px;
+  min-width: 150px;
+  min-height: 229px;
+  width: 100%;
+  height: 100%;
   display: table;
   margin-bottom: 10px;
+  transition: 0.5s scale;
 }
 .grid .card .bookTitle {
   text-align: center;
@@ -190,8 +197,16 @@ h3 {
   background: #3547a4;
   cursor: pointer;
 }
+.grid .expand {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: #3547a4;
+}
+.grid .expand .bookTitle {
+  color: white;
+}
 .grid .hide {
-  display: none;
+  opacity: 30%;
 }
 
 /*# sourceMappingURL=style.css.map */

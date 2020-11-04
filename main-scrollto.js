@@ -74,7 +74,7 @@ function preload() {
       let bookTitle = booksWithDescriptions[i].title.replace(",", "");
       let bookType = booksWithDescriptions[i].type;
       let bookYear = booksWithDescriptions[i].year;
-      getRandomInt(1, 3, 2, bookYear);
+      getRandomInt(1, 5, 2, bookYear);
       createTiles(bookTitle, bookType, bookYear);
     }
 
@@ -100,7 +100,27 @@ const getRandomInt = (min, max, target) => {
 };
 
 const createTiles = (bookNames, bookType, bookYear) => {
-  var card = document.createElement("div");
+  let card = document.createElement("div");
+  card.onclick = function (e) {
+    let allExpanded = document.getElementsByClassName("expand");
+    if (allExpanded.length > 0) {
+      for (expanded in allExpanded) {
+        if (typeof allExpanded[expanded] === "object") {
+          allExpanded[expanded].classList.remove("expand");
+          console.log(allExpanded);
+        }
+      }
+    }
+    //add new content to each card
+    $(card).empty();
+
+    var author = document.createElement("p");
+    $(author).text("hello");
+    card.appendChild(author);
+
+    card.classList.add("expand");
+  };
+
   var content = document.createElement("p");
   $(card).addClass("card all " + bookType);
   $(card).attr("data-bookYear", bookYear);
@@ -209,16 +229,19 @@ const downloadBookData = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  // document.addEventListener("scroll", function (e) {
-  // });
   $(".trendList").scroll(function () {
     filterBooks();
   });
-  $(".bookList").scroll(function () {
-    // let desiredElement = $("#2007");
-    // console.log(desiredElement);
-    // console.log(desiredElement.position().top);
-  });
+  //   $(".bookList").scroll(function () {
+  //     // let desiredElement = $("#2007");
+  //     // console.log(desiredElement);
+  //     // console.log(desiredElement.position().top);
+  //   });
+
+  //   console.log(document.querySelector(".card"));
+  //   document.querySelectorAll(".card").addEventListener("click", function () {
+  //     console.log("clicked");
+  //   });
 });
 
 const scrollToPos = () => {
@@ -350,49 +373,56 @@ class TrendYear {
 //FILTER BOOK
 //https://www.w3schools.com/howto/howto_js_filter_elements.asp
 
-// function filterSelection(c) {
-//   var x, i;
-//   x = document.getElementsByClassName("card");
-//   if (c == "all") c = "";
-//   // Add the "hide" class (display:block) to the filtered elements, and remove the "hide" class from the elements that are not selected
-//   for (i = 0; i < x.length; i++) {
-//     RemoveClass(x[i], "hide");
-//     if (x[i].className.indexOf(c) > -1) AddClass(x[i], "hide");
-//   }
-// }
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName(c);
+  if (c == "all") c = "";
+  // Add the "hide" class (display:block) to the filtered elements, and remove the "hide" class from the elements that are not selected
+  for (i = 0; i < x.length; i++) {
+    showCard(x[i], "hide");
+    if (x[i].className.indexOf(c) > -1) hideCard(x[i], "hide");
+  }
+}
 
-// // hide filtered elements
-// function AddClass(element, name) {
-//   var i, arr1, arr2;
-//   arr1 = element.className.split(" ");
-//   arr2 = name.split(" ");
-//   for (i = 0; i < arr2.length; i++) {
-//     if (arr1.indexOf(arr2[i]) == -1) {
-//       element.className += " " + arr2[i];
-//     }
-//   }
-// }
+// hide filtered elements
+function hideCard(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {
+      element.className += " " + arr2[i];
+    }
+  }
+}
 
-// // Hide elements that are not selected
-// function RemoveClass(element, name) {
-//   var i, arr1, arr2;
-//   arr1 = element.className.split(" ");
-//   arr2 = name.split(" ");
-//   for (i = 0; i < arr2.length; i++) {
-//     while (arr1.indexOf(arr2[i]) > -1) {
-//       arr1.splice(arr1.indexOf(arr2[i]), 1);
-//     }
-//   }
-//   element.className = arr1.join(" ");
-// }
+// Hide elements that are not selected
+function showCard(element, name) {
+  //   console.log("running");
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  //   console.log(arr1);
+
+  // gets hide class
+  arr2 = name.split(" ");
+  console.log(arr2);
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);
+    }
+  }
+  //   console.log(arr1.join(" "));
+  element.className = arr1.join(" ");
+  //   console.log(element);
+}
 
 // Add active class to the current control button (highlight it)
-// var btnContainer = document.getElementById("myBtnContainer");
-// var btns = btnContainer.getElementsByClassName("btn");
-// for (var i = 0; i < btns.length; i++) {
-//   btns[i].addEventListener("click", function () {
-//     var current = document.getElementsByClassName("active");
-//     current[0].className = current[0].className.replace(" active", "");
-//     this.className += " active";
-//   });
-// }
+var btnContainer = document.getElementsByClassName("right")[0];
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function () {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
