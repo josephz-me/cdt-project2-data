@@ -121,7 +121,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
           //   $(allExpanded[expanded]).removeClass(".expand");
           //   console.log(allExpanded[expanded].classList);
           allExpanded[expanded].classList.remove("expand");
-          console.log(allExpanded);
 
           $(allExpanded[expanded]).remove(".card-container");
           $(allExpanded[expanded]).remove(".inner");
