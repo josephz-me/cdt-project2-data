@@ -123,12 +123,11 @@ h3 {
   padding: 10px 0 10px 5px;
   color: #3547a4;
   font-size: 18px;
-  transition: 0.2s;
   border-radius: 4px;
   cursor: pointer;
 }
 .trendList p:hover {
-  color: #3547a4;
+  opacity: 20%;
 }
 
 /* Style the buttons */

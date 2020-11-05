@@ -290,7 +290,7 @@ const filterBooks = () => {
 
     if (desiredYearElement) {
       yearPos = desiredYearElement.getBoundingClientRect().top;
-      if (yearPos < 120 && yearPos > 110 && yearPos) {
+      if (yearPos < 120 && yearPos > 90 && yearPos) {
         yearDisplayed = yearString;
       }
     }
