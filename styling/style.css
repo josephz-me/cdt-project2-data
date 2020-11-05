@@ -74,6 +74,8 @@ h3 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+  z-index: 1000;
+  background-color: #d3ffea;
 }
 .nav h1 {
   margin-bottom: 0px;
@@ -180,7 +182,7 @@ h3 {
   height: 100%;
   display: table;
   margin-bottom: 10px;
-  transition: 0.5s scale;
+  transition: 0.1s transform;
 }
 .grid .card .bookTitle {
   text-align: center;
@@ -221,10 +223,12 @@ h3 {
 .expanded-bookAuthor {
   font-size: 18px;
   font-weight: 600;
+  margin-bottom: 60px;
 }
 
 .expanded-bookDescription {
   font-size: 18px;
+  vertical-align: bottom;
 }
 
 .hidden {
@@ -235,6 +239,17 @@ h3 {
   width: 100%;
   height: 100%;
   padding: 10px;
+}
+
+.expanded-card {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  padding: 10px;
+  background: #3547a4;
+  width: 328px;
+  height: 488px;
+  z-index: 10;
 }
 
 /*# sourceMappingURL=style.css.map */
