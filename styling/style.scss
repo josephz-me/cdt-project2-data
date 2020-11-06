@@ -247,6 +247,7 @@ h3 {
     height: 100%;
     // transition: 0.2s;
     display: table;
+    position: relative;
     margin-bottom: 10px;
 
     .bookTitle {
@@ -330,7 +331,7 @@ h3 {
 }
 
 .hidden {
-  // display: none !important;
+  display: none;
 }
 
 .card-container {
@@ -343,8 +344,8 @@ h3 {
 
 .expanded-card {
   position: absolute;
-  top: 50px;
-  left: 50px;
+  top: 0px;
+  left: 0px;
   padding: 20px;
   background: $lighter-color;
   width: 159px + 159px + 10px;
