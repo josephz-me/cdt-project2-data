@@ -305,4 +305,66 @@ h3 {
   z-index: 10;
 }
 
+/* The Modal (background) */
+.modal {
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 20px;
+  /* Location of the box */
+  top: 0;
+  width: 200px;
+  /* Full width */
+  overflow: auto;
+  /* Enable scroll if needed */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #d3ffea;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 100%;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  font-family: "noto-sans";
+  color: #3547a4;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes animatetop {
+  from {
+    top: 300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

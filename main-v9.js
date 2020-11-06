@@ -528,4 +528,25 @@ const showBooks = (e) => {
       }
     }
   }
+
+  //MODAL CODE
+  // Get the modal
+  let modal = document.getElementById("myModal");
+
+  // Get the button that opens the modal
+  let btn = document.getElementById("myBtn");
+
+  // Get the <span> element that closes the modal
+  //   let span = document.getElementsByClassName("close")[0];
+  // span.onclick = function () {
+  //   modal.style.display = "none";
+  // };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+  $(modal).find("p").text(`${desiredBookList.length} Related Books`);
+  modal.style.display = "block";
 };
