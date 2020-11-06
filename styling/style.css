@@ -88,6 +88,10 @@ h3 {
   grid-column-start: 3;
 }
 
+.year {
+  cursor: pointer;
+}
+
 .trendList,
 .bookList {
   overflow: auto;
@@ -138,6 +142,7 @@ h3 {
   border-radius: 4px;
   cursor: pointer;
 }
+.trendList .year:hover,
 .trendList p:hover {
   opacity: 20%;
 }

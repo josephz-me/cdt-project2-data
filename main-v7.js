@@ -321,8 +321,22 @@ $(window).resize(() => {
   $(".expanded-card").remove();
 });
 
-const scrollToPos = () => {
-  let desiredElement = $("#2006");
+// const scrollToPos = () => {
+//   let desiredElement = $("#2006");
+//   $(".bookList").animate(
+//     {
+//       scrollTop:
+//         $(".bookList").scrollTop() + desiredElement.position().top + -50,
+//     },
+//     1000
+//   );
+// };
+
+const scrollToYear = (e) => {
+  let year = $(e).data("year");
+  let desiredElement = $(`#${year}`);
+  // let allBooks = $(".card");
+  // allBooks.removeClass("hide");
   $(".bookList").animate(
     {
       scrollTop:
@@ -409,7 +423,11 @@ class TrendYear {
     $(".trendList").append("<br><br/>");
     let year = this.id;
     $(".trendList").append(
-      "<h1 class='year' data-year=" + year + ">" + year + "</h1>"
+      "<h1 class='year' onclick=scrollToYear(this) data-year=" +
+        year +
+        ">" +
+        year +
+        "</h1>"
     );
     for (let key of this.vals) {
       $(".trendList").append("<h3>" + key[0] + "</h3>");

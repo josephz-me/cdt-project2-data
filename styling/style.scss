@@ -111,6 +111,10 @@ h3 {
   }
 }
 
+.year {
+  cursor: pointer;
+}
+
 .trendList,
 .bookList {
   overflow: auto;
@@ -162,6 +166,7 @@ h3 {
     cursor: pointer;
   }
 
+  .year:hover,
   p:hover {
     // color: $lighter-color;
     opacity: 20%;
