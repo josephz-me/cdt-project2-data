@@ -206,32 +206,6 @@ const searchForBookYear = (bkYear) => {
   }
 
   return booksWithDescriptions[middleIndex].year != bkYear ? -1 : middleIndex;
-  //   firstIndex = 0;
-  //   lastIndex = booksWithDescriptions.length - 1;
-  //   // Binary search to find the first instance of the year
-  //   while (firstIndex < lastIndex) {
-  //     middleIndex = Math.floor((lastIndex + firstIndex) / 2);
-  //     if (booksWithDescriptions[middleIndex].year <= bkYear) {
-  //       lastIndex = middleIndex;
-  //     } else {
-  //       firstIndex = middleIndex + 1;
-  //     }
-  //   }
-  //   let firstInstance = firstIndex;
-  //   firstIndex = 0;
-  //   lastIndex = booksWithDescriptions.length - 1;
-  // Binary search to find the last instance of the year
-  //   while (firstIndex < lastIndex) {
-  //     middleIndex = Math.floor((lastIndex + firstIndex) / 2);
-  //     if (booksWithDescriptions[middleIndex].year < bkYear) {
-  //       lastIndex = middleIndex;
-  //     } else {
-  //       firstIndex = middleIndex + 1;
-  //     }
-  //   }
-  //   let lastInstance = firstIndex;
-  //   console.log("hi");
-  //   console.log(firstInstance, lastInstance);
 };
 
 const wait = (amount = 0) =>
@@ -243,9 +217,10 @@ function setup() {
   //trender trends in left column
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
     let key = keywordTable.getString(r, 0);
-    let value = keywordTable.getString(r, 1).split(",");
+    let value = keywordTable.getString(r, 1);
     trendToKeywords[key] = value;
   }
+  console.log(trendToKeywords);
   csvToDict();
 
   //in each year
@@ -383,6 +358,7 @@ const filterBooks = () => {
   if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
     previousDisplayed.push(yearDisplayed);
     let desiredElement = $(`#${yearDisplayed}`);
+
     $(".bookList").animate(
       {
         scrollTop:
@@ -438,6 +414,7 @@ class TrendYear {
     for (let key of this.vals) {
       $(".trendList").append("<h3>" + key[0] + "</h3>");
       for (let value in key[1]) {
+        //actual bookname
         $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
       }
     }

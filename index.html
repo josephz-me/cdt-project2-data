@@ -27,13 +27,23 @@ sass --watch style.scss:style.css
     <!-- <div class="label"><p>Trends</p></div> -->
 
     <div class="nav">
-      <h1 class="left">Trends by Year</h1>
+      <div class="left">
+        <h1>Trends by Year</h1>
+      </div>
       <div class="right">
         <!-- <button class="btn active" onclick="filterSelection('all')">All</button> -->
-        <button class="btn active" onclick="filterSelection('fiction')">
+        <button
+          data-type="fiction"
+          class="fictionBtn btn active"
+          onclick="filterSelection(this)"
+        >
           Fiction
         </button>
-        <button class="btn" onclick="filterSelection('nonfiction')">
+        <button
+          data-type="nonfiction"
+          class="nonfictionBtn btn active"
+          onclick="filterSelection(this)"
+        >
           Nonfiction
         </button>
       </div>
@@ -46,5 +56,5 @@ sass --watch style.scss:style.css
       </div>
     </main>
   </body>
-  <script type="text/javascript" src="main-expand2.js"></script>
+  <script type="text/javascript" src="main-v7.js"></script>
 </html>

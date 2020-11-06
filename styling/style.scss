@@ -8,8 +8,10 @@
 // sass --watch style.scss style.css
 
 $left-label-width: 60px;
-$main-color: #d3ffea;
-$secondary-color: #3547a4;
+$darker-color: #3547a4;
+$lighter-color: #d3ffea;
+$serif: "noto-serif";
+$sans: "noto-sans";
 $body-size: 18px;
 
 * {
@@ -31,13 +33,13 @@ $body-size: 18px;
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   overflow: hidden;
-  font-family: franklin-gothic-urw, sans-serif;
+  // font-family: $sans, sans-serif;
 }
 
 body {
   margin-left: $left-label-width;
   margin-right: $left-label-width;
-  background: #d3ffea;
+  background: $darker-color;
 }
 
 .label {
@@ -63,7 +65,7 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: $body-size;
-  color: $secondary-color;
+  color: $lighter-color;
 }
 
 h3 {
@@ -73,7 +75,7 @@ h3 {
   text-transform: uppercase;
   font-weight: 400;
   font-size: $body-size;
-  color: $secondary-color;
+  color: $lighter-color;
 }
 
 .container {
@@ -85,13 +87,14 @@ h3 {
 }
 
 .nav {
-  border-bottom: 1.5px solid $secondary-color;
+  border-bottom: 1.5px solid $lighter-color;
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   z-index: 1000;
-  background-color: $main-color;
+  background-color: $darker-color;
+  font-family: $sans;
 
   h1 {
     margin-bottom: 0px;
@@ -125,6 +128,15 @@ h3 {
   display: none;
 }
 
+.clickedTrend {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.clickedTrend:hover {
+  opacity: 100% !important;
+}
+
 .bookList {
   flex: 3;
   height: 90vh;
@@ -133,7 +145,8 @@ h3 {
 }
 
 .trendList {
-  border-right: 1.5px solid $secondary-color;
+  font-family: $sans, sans-serif;
+  border-right: 1.5px solid $lighter-color;
   flex: 1;
   height: 90vh;
   // margin-top: 40px;
@@ -143,44 +156,62 @@ h3 {
   p {
     // margin-bottom: 20px;
     padding: 10px 0 10px 5px;
-    color: $secondary-color;
+    color: $lighter-color;
     font-size: $body-size;
     border-radius: 4px;
     cursor: pointer;
   }
 
   p:hover {
-    // color: $secondary-color;
+    // color: $lighter-color;
     opacity: 20%;
   }
 }
 
 /* Style the buttons */
 .btn {
-  border: 1.5px solid $secondary-color;
+  border: 1.5px solid $lighter-color;
   padding: 12px 16px;
-  background-color: $main-color;
+
+  background-color: $darker-color;
   cursor: pointer;
-  color: $secondary-color;
+  color: $lighter-color;
+}
+
+.nonfictionBtn {
+  width: 120px;
+}
+
+.fictionBtn {
+  width: 120px;
 }
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-  background-color: $secondary-color;
-  color: $main-color;
-  border: 1.5px solid $secondary-color;
+  background-color: $lighter-color;
+  color: $darker-color;
+  border: 1.5px solid $lighter-color;
 }
 
 /* Add a dark background to the active button */
 .btn.active {
-  background-color: $secondary-color;
-  color: white;
+  background-color: $lighter-color;
+  color: $darker-color;
+  font-weight: 600;
 }
 
 .btn.active:hover {
-  border: 1.5px solid $secondary-color;
-  //   background-color: $main-color;
-  //   color: $secondary-color;
+  border: 1.5px solid $lighter-color;
+  //   background-color: $darker-color;
+  //   color: $lighter-color;
+}
+
+.nonfictionBtn {
+  font-family: $serif;
+}
+
+.fictionBtn {
+  font-family: $sans;
 }
 
 .card-blank {
@@ -204,7 +235,7 @@ h3 {
   grid-column-end: 2;
 
   .card {
-    border: 1.5px solid $secondary-color;
+    border: 1.5px solid $lighter-color;
     min-width: 150px;
     min-height: 229px;
     width: 100%;
@@ -217,41 +248,49 @@ h3 {
       text-align: center;
       vertical-align: middle;
       text-transform: uppercase;
-      color: $secondary-color;
+      color: $lighter-color;
       display: table-cell;
     }
     transition: 0.1s transform;
   }
 
+  .fiction {
+    font-family: $sans, san-serif;
+    font-weight: 600;
+  }
+
+  .nonfiction {
+    font-family: $serif, san-serif;
+    font-weight: 600;
+  }
+
   .card:hover .bookTitle {
-    color: white;
+    color: $darker-color;
   }
 
   .card:hover {
-    // border: 1.5px solid $secondary-color;
-    background: $secondary-color;
+    // border: 1.5px solid $lighter-color;
+    background: $lighter-color;
     cursor: pointer;
   }
 
   .expand {
     grid-column: span 2;
     grid-row: span 2;
-    background: $secondary-color;
+    background: $lighter-color;
   }
 
-  .expand .bookTitle {
-    color: white;
-  }
+  // .expand .bookTitle {
+  //   color: $darker-color;
+  // }
 
   /* The "hide" class is added to the filtered elements */
   .hide {
-    // display: none;
-    // background: yellow;
     opacity: 30%;
-    // visibility: hidden;
-    // position: absolute !important;
-    // top: -9999px !important;
-    // left: -9999px !important;
+  }
+
+  .navFilterHide {
+    opacity: 30%;
   }
 }
 
@@ -260,26 +299,33 @@ h3 {
 .expanded-bookTitle,
 .expanded-bookAuthor,
 .expanded-bookDescription {
-  color: white;
+  color: $darker-color;
 }
 
 .expanded-bookTitle {
   font-size: 36px;
+  font-family: $serif;
+  font-style: italic;
+  font-weight: 400;
+  margin-bottom: 0px;
 }
 
 .expanded-bookAuthor {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 60px;
+  font-family: $serif;
+  font-weight: 400;
 }
 
 .expanded-bookDescription {
-  font-size: 18px;
+  font-size: 16px;
   vertical-align: bottom;
+  font-family: $serif;
 }
 
 .hidden {
-  display: none !important;
+  // display: none !important;
 }
 
 .card-container {
@@ -294,8 +340,8 @@ h3 {
   position: absolute;
   top: 50px;
   left: 50px;
-  padding: 10px;
-  background: $secondary-color;
+  padding: 20px;
+  background: $lighter-color;
   width: 159px + 159px + 10px;
   height: 239px + 239px + 10px;
   z-index: 10;

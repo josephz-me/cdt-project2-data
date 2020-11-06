@@ -20,13 +20,12 @@
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   overflow: hidden;
-  font-family: franklin-gothic-urw, sans-serif;
 }
 
 body {
   margin-left: 60px;
   margin-right: 60px;
-  background: #d3ffea;
+  background: #3547a4;
 }
 
 .label {
@@ -49,7 +48,7 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: 18px;
-  color: #3547a4;
+  color: #d3ffea;
 }
 
 h3 {
@@ -59,7 +58,7 @@ h3 {
   text-transform: uppercase;
   font-weight: 400;
   font-size: 18px;
-  color: #3547a4;
+  color: #d3ffea;
 }
 
 .container {
@@ -69,13 +68,14 @@ h3 {
 }
 
 .nav {
-  border-bottom: 1.5px solid #3547a4;
+  border-bottom: 1.5px solid #d3ffea;
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   z-index: 1000;
-  background-color: #d3ffea;
+  background-color: #3547a4;
+  font-family: "noto-sans";
 }
 .nav h1 {
   margin-bottom: 0px;
@@ -103,6 +103,15 @@ h3 {
   display: none;
 }
 
+.clickedTrend {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.clickedTrend:hover {
+  opacity: 100% !important;
+}
+
 .bookList {
   flex: 3;
   height: 90vh;
@@ -113,7 +122,8 @@ h3 {
 }
 
 .trendList {
-  border-right: 1.5px solid #3547a4;
+  font-family: "noto-sans", sans-serif;
+  border-right: 1.5px solid #d3ffea;
   flex: 1;
   height: 90vh;
   -ms-overflow-style: none;
@@ -123,7 +133,7 @@ h3 {
 }
 .trendList p {
   padding: 10px 0 10px 5px;
-  color: #3547a4;
+  color: #d3ffea;
   font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
@@ -134,28 +144,45 @@ h3 {
 
 /* Style the buttons */
 .btn {
-  border: 1.5px solid #3547a4;
+  border: 1.5px solid #d3ffea;
   padding: 12px 16px;
-  background-color: #d3ffea;
+  background-color: #3547a4;
   cursor: pointer;
-  color: #3547a4;
+  color: #d3ffea;
+}
+
+.nonfictionBtn {
+  width: 120px;
+}
+
+.fictionBtn {
+  width: 120px;
 }
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-  background-color: #3547a4;
-  color: #d3ffea;
-  border: 1.5px solid #3547a4;
+  background-color: #d3ffea;
+  color: #3547a4;
+  border: 1.5px solid #d3ffea;
 }
 
 /* Add a dark background to the active button */
 .btn.active {
-  background-color: #3547a4;
-  color: white;
+  background-color: #d3ffea;
+  color: #3547a4;
+  font-weight: 600;
 }
 
 .btn.active:hover {
-  border: 1.5px solid #3547a4;
+  border: 1.5px solid #d3ffea;
+}
+
+.nonfictionBtn {
+  font-family: "noto-serif";
+}
+
+.fictionBtn {
+  font-family: "noto-sans";
 }
 
 .card-blank {
@@ -175,7 +202,7 @@ h3 {
   /* The "hide" class is added to the filtered elements */
 }
 .grid .card {
-  border: 1.5px solid #3547a4;
+  border: 1.5px solid #d3ffea;
   min-width: 150px;
   min-height: 229px;
   width: 100%;
@@ -188,51 +215,62 @@ h3 {
   text-align: center;
   vertical-align: middle;
   text-transform: uppercase;
-  color: #3547a4;
+  color: #d3ffea;
   display: table-cell;
 }
+.grid .fiction {
+  font-family: "noto-sans", san-serif;
+  font-weight: 600;
+}
+.grid .nonfiction {
+  font-family: "noto-serif", san-serif;
+  font-weight: 600;
+}
 .grid .card:hover .bookTitle {
-  color: white;
+  color: #3547a4;
 }
 .grid .card:hover {
-  background: #3547a4;
+  background: #d3ffea;
   cursor: pointer;
 }
 .grid .expand {
   grid-column: span 2;
   grid-row: span 2;
-  background: #3547a4;
-}
-.grid .expand .bookTitle {
-  color: white;
+  background: #d3ffea;
 }
 .grid .hide {
+  opacity: 30%;
+}
+.grid .navFilterHide {
   opacity: 30%;
 }
 
 .expanded-bookTitle,
 .expanded-bookAuthor,
 .expanded-bookDescription {
-  color: white;
+  color: #3547a4;
 }
 
 .expanded-bookTitle {
   font-size: 36px;
+  font-family: "noto-serif";
+  font-style: italic;
+  font-weight: 400;
+  margin-bottom: 0px;
 }
 
 .expanded-bookAuthor {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 60px;
+  font-family: "noto-serif";
+  font-weight: 400;
 }
 
 .expanded-bookDescription {
-  font-size: 18px;
+  font-size: 16px;
   vertical-align: bottom;
-}
-
-.hidden {
-  display: none !important;
+  font-family: "noto-serif";
 }
 
 .card-container {
@@ -245,8 +283,8 @@ h3 {
   position: absolute;
   top: 50px;
   left: 50px;
-  padding: 10px;
-  background: #3547a4;
+  padding: 20px;
+  background: #d3ffea;
   width: 328px;
   height: 488px;
   z-index: 10;
