@@ -162,6 +162,7 @@ h3 {
 
 .fictionBtn {
   width: 120px;
+  margin-right: 10px;
 }
 
 /* Add a light grey background on mouse-over */
@@ -178,8 +179,10 @@ h3 {
   font-weight: 600;
 }
 
-.btn.active:hover {
-  border: 1.5px solid #d3ffea;
+.btn:active {
+  background-color: #3547a4;
+  color: #d3ffea;
+  font-weight: 600;
 }
 
 .nonfictionBtn {
@@ -223,6 +226,7 @@ h3 {
   text-transform: uppercase;
   color: #d3ffea;
   display: table-cell;
+  padding: 10px;
 }
 .grid .fiction {
   font-family: "noto-sans", san-serif;
@@ -258,10 +262,10 @@ h3 {
 }
 
 .expanded-bookTitle {
-  font-size: 36px;
+  font-size: 24px;
   font-family: "noto-serif";
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 0px;
 }
 
@@ -277,6 +281,7 @@ h3 {
   font-size: 16px;
   vertical-align: bottom;
   font-family: "noto-serif";
+  font-weight: 400;
 }
 
 .hidden {

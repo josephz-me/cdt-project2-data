@@ -189,6 +189,7 @@ h3 {
 
 .fictionBtn {
   width: 120px;
+  margin-right: 10px;
 }
 
 /* Add a light grey background on mouse-over */
@@ -205,11 +206,17 @@ h3 {
   font-weight: 600;
 }
 
-.btn.active:hover {
-  border: 1.5px solid $lighter-color;
-  //   background-color: $darker-color;
-  //   color: $lighter-color;
+.btn:active {
+  background-color: $darker-color;
+  color: $lighter-color;
+  font-weight: 600;
 }
+
+// .btn.active:hover {
+//   border: 1.5px solid $lighter-color;
+//   background-color: $darker-color;
+//   color: $lighter-color;
+// }
 
 .nonfictionBtn {
   font-family: $serif;
@@ -256,6 +263,7 @@ h3 {
       text-transform: uppercase;
       color: $lighter-color;
       display: table-cell;
+      padding: 10px;
     }
     transition: 0.1s transform;
   }
@@ -309,10 +317,10 @@ h3 {
 }
 
 .expanded-bookTitle {
-  font-size: 36px;
+  font-size: 24px;
   font-family: $serif;
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 0px;
 }
 
@@ -328,6 +336,7 @@ h3 {
   font-size: 16px;
   vertical-align: bottom;
   font-family: $serif;
+  font-weight: 400;
 }
 
 .hidden {
