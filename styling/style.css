@@ -1,7 +1,3 @@
-/* @font-face {
-  font-family: DaysOne-Regular;
-  src: url("DaysOne-Regular.ttf") format("woff2");
-} */
 * {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -22,10 +18,33 @@
   overflow: hidden;
 }
 
+.browserWidthCatch {
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffbb7c;
+  color: #182938;
+  font-family: "noto-sans";
+  transition: 0.4s opacity;
+  pointer-events: none;
+}
+
+@media only screen and (max-width: 890px) {
+  .browserWidthCatch {
+    opacity: 100%;
+  }
+}
 body {
-  margin-left: 60px;
-  margin-right: 60px;
-  background: #3547a4;
+  background: #182938;
 }
 
 .label {
@@ -41,7 +60,7 @@ body {
   align-items: center;
 }
 .label p {
-  color: #d3ffea;
+  color: #ffbb7c;
   transform: rotate(-90deg);
   font-family: "noto-sans";
   font-weight: 600;
@@ -50,7 +69,7 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: 18px;
-  color: #d3ffea;
+  color: #ffbb7c;
 }
 
 h3 {
@@ -60,23 +79,26 @@ h3 {
   text-transform: uppercase;
   font-weight: 400;
   font-size: 18px;
-  color: #d3ffea;
+  color: #ffbb7c;
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  margin-left: 60px;
+  margin-right: 60px;
 }
 
 .nav {
-  border-bottom: 1.5px solid #d3ffea;
+  margin-left: 60px;
+  margin-right: 60px;
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   z-index: 1000;
-  background-color: #3547a4;
+  background-color: #182938;
   font-family: "noto-sans";
 }
 .nav h1 {
@@ -88,6 +110,10 @@ h3 {
 }
 .nav .right {
   grid-column-start: 3;
+}
+
+.nav-wrapper {
+  border-bottom: 1.5px solid #ffbb7c;
 }
 
 .year {
@@ -115,7 +141,6 @@ h3 {
 
 .clickedTrend {
   font-weight: 600;
-  font-style: italic;
 }
 
 .clickedTrend:hover {
@@ -134,17 +159,19 @@ h3 {
 
 .trendList {
   font-family: "noto-sans", sans-serif;
-  border-right: 1.5px solid #d3ffea;
+  border-right: 1.5px solid #ffbb7c;
   flex: 1;
   height: 90vh;
+  position: relative;
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
 }
 .trendList p {
-  padding: 10px 0 10px 5px;
-  color: #d3ffea;
+  display: block;
+  padding: 10px 0 10px 20px;
+  color: #ffbb7c;
   font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
@@ -156,11 +183,11 @@ h3 {
 
 /* Style the buttons */
 .btn {
-  border: 1.5px solid #d3ffea;
+  border: 1.5px solid #ffbb7c;
   padding: 12px 16px;
-  background-color: #3547a4;
+  background-color: #182938;
   cursor: pointer;
-  color: #d3ffea;
+  color: #ffbb7c;
 }
 
 .nonfictionBtn {
@@ -174,22 +201,28 @@ h3 {
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-  background-color: #d3ffea;
-  color: #3547a4;
-  border: 1.5px solid #d3ffea;
+  background-color: #ffbb7c;
+  color: #182938;
+  border: 1.5px solid #ffbb7c;
 }
 
 /* Add a dark background to the active button */
 .btn.active {
-  background-color: #d3ffea;
-  color: #3547a4;
+  background-color: #ffbb7c;
+  color: #182938;
   font-weight: 600;
 }
 
 .btn:active {
-  background-color: #3547a4;
-  color: #d3ffea;
+  background-color: #182938;
+  color: #ffbb7c;
   font-weight: 600;
+}
+
+.btn.active:hover {
+  border: 1.5px solid #ffbb7c;
+  background-color: #182938;
+  color: #ffbb7c;
 }
 
 .nonfictionBtn {
@@ -206,9 +239,31 @@ h3 {
   pointer-events: none;
 }
 
+.hoverCard {
+  position: absolute;
+  pointer-events: none;
+  width: auto;
+  height: 50px;
+  background: #ffbb7c;
+  border: 1.5px solid #182938;
+}
+.hoverCard p {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.hoverCard.fiction {
+  font-family: "noto-sans";
+}
+
+.hoverCard.nonfiction {
+  font-family: "noto-serif";
+}
+
 .grid {
   padding-left: 80px;
-  padding-top: 20px;
+  padding-top: 40px;
+  padding-bottom: 200px;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fill, 159px);
@@ -217,7 +272,6 @@ h3 {
   /* The "hide" class is added to the filtered elements */
 }
 .grid .card {
-  border: 1.5px solid #d3ffea;
   min-width: 150px;
   min-height: 229px;
   width: 100%;
@@ -231,29 +285,31 @@ h3 {
   text-align: center;
   vertical-align: middle;
   text-transform: uppercase;
-  color: #d3ffea;
+  color: #ffbb7c;
   display: table-cell;
   padding: 10px;
 }
 .grid .fiction {
   font-family: "noto-sans", san-serif;
   font-weight: 600;
+  border: 1.5px solid #ffbb7c;
 }
 .grid .nonfiction {
   font-family: "noto-serif", san-serif;
   font-weight: 600;
+  border: 1.5px solid #ffbb7c;
 }
 .grid .card:hover .bookTitle {
-  color: #3547a4;
+  color: #182938;
 }
 .grid .card:hover {
-  background: #d3ffea;
+  background: #ffbb7c;
   cursor: pointer;
 }
 .grid .expand {
   grid-column: span 2;
   grid-row: span 2;
-  background: #d3ffea;
+  background: #ffbb7c;
 }
 .grid .hide {
   opacity: 30%;
@@ -265,7 +321,7 @@ h3 {
 .expanded-bookTitle,
 .expanded-bookAuthor,
 .expanded-bookDescription {
-  color: #3547a4;
+  color: #182938;
   pointer-events: none;
 }
 
@@ -307,7 +363,7 @@ h3 {
   top: 0px;
   left: 0px;
   padding: 20px;
-  background: #d3ffea;
+  background: #ffbb7c;
   width: 328px;
   height: 488px;
   z-index: 10;
@@ -336,7 +392,7 @@ h3 {
 
 /* Modal Content */
 .modal-content {
-  background-color: #d3ffea;
+  background-color: #ffbb7c;
   margin: auto;
   padding: 10px 20px 10px 20px;
   border: 1px solid #888;
@@ -344,7 +400,7 @@ h3 {
   animation-name: animatetop;
   animation-duration: 0.4s;
   font-family: "noto-sans";
-  color: #3547a4;
+  color: #182938;
   font-weight: 600;
   font-size: 14px;
 }

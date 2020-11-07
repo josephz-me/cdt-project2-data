@@ -25,27 +25,32 @@ sass --watch style.scss:style.css
   </head>
   <body>
     <div class="label"><p>Trends</p></div>
+    <div class="browserWidthCatch">
+      <p>This project is designed for wider browser width.</p>
+    </div>
 
-    <div class="nav">
-      <div class="left">
-        <h1>Reading Trends</h1>
-      </div>
-      <div class="right">
-        <!-- <button class="btn active" onclick="filterSelection('all')">All</button> -->
-        <button
-          data-type="fiction"
-          class="fictionBtn btn active"
-          onclick="filterSelection(this)"
-        >
-          Fiction
-        </button>
-        <button
-          data-type="nonfiction"
-          class="nonfictionBtn btn active"
-          onclick="filterSelection(this)"
-        >
-          Nonfiction
-        </button>
+    <div class="nav-wrapper">
+      <div class="nav">
+        <div class="left">
+          <h1 class="logo">Reading Trends</h1>
+        </div>
+        <div class="right">
+          <!-- <button class="btn active" onclick="filterSelection('all')">All</button> -->
+          <button
+            data-type="fiction"
+            class="fictionBtn btn active"
+            onclick="filterSelection(this)"
+          >
+            Fiction
+          </button>
+          <button
+            data-type="nonfiction"
+            class="nonfictionBtn btn active"
+            onclick="filterSelection(this)"
+          >
+            Nonfiction
+          </button>
+        </div>
       </div>
     </div>
 

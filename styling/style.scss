@@ -1,15 +1,12 @@
 @charset "UTF-8";
-/* @font-face {
-  font-family: DaysOne-Regular;
-  src: url("DaysOne-Regular.ttf") format("woff2");
-} */
 
 // cd styling
 // sass --watch style.scss style.css
 
 $left-label-width: 60px;
-$darker-color: #3547a4;
-$lighter-color: #d3ffea;
+// $darker-color: #3547a4;
+$darker-color: #182938;
+$lighter-color: #ffbb7c;
 $serif: "noto-serif";
 $sans: "noto-sans";
 $body-size: 18px;
@@ -36,9 +33,33 @@ $body-size: 18px;
   // font-family: $sans, sans-serif;
 }
 
+.browserWidthCatch {
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $lighter-color;
+  color: $darker-color;
+  font-family: $sans;
+  transition: 0.4s opacity;
+  pointer-events: none;
+}
+@media only screen and (max-width: 890px) {
+  .browserWidthCatch {
+    // visibility: visible;
+    opacity: 100%;
+  }
+}
+
 body {
-  margin-left: $left-label-width;
-  margin-right: $left-label-width;
   background: $darker-color;
 }
 
@@ -86,10 +107,14 @@ h3 {
   flex-wrap: wrap;
   // padding: 30px;
   position: relative;
+  margin-left: $left-label-width;
+  margin-right: $left-label-width;
 }
 
 .nav {
-  border-bottom: 1.5px solid $lighter-color;
+  margin-left: $left-label-width;
+  margin-right: $left-label-width;
+
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -111,6 +136,9 @@ h3 {
     grid-column-start: 3;
     // justify-items: flex-end;
   }
+}
+.nav-wrapper {
+  border-bottom: 1.5px solid $lighter-color;
 }
 
 .year {
@@ -140,7 +168,7 @@ h3 {
 
 .clickedTrend {
   font-weight: 600;
-  font-style: italic;
+  // font-style: italic;
 }
 
 .clickedTrend:hover {
@@ -160,13 +188,15 @@ h3 {
   border-right: 1.5px solid $lighter-color;
   flex: 1;
   height: 90vh;
+  position: relative;
   // margin-top: 40px;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 
   p {
+    display: block;
     // margin-bottom: 20px;
-    padding: 10px 0 10px 5px;
+    padding: 10px 0 10px 20px;
     color: $lighter-color;
     font-size: $body-size;
     border-radius: 4px;
@@ -219,11 +249,11 @@ h3 {
   font-weight: 600;
 }
 
-// .btn.active:hover {
-//   border: 1.5px solid $lighter-color;
-//   background-color: $darker-color;
-//   color: $lighter-color;
-// }
+.btn.active:hover {
+  border: 1.5px solid $lighter-color;
+  background-color: $darker-color;
+  color: $lighter-color;
+}
 
 .nonfictionBtn {
   font-family: $serif;
@@ -240,9 +270,34 @@ h3 {
   pointer-events: none;
 }
 
+.hoverCard {
+  position: absolute;
+  pointer-events: none;
+  // top: 0;
+  // left: 0;
+  width: auto;
+  height: 50px;
+  background: $lighter-color;
+  border: 1.5px solid $darker-color;
+
+  p {
+    padding: 10px 20px;
+    font-weight: bold;
+  }
+}
+
+.hoverCard.fiction {
+  font-family: $sans;
+}
+
+.hoverCard.nonfiction {
+  font-family: $serif;
+}
+
 .grid {
   padding-left: 80px;
-  padding-top: 20px;
+  padding-top: 40px;
+  padding-bottom: 200px;
 
   display: grid;
   grid-gap: 10px;
@@ -253,7 +308,6 @@ h3 {
   grid-column-end: 2;
 
   .card {
-    border: 1.5px solid $lighter-color;
     min-width: 150px;
     min-height: 229px;
     width: 100%;
@@ -277,11 +331,13 @@ h3 {
   .fiction {
     font-family: $sans, san-serif;
     font-weight: 600;
+    border: 1.5px solid $lighter-color;
   }
 
   .nonfiction {
     font-family: $serif, san-serif;
     font-weight: 600;
+    border: 1.5px solid $lighter-color;
   }
 
   .card:hover .bookTitle {

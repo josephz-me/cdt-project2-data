@@ -13,37 +13,37 @@ let apikey = "dPxVkGTEZ2h4KpgLTnwr6TziqqeoQspR";
 let table;
 let tables = [];
 let years = [
-  2006,
-  2007,
-  2008,
-  2009,
-  2011,
-  2012,
-  2013,
-  2014,
-  2015,
-  2016,
-  2017,
-  2018,
   2019,
+  2018,
+  2017,
+  2016,
+  2015,
+  2014,
+  2013,
+  2012,
+  2011,
+  2009,
+  2008,
+  2007,
+  2006,
 ];
 
 let trends = {};
 let trendsLength;
 let csvs = [
-  "2006.csv",
-  "2007.csv",
-  "2008.csv",
-  "2009.csv",
-  "2011.csv",
-  "2012.csv",
-  "2013.csv",
-  "2014.csv",
-  "2015.csv",
-  "2016.csv",
-  "2017.csv",
-  "2018.csv",
   "2019.csv",
+  "2018.csv",
+  "2017.csv",
+  "2016.csv",
+  "2015.csv",
+  "2014.csv",
+  "2013.csv",
+  "2012.csv",
+  "2011.csv",
+  "2009.csv",
+  "2008.csv",
+  "2007.csv",
+  "2006.csv",
 ];
 
 let keywordTable;
@@ -61,10 +61,9 @@ function preload() {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
+
   // convert books into data
   $.getJSON("books/books.json", (data) => {
-    // booksInYears.;
-
     //NONFICTION
     for (year in years) {
       // booksInYears.push(data)
@@ -76,12 +75,15 @@ function preload() {
   $.getJSON("books/book-description.json", (data) => {
     booksWithDescriptions = data;
     matchTrendtoBooks();
-    for (let i = 0; i < booksWithDescriptions.length; i++) {
-      let bookTitle = booksWithDescriptions[i].title;
-      let bookType = booksWithDescriptions[i].type;
-      let bookYear = booksWithDescriptions[i].year;
-      getRandomInt(1, 5, 2, bookYear);
-      createTiles(bookTitle, bookType, bookYear);
+    for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
+      // for (let i = 0; i < booksWithDescriptions.length; i++) {
+      if (booksWithDescriptions[i]) {
+        let bookTitle = booksWithDescriptions[i].title;
+        let bookType = booksWithDescriptions[i].type;
+        let bookYear = booksWithDescriptions[i].year;
+        getRandomInt(1, 5, 2, bookYear);
+        createTiles(bookTitle, bookType, bookYear);
+      }
     }
 
     for (year in years) {
@@ -119,6 +121,39 @@ const createTiles = (bookNames, bookType, bookYear) => {
   card.appendChild(content);
   $(".grid").append(card);
 
+  $(card).hover(
+    function (e) {
+      let bookYear = $(e.currentTarget).data("bookyear");
+      let bookName = $(e.currentTarget).data("bookname");
+
+      let hoverCard = document.createElement("div");
+      let hoverContent = document.createElement("p");
+      var currentMousePos = { x: -1, y: -1 };
+
+      $(hoverContent).text(bookYear);
+      hoverCard.appendChild(hoverContent);
+
+      let bookType;
+      $(card).hasClass("nonfiction")
+        ? (bookType = "nonfiction")
+        : (bookType = "fiction");
+      $(hoverCard).addClass(`hoverCard ${bookType}`);
+
+      $("body").append(hoverCard);
+
+      $(document).mousemove(function (event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+        $(".hoverCard").css({
+          top: `${currentMousePos.y + 30}px`,
+          left: `${currentMousePos.x + 30}px`,
+        });
+      });
+    },
+    function () {
+      $(".hoverCard").remove();
+    }
+  );
   card.onclick = function (e) {
     //div element just clicked
     let currentElement = e.path[1];
@@ -171,7 +206,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
       //IF ANOTHER CARD IS CLICKED
 
       if (previousDataBookName !== currentDataBookName) {
-        console.log("running");
         let bkPos = searchForBookYear(bkYear);
         let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
         let arrayPos = findBook(bkPos, searchNum, bkTitle);
@@ -214,7 +248,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
         previousDataBookName = $(currentElement).data("bookname");
         $(currentElement).append(expandedCard);
       } else if (previousDataBookName === currentDataBookName) {
-        console.log("same card clicked");
         $(currentElement).toggleClass("expand");
         $(".expanded-card").toggle();
       }
@@ -273,11 +306,14 @@ function setup() {
   csvToDict();
 
   //in each year
-  for (year in trends) {
-    trends[year].render();
+  // for (year in trends) {
+  //   trends[year].render();
+  // }
+  console.log(Object.keys(trends).length - 1);
+  for (let i = Object.keys(trends).length - 1; i >= 0; i--) {
+    // console.log();
+    trends[Object.keys(trends)[i]].render();
   }
-  $(".trendList").append("<br><br/>");
-  $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
 }
@@ -422,7 +458,7 @@ function csvToDict() {
     table = tables[h];
     let cols = table.findRow().table.columns;
     let dict = new Map(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
-    let key = new Map();
+
     for (let i = 0; i < cols.length; i++) {
       let trendNameArr = table.getColumn(cols[i]);
       let trendArr = [];
@@ -474,7 +510,7 @@ class TrendYear {
         $(trendElement).addClass(`trend`);
         $(trendElement).attr("data-trendname", trendName);
         $(trendElement).attr("data-trendyear", year);
-        $(trendElement).text(`— ${trendName}`);
+        $(trendElement).text(`${trendName}`);
         trendElement.addEventListener("click", showBooks);
         $(".trendList").append(trendElement);
       }
@@ -565,7 +601,6 @@ const showBooks = (e) => {
     }
   }
   let desiredElement = $(allBooks).not(".hide")[0];
-  console.log($(desiredElement).position());
   $(".bookList").animate(
     {
       scrollTop:
@@ -582,7 +617,7 @@ const showBooks = (e) => {
   let btn = document.getElementById("myBtn");
 
   // Get the <span> element that closes the modal
-  //   let span = document.getElementsByClassName("close")[0];
+  // let span = document.getElementsByClassName("close")[0];
   // span.onclick = function () {
   //   modal.style.display = "none";
   // };
