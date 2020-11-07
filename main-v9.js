@@ -107,6 +107,7 @@ const getRandomInt = (min, max, target) => {
 
 let previousExpandedCard;
 let previousCard;
+let previousDataBookName;
 const createTiles = (bookNames, bookType, bookYear) => {
   let card = document.createElement("div");
   var content = document.createElement("p");
@@ -119,69 +120,107 @@ const createTiles = (bookNames, bookType, bookYear) => {
   $(".grid").append(card);
 
   card.onclick = function (e) {
-    //find bookData
-    let divElement = e.path[1];
-    let bkTitle = divElement.textContent;
-    let bkYear = $(divElement).data("bookyear");
+    //div element just clicked
+    let currentElement = e.path[1];
+    //clicked book's data
+    let currentDataBookName = $(currentElement).data("bookname");
 
-    let bkPos = searchForBookYear(bkYear);
-    let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
-    let arrayPos = findBook(bkPos, searchNum, bkTitle);
-    let bkDescription = booksWithDescriptions[arrayPos].description;
-    let bkAuthor = booksWithDescriptions[arrayPos].author;
+    //IF NO PREVIOUS CARD EXISTS (first click)
+    if (!previousCard) {
+      let bkTitle = currentElement.textContent;
+      let bkYear = $(currentElement).data("bookyear");
+      let bkPos = searchForBookYear(bkYear);
+      let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
+      let arrayPos = findBook(bkPos, searchNum, bkTitle);
+      let bkDescription = booksWithDescriptions[arrayPos].description;
+      let bkAuthor = booksWithDescriptions[arrayPos].author;
+      let bkTitleElement = $(currentElement).find(".bookTitle");
+      //add category class
+      $(currentElement).hasClass("nonfiction")
+        ? (bkType = "nonfiction")
+        : (bkType = "fiction");
 
-    let bkTitleElement = $(divElement).find(".bookTitle");
-    $(bkTitleElement).addClass("hidden");
+      //create expanded card
+      $(currentElement).addClass("expand");
+      let expandedCard = document.createElement("div");
+      $(expandedCard).addClass("expanded-card");
 
-    //remove previous card
-    if (previousExpandedCard) {
-      $(previousExpandedCard).remove();
+      //Create all elements
+      var expandedTitle = document.createElement("h1");
+      $(expandedTitle).addClass("expanded-bookTitle inner");
+      $(expandedTitle).text(bkTitle);
+      var expandedAuthor = document.createElement("h2");
+      $(expandedAuthor).addClass("expanded-bookAuthor inner");
+      $(expandedAuthor).text(bkAuthor);
+      var expandedDescription = document.createElement("p");
+      $(expandedDescription).addClass("expanded-bookDescription inner");
+      $(expandedDescription).text(bkDescription);
+      expandedCard.appendChild(expandedTitle);
+      expandedCard.appendChild(expandedAuthor);
+      expandedCard.appendChild(expandedDescription);
+
+      //add card to screen
+      previousExpandedCard = expandedCard;
+      previousCard = currentElement;
+      previousDataBookName = $(currentElement).data("bookname");
+      $(currentElement).append(expandedCard);
     }
 
-    if (previousCard) {
-      $(previousCard).removeClass("expand");
-      let previousTitleElement = $(previousCard).find(".bookTitle");
-      $(previousTitleElement).removeClass("hidden");
+    //IF PREVIOUS CARD DOES EXIST
+    else if (previousCard) {
+      //IF ANOTHER CARD IS CLICKED
+
+      if (previousDataBookName !== currentDataBookName) {
+        console.log(currentDataBookName, previousDataBookName);
+        let bkTitle = currentElement.textContent;
+        let bkYear = $(currentElement).data("bookyear");
+        let bkPos = searchForBookYear(bkYear);
+        let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
+        let arrayPos = findBook(bkPos, searchNum, bkTitle);
+        let bkDescription = booksWithDescriptions[arrayPos].description;
+        let bkAuthor = booksWithDescriptions[arrayPos].author;
+        let bkTitleElement = $(currentElement).find(".bookTitle");
+        $(bkTitleElement).addClass("hidden");
+        $(previousCard).removeClass("expand");
+        let previousTitleElement = $(previousCard).find(".bookTitle");
+        $(previousTitleElement).removeClass("hidden");
+        $(previousExpandedCard).remove(); //remove previous card
+
+        //add category class
+        $(currentElement).hasClass("nonfiction")
+          ? (bkType = "nonfiction")
+          : (bkType = "fiction");
+
+        //create expanded card
+        $(currentElement).addClass("expand");
+        let expandedCard = document.createElement("div");
+        $(expandedCard).addClass("expanded-card");
+
+        //Create all elements
+        var expandedTitle = document.createElement("h1");
+        $(expandedTitle).addClass("expanded-bookTitle inner");
+        $(expandedTitle).text(bkTitle);
+        var expandedAuthor = document.createElement("h2");
+        $(expandedAuthor).addClass("expanded-bookAuthor inner");
+        $(expandedAuthor).text(bkAuthor);
+        var expandedDescription = document.createElement("p");
+        $(expandedDescription).addClass("expanded-bookDescription inner");
+        $(expandedDescription).text(bkDescription);
+        expandedCard.appendChild(expandedTitle);
+        expandedCard.appendChild(expandedAuthor);
+        expandedCard.appendChild(expandedDescription);
+
+        //add card to screen
+        previousExpandedCard = expandedCard;
+        previousCard = currentElement;
+        previousDataBookName = $(currentElement).data("bookname");
+        $(currentElement).append(expandedCard);
+      } else if (previousDataBookName === currentDataBookName) {
+        console.log("same card clicked");
+        $(currentElement).toggleClass("expand");
+        $(".expanded-card").toggle();
+      }
     }
-
-    $(divElement).hasClass("nonfiction")
-      ? (bkType = "nonfiction")
-      : (bkType = "fiction");
-
-    $(divElement).addClass("expand");
-
-    // let xPos = e.path[1].getBoundingClientRect().x;
-    // let yPos = e.path[1].getBoundingClientRect().y;
-
-    let expandedCard = document.createElement("div");
-    $(expandedCard).addClass("expanded-card");
-    // $(expandedCard).css({ top: `${yPos}px`, left: `${xPos}px` });
-
-    //title
-    var expandedTitle = document.createElement("h1");
-    $(expandedTitle).addClass("expanded-bookTitle inner");
-    $(expandedTitle).text(bkTitle);
-
-    //author
-    var expandedAuthor = document.createElement("h2");
-    $(expandedAuthor).addClass("expanded-bookAuthor inner");
-    $(expandedAuthor).text(bkAuthor);
-
-    //description
-    var expandedDescription = document.createElement("p");
-    $(expandedDescription).addClass("expanded-bookDescription inner");
-    $(expandedDescription).text(bkDescription);
-
-    expandedCard.appendChild(expandedTitle);
-    expandedCard.appendChild(expandedAuthor);
-    expandedCard.appendChild(expandedDescription);
-
-    //add card to screen
-    previousExpandedCard = expandedCard;
-    previousCard = divElement;
-
-    // console.log(previousExpandedCard);
-    $(divElement).append(expandedCard);
   };
 };
 
@@ -200,6 +239,7 @@ const findBook = (bkPos, searchNum, bkTitle) => {
     }
   }
 };
+
 const searchForBookYear = (bkYear) => {
   let firstIndex = 0,
     lastIndex = booksWithDescriptions.length - 1,
@@ -324,9 +364,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
   });
 });
 
-$(window).resize(() => {
-  $(".expanded-card").remove();
-});
+// $(window).resize(() => {
+//   $(".expanded-card").remove();
+// });
 
 const scrollToYear = (e) => {
   let year = $(e).data("year");
@@ -426,7 +466,7 @@ class TrendYear {
         "</h1>"
     );
     for (let key of this.vals) {
-      $(".trendList").append("<h3>" + key[0] + "</h3>");
+      $(".trendList").append("<h3 class='trendCategory'>" + key[0] + "</h3>");
       for (let value in key[1]) {
         //actual bookname
         // $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
@@ -509,7 +549,6 @@ const showBooks = (e) => {
       desiredBookList.push(desiredBook);
     }
   }
-  console.log(`${desiredBookList.length} have been found!`);
 
   //go through very book
   for (let i = 0; i < allBooks.length; i++) {
@@ -549,4 +588,7 @@ const showBooks = (e) => {
   };
   $(modal).find("p").text(`${desiredBookList.length} Related Books`);
   modal.style.display = "block";
+  setTimeout(() => {
+    $(modal).fadeOut(1000);
+  }, 3000);
 };

@@ -124,6 +124,10 @@ h3 {
   -ms-overflow-style: none;
 }
 
+.trendCategory {
+  opacity: 50%;
+}
+
 .trendList::-webkit-scrollbar {
   display: none;
 }
@@ -314,6 +318,7 @@ h3 {
 .expanded-bookAuthor,
 .expanded-bookDescription {
   color: $darker-color;
+  pointer-events: none;
 }
 
 .expanded-bookTitle {
@@ -371,7 +376,7 @@ h3 {
   z-index: 1; /* Sit on top */
   padding-top: 20px; /* Location of the box */
   top: 0;
-  width: 200px; /* Full width */
+  width: auto; /* Full width */
   // height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   left: 50%;
@@ -382,7 +387,7 @@ h3 {
 .modal-content {
   background-color: $lighter-color;
   margin: auto;
-  padding: 10px;
+  padding: 10px 20px 10px 20px;
   border: 1px solid #888;
   width: 100%;
   animation-name: animatetop;
@@ -410,11 +415,11 @@ h3 {
 
 @keyframes animatetop {
   from {
-    top: 300px;
+    // top: 300px;
     opacity: 0;
   }
   to {
-    top: 0;
+    // top: 0;
     opacity: 1;
   }
 }
