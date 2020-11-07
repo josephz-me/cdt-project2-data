@@ -30,7 +30,6 @@ body {
 
 .label {
   height: 100%;
-  width: 60px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -42,7 +41,10 @@ body {
   align-items: center;
 }
 .label p {
+  color: #d3ffea;
   transform: rotate(-90deg);
+  font-family: "noto-sans";
+  font-weight: 600;
 }
 
 h1 {
@@ -123,6 +125,7 @@ h3 {
 .bookList {
   flex: 3;
   height: 90vh;
+  position: relative;
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
@@ -204,7 +207,7 @@ h3 {
 }
 
 .grid {
-  padding-left: 60px;
+  padding-left: 80px;
   padding-top: 20px;
   display: grid;
   grid-gap: 10px;

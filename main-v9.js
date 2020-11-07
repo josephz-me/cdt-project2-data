@@ -124,11 +124,11 @@ const createTiles = (bookNames, bookType, bookYear) => {
     let currentElement = e.path[1];
     //clicked book's data
     let currentDataBookName = $(currentElement).data("bookname");
+    let bkTitle = currentElement.textContent;
+    let bkYear = $(currentElement).data("bookyear");
 
     //IF NO PREVIOUS CARD EXISTS (first click)
     if (!previousCard) {
-      let bkTitle = currentElement.textContent;
-      let bkYear = $(currentElement).data("bookyear");
       let bkPos = searchForBookYear(bkYear);
       let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
       let arrayPos = findBook(bkPos, searchNum, bkTitle);
@@ -171,9 +171,7 @@ const createTiles = (bookNames, bookType, bookYear) => {
       //IF ANOTHER CARD IS CLICKED
 
       if (previousDataBookName !== currentDataBookName) {
-        console.log(currentDataBookName, previousDataBookName);
-        let bkTitle = currentElement.textContent;
-        let bkYear = $(currentElement).data("bookyear");
+        console.log("running");
         let bkPos = searchForBookYear(bkYear);
         let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
         let arrayPos = findBook(bkPos, searchNum, bkTitle);
@@ -557,7 +555,6 @@ const showBooks = (e) => {
       let found = false;
       for (book in desiredBookList) {
         if (allBooks[i] === desiredBookList[book]) {
-          // $(allBooks[i]).addClass("hide");
           found = true;
           break;
         }
@@ -567,6 +564,15 @@ const showBooks = (e) => {
       }
     }
   }
+  let desiredElement = $(allBooks).not(".hide")[0];
+  console.log($(desiredElement).position());
+  $(".bookList").animate(
+    {
+      scrollTop:
+        $(".bookList").scrollTop() + $(desiredElement).position().top + -50,
+    },
+    1000
+  );
 
   //MODAL CODE
   // Get the modal

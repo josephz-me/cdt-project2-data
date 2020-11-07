@@ -44,7 +44,6 @@ body {
 
 .label {
   height: 100%;
-  width: $left-label-width;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -56,8 +55,11 @@ body {
   align-items: center;
 
   p {
+    color: $lighter-color;
+    // text-transform: uppercase;
     transform: rotate(-90deg);
-
+    font-family: $sans;
+    font-weight: 600;
     // vertical-align: middle;
   }
 }
@@ -148,6 +150,7 @@ h3 {
 .bookList {
   flex: 3;
   height: 90vh;
+  position: relative;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -238,8 +241,7 @@ h3 {
 }
 
 .grid {
-  // gap: 10px;
-  padding-left: 60px;
+  padding-left: 80px;
   padding-top: 20px;
 
   display: grid;
