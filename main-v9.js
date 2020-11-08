@@ -52,6 +52,8 @@ let booksWithDescriptions;
 let nonFicPerYear = {};
 let FicPerYear = {};
 
+let twinTextWords = {};
+
 function preload() {
   //load trend-keywords
   keywordTable = loadTable("trends/trend-keywords.csv", "csv");
@@ -92,6 +94,13 @@ function preload() {
       );
       firstYearElement.id = `${years[year]}`;
     }
+    $.getJSON("books/twinTextBooks.json", (books) => {
+      for (book in books) {
+        let bookTitle = books[book].title;
+        let classifiers = books[book].classifiers;
+        twinTextWords[bookTitle] = classifiers;
+      }
+    });
   });
 }
 
@@ -126,18 +135,31 @@ const createTiles = (bookNames, bookType, bookYear) => {
       let bookYear = $(e.currentTarget).data("bookyear");
       let bookName = $(e.currentTarget).data("bookname");
 
-      let hoverCard = document.createElement("div");
-      let hoverContent = document.createElement("p");
-      var currentMousePos = { x: -1, y: -1 };
-
-      $(hoverContent).text(bookYear);
-      hoverCard.appendChild(hoverContent);
-
       let bookType;
       $(card).hasClass("nonfiction")
         ? (bookType = "nonfiction")
         : (bookType = "fiction");
+
+      let hoverCard = document.createElement("div");
+      let hoverCategory = document.createElement("p");
+      let hoverClassifiers = document.createElement("p");
+      var currentMousePos = { x: -1, y: -1 };
       $(hoverCard).addClass(`hoverCard ${bookType}`);
+      $(hoverCategory).addClass(`hoverCategory`);
+      $(hoverClassifiers).addClass(`hoverClassifiers`);
+
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+
+      $(hoverCategory).text(
+        "Keywords (" + capitalizeFirstLetter(bookType) + ")"
+      );
+      $(hoverClassifiers).text(
+        twinTextWords[bookName].split(",", 5).join(", ")
+      );
+      hoverCard.appendChild(hoverCategory);
+      hoverCard.appendChild(hoverClassifiers);
 
       if ($(card).hasClass("hide") || $(card).hasClass("navFilterHide")) {
         $(hoverCard).addClass("hoverHide");
@@ -171,7 +193,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
   );
   card.onclick = function (e) {
     //div element just clicked
-    // console.log(e.composedPath());
     let currentElement = e.composedPath()[1];
     //clicked book's data
     let currentDataBookName = $(currentElement).data("bookname");
@@ -180,7 +201,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
     //IF NO PREVIOUS CARD EXISTS (first click)
     if (!previousCard) {
       //THE SHITTY HEAVY COMPUTATION
-      console.log("running");
       let bkPos = searchForBookYear(bkYear);
       let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
       let arrayPos = findBook(bkPos, searchNum, bkTitle);
@@ -243,9 +263,7 @@ const createTiles = (bookNames, bookType, bookYear) => {
       let URL = $(".expanded-bookURL")[0];
 
       if (previousDataBookName !== currentDataBookName) {
-        console.log(e.composedPath()[0], URL);
         if (e.composedPath()[0] === URL) {
-          console.log("matched");
           return;
         } else {
           // THE SHITTY HEAVY COMPUTATION
@@ -308,7 +326,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
           $(currentElement).append(expandedCard);
         }
       } else if (previousDataBookName === currentDataBookName) {
-        console.log("ran!");
         $(currentElement).toggleClass("expand");
         $(".expanded-card").toggle();
       }
@@ -662,7 +679,6 @@ const showBooks = (e) => {
   let desiredBookList = [];
 
   if (previousDiv === selectedDiv) {
-    console.log("toggled");
     $(".hide").toggleClass("hide");
     $(selectedDiv).toggleClass("clickedTrend");
     previousDiv = "";
