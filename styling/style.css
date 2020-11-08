@@ -95,21 +95,39 @@ h3 {
   margin-right: 60px;
   padding: 20px 0 20px 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
+  grid-template-columns: 1fr auto 1fr;
   z-index: 1000;
   background-color: #182938;
   font-family: "noto-sans";
-}
-.nav h1 {
-  margin-bottom: 0px;
+  align-items: center;
+  color: #ffbb7c;
 }
 .nav .left {
-  grid-column-start: 1;
-  justify-items: flex-start;
+  grid-column: 1;
+  justify-self: start;
+}
+.nav .left a {
+  font-weight: 600;
+  cursor: pointer;
+}
+.nav .left a:hover {
+  opacity: 30%;
+}
+.nav .logo {
+  text-transform: uppercase;
+  grid-column: 2;
+  justify-self: center;
+  font-size: 24px;
+  font-family: "noto-serif";
+  margin-bottom: 0;
+}
+.nav .logo span {
+  font-family: "noto-sans";
 }
 .nav .right {
-  grid-column-start: 3;
+  grid-column: 3;
+  justify-self: end;
+  align-self: center;
 }
 
 .nav-wrapper {
@@ -188,6 +206,7 @@ h3 {
   background-color: #182938;
   cursor: pointer;
   color: #ffbb7c;
+  font-size: 14px;
 }
 
 .nonfictionBtn {
@@ -269,7 +288,6 @@ h3 {
   grid-template-columns: repeat(auto-fill, 159px);
   grid-column-start: 0;
   grid-column-end: 2;
-  /* The "hide" class is added to the filtered elements */
 }
 .grid .card {
   min-width: 150px;
@@ -284,7 +302,6 @@ h3 {
 .grid .card .bookTitle {
   text-align: center;
   vertical-align: middle;
-  text-transform: uppercase;
   color: #ffbb7c;
   display: table-cell;
   padding: 10px;
@@ -311,41 +328,73 @@ h3 {
   grid-row: span 2;
   background: #ffbb7c;
 }
-.grid .hide {
-  opacity: 30%;
-}
-.grid .navFilterHide {
+
+.navFilterHide {
   opacity: 30%;
 }
 
+/* The "hide" class is added to the filtered elements */
+.hide {
+  opacity: 30%;
+}
+
+.hoverHide {
+  background: #5f574f;
+  color: #232d3a;
+}
+
+.expanded-bookYear,
 .expanded-bookTitle,
 .expanded-bookAuthor,
-.expanded-bookDescription {
+.expanded-bookDescription,
+.expanded-bookYear {
   color: #182938;
   pointer-events: none;
 }
 
+.expanded-bookYear {
+  font-size: 14px;
+  font-family: "noto-serif";
+  font-style: regular;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
 .expanded-bookTitle {
-  font-size: 24px;
+  margin-top: 0;
+  padding-top: 0;
+  font-size: 28px;
   font-family: "noto-serif";
   font-style: italic;
   font-weight: 600;
   margin-bottom: 0px;
+  line-height: 2rem;
 }
 
 .expanded-bookAuthor {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
   font-family: "noto-serif";
   font-weight: 400;
 }
 
 .expanded-bookDescription {
-  font-size: 16px;
+  font-size: 14px;
   vertical-align: bottom;
   font-family: "noto-serif";
   font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.expanded-bookURL {
+  font-size: 14px;
+  vertical-align: bottom;
+  font-family: "noto-serif";
+  font-weight: 400;
+  color: #182938;
+  text-decoration: underline;
+  font-style: italic;
 }
 
 .hidden {
@@ -362,11 +411,11 @@ h3 {
   position: absolute;
   top: 0px;
   left: 0px;
-  padding: 20px;
+  padding: 10px 20px;
   background: #ffbb7c;
-  width: 328px;
-  height: 488px;
-  z-index: 10;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 /* The Modal (background) */
@@ -379,9 +428,9 @@ h3 {
   /* Stay in place */
   z-index: 1;
   /* Sit on top */
-  padding-top: 20px;
+  padding-bottom: 30px;
   /* Location of the box */
-  top: 0;
+  bottom: 0;
   width: auto;
   /* Full width */
   overflow: auto;
@@ -402,22 +451,69 @@ h3 {
   font-family: "noto-sans";
   color: #182938;
   font-weight: 600;
-  font-size: 14px;
+  text-transform: uppercase;
+  font-size: 16px;
 }
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
+  color: #182938;
   float: right;
-  font-size: 28px;
+  font-size: 60px;
   font-weight: bold;
+  line-height: 50px;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
+  opacity: 0.3;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* The Modal (background) */
+.aboutModal {
+  z-index: 1010;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  top: 0;
+  left: 0;
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content */
+.about-modal-content {
+  background-color: #ffbb7c;
+  margin: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px 10px 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 80%;
+  animation-name: animatetop;
+  animation-duration: 0.2s;
+  font-family: "noto-serif";
+  color: #182938;
+  font-weight: 50;
+  font-size: 16px;
 }
 
 @keyframes animatetop {
