@@ -63,7 +63,7 @@ body {
   background: $darker-color;
 }
 
-.label {
+.leftLabel {
   height: 100%;
   position: fixed;
   z-index: 1;
@@ -220,7 +220,7 @@ h3 {
   p {
     display: block;
     // margin-bottom: 20px;
-    padding: 10px 0 10px 20px;
+    padding: 4px 0 4px 20px;
     color: $lighter-color;
     font-size: $body-size;
     border-radius: 4px;
@@ -337,7 +337,6 @@ h3 {
       color: $lighter-color;
       display: table-cell;
       padding: 10px;
-      pointer-events: none;
     }
     transition: 0.1s transform;
   }

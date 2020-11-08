@@ -47,7 +47,7 @@ body {
   background: #182938;
 }
 
-.label {
+.leftLabel {
   height: 100%;
   position: fixed;
   z-index: 1;
@@ -59,7 +59,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-.label p {
+.leftLabel p {
   color: #ffbb7c;
   transform: rotate(-90deg);
   font-family: "noto-sans";
@@ -192,7 +192,7 @@ h3 {
 }
 .trendList p {
   display: block;
-  padding: 10px 0 10px 20px;
+  padding: 4px 0 4px 20px;
   color: #ffbb7c;
   font-size: 18px;
   border-radius: 4px;

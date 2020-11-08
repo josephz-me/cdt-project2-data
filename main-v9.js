@@ -139,13 +139,19 @@ const createTiles = (bookNames, bookType, bookYear) => {
         : (bookType = "fiction");
       $(hoverCard).addClass(`hoverCard ${bookType}`);
 
-      $(card).hasClass("hide")
-        ? $(hoverCard).addClass("hoverHide")
-        : $(hoverCard).removeClass("hoverHide");
+      if ($(card).hasClass("hide") || $(card).hasClass("navFilterHide")) {
+        $(hoverCard).addClass("hoverHide");
+      } else {
+        $(hoverCard).removeClass("hoverHide");
+      }
 
-      $(card).hasClass("navFilterHide")
-        ? $(hoverCard).addClass("hoverHide")
-        : $(hoverCard).removeClass("hoverHide");
+      // $(card).hasClass("hide")
+      //   ? $(hoverCard).addClass("hoverHide")
+      //   : $(hoverCard).removeClass("hoverHide");
+
+      // $(card).hasClass("navFilterHide")
+      //   ? $(hoverCard).addClass("hoverHide")
+      //   : $(hoverCard).removeClass("hoverHide");
       $(hoverCard).addClass(`hoverCard ${bookType}`);
 
       $("body").append(hoverCard);
@@ -174,6 +180,7 @@ const createTiles = (bookNames, bookType, bookYear) => {
     //IF NO PREVIOUS CARD EXISTS (first click)
     if (!previousCard) {
       //THE SHITTY HEAVY COMPUTATION
+      console.log("running");
       let bkPos = searchForBookYear(bkYear);
       let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
       let arrayPos = findBook(bkPos, searchNum, bkTitle);
@@ -236,8 +243,8 @@ const createTiles = (bookNames, bookType, bookYear) => {
       let URL = $(".expanded-bookURL")[0];
 
       if (previousDataBookName !== currentDataBookName) {
+        console.log(e.composedPath()[0], URL);
         if (e.composedPath()[0] === URL) {
-          // return;
           console.log("matched");
           return;
         } else {
