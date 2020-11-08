@@ -337,6 +337,7 @@ h3 {
       color: $lighter-color;
       display: table-cell;
       padding: 10px;
+      pointer-events: none;
     }
     transition: 0.1s transform;
   }

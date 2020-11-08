@@ -165,7 +165,8 @@ const createTiles = (bookNames, bookType, bookYear) => {
   );
   card.onclick = function (e) {
     //div element just clicked
-    let currentElement = e.path[1];
+    // console.log(e.composedPath());
+    let currentElement = e.composedPath()[1];
     //clicked book's data
     let currentDataBookName = $(currentElement).data("bookname");
     let bkTitle = currentElement.textContent;
@@ -235,7 +236,7 @@ const createTiles = (bookNames, bookType, bookYear) => {
       let URL = $(".expanded-bookURL")[0];
 
       if (previousDataBookName !== currentDataBookName) {
-        if (e.path[0] === URL) {
+        if (e.composedPath()[0] === URL) {
           // return;
           console.log("matched");
           return;
@@ -639,7 +640,7 @@ const showBooks = (e) => {
   $(".clickedTrend").removeClass("clickedTrend");
 
   // add active state to just clicked element
-  let selectedDiv = e.path[0];
+  let selectedDiv = e.composedPath()[0];
   $(selectedDiv).addClass("clickedTrend");
 
   //show all hidden elements
