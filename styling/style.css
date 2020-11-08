@@ -124,6 +124,10 @@ h3 {
 .nav .logo span {
   font-family: "noto-sans";
 }
+.nav .logo:hover {
+  opacity: 30%;
+  cursor: pointer;
+}
 .nav .right {
   grid-column: 3;
   justify-self: end;
@@ -207,6 +211,8 @@ h3 {
   cursor: pointer;
   color: #ffbb7c;
   font-size: 14px;
+  opacity: 30%;
+  font-weight: 600;
 }
 
 .nonfictionBtn {
@@ -218,30 +224,14 @@ h3 {
   margin-right: 10px;
 }
 
-/* Add a light grey background on mouse-over */
-.btn:hover {
-  background-color: #ffbb7c;
-  color: #182938;
-  border: 1.5px solid #ffbb7c;
-}
-
 /* Add a dark background to the active button */
 .btn.active {
-  background-color: #ffbb7c;
-  color: #182938;
-  font-weight: 600;
-}
-
-.btn:active {
-  background-color: #182938;
   color: #ffbb7c;
-  font-weight: 600;
+  opacity: 1;
 }
 
 .btn.active:hover {
-  border: 1.5px solid #ffbb7c;
-  background-color: #182938;
-  color: #ffbb7c;
+  opacity: 30%;
 }
 
 .nonfictionBtn {
@@ -352,9 +342,24 @@ h3 {
   pointer-events: none;
 }
 
+.fiction .expanded-bookYear,
+.fiction .expanded-bookTitle,
+.fiction .expanded-bookAuthor,
+.fiction .expanded-bookDescription,
+.fiction .expanded-bookURL {
+  font-family: "noto-sans";
+}
+
+.nonfiction .expanded-bookYear,
+.nonfiction .expanded-bookTitle,
+.nonfiction .expanded-bookAuthor,
+.nonfiction .expanded-bookDescription,
+.nonfiction .expanded-bookURL {
+  font-family: "noto-serif";
+}
+
 .expanded-bookYear {
   font-size: 14px;
-  font-family: "noto-serif";
   font-style: regular;
   font-weight: 400;
   margin-bottom: 20px;
@@ -364,7 +369,6 @@ h3 {
   margin-top: 0;
   padding-top: 0;
   font-size: 28px;
-  font-family: "noto-serif";
   font-style: italic;
   font-weight: 600;
   margin-bottom: 0px;
@@ -375,14 +379,12 @@ h3 {
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 20px;
-  font-family: "noto-serif";
   font-weight: 400;
 }
 
 .expanded-bookDescription {
   font-size: 14px;
   vertical-align: bottom;
-  font-family: "noto-serif";
   font-weight: 400;
   margin-bottom: 30px;
 }
@@ -390,7 +392,6 @@ h3 {
 .expanded-bookURL {
   font-size: 14px;
   vertical-align: bottom;
-  font-family: "noto-serif";
   font-weight: 400;
   color: #182938;
   text-decoration: underline;
@@ -508,8 +509,6 @@ h3 {
   border: 1px solid #888;
   width: 80%;
   height: 80%;
-  animation-name: animatetop;
-  animation-duration: 0.2s;
   font-family: "noto-serif";
   color: #182938;
   font-weight: 50;

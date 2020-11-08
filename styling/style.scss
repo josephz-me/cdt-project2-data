@@ -149,6 +149,11 @@ h3 {
       font-family: $sans;
     }
   }
+
+  .logo:hover {
+    opacity: 30%;
+    cursor: pointer;
+  }
   .right {
     grid-column: 3;
     // display: inline-block;
@@ -237,6 +242,8 @@ h3 {
   cursor: pointer;
   color: $lighter-color;
   font-size: 14px;
+  opacity: 30%;
+  font-weight: 600;
 }
 
 .nonfictionBtn {
@@ -248,30 +255,17 @@ h3 {
   margin-right: 10px;
 }
 
-/* Add a light grey background on mouse-over */
-.btn:hover {
-  background-color: $lighter-color;
-  color: $darker-color;
-  border: 1.5px solid $lighter-color;
-}
-
 /* Add a dark background to the active button */
 .btn.active {
-  background-color: $lighter-color;
-  color: $darker-color;
-  font-weight: 600;
-}
-
-.btn:active {
-  background-color: $darker-color;
+  // background-color: $lighter-color;
   color: $lighter-color;
-  font-weight: 600;
+  opacity: 1;
 }
 
 .btn.active:hover {
-  border: 1.5px solid $lighter-color;
-  background-color: $darker-color;
-  color: $lighter-color;
+  // border: 1.5px solid $darker-color;
+  opacity: 30%;
+  // background-color: $lighter-color;
 }
 
 .nonfictionBtn {
@@ -403,10 +397,28 @@ h3 {
   color: $darker-color;
   pointer-events: none;
 }
+.fiction {
+  .expanded-bookYear,
+  .expanded-bookTitle,
+  .expanded-bookAuthor,
+  .expanded-bookDescription,
+  .expanded-bookURL {
+    font-family: $sans;
+  }
+}
 
+.nonfiction {
+  .expanded-bookYear,
+  .expanded-bookTitle,
+  .expanded-bookAuthor,
+  .expanded-bookDescription,
+  .expanded-bookURL {
+    font-family: $serif;
+  }
+}
 .expanded-bookYear {
   font-size: 14px;
-  font-family: $serif;
+
   font-style: regular;
   font-weight: 400;
   margin-bottom: 20px;
@@ -416,7 +428,7 @@ h3 {
   margin-top: 0;
   padding-top: 0;
   font-size: 28px;
-  font-family: $serif;
+
   font-style: italic;
   font-weight: 600;
   margin-bottom: 0px;
@@ -427,14 +439,14 @@ h3 {
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 20px;
-  font-family: $serif;
+
   font-weight: 400;
 }
 
 .expanded-bookDescription {
   font-size: 14px;
   vertical-align: bottom;
-  font-family: $serif;
+
   font-weight: 400;
   margin-bottom: 30px;
 }
@@ -442,7 +454,7 @@ h3 {
 .expanded-bookURL {
   font-size: 14px;
   vertical-align: bottom;
-  font-family: $serif;
+
   font-weight: 400;
   color: $darker-color;
   text-decoration: underline;
@@ -550,8 +562,8 @@ h3 {
   border: 1px solid #888;
   width: 80%;
   height: 80%;
-  animation-name: animatetop;
-  animation-duration: 0.2s;
+  // animation-name: animatetop;
+  // animation-duration: 0.2s;
   font-family: $serif;
   color: $darker-color;
   font-weight: 50;

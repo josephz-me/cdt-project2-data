@@ -578,6 +578,7 @@ function filterSelection(c) {
   let bookType = $(c).data("type");
   $(c).toggleClass("active");
   let allBooks = $(".card");
+
   for (let i = 0; i < allBooks.length; i++) {
     if (typeof allBooks[i] === "object") {
       if (!$(allBooks[i]).hasClass(bookType)) {
@@ -585,6 +586,26 @@ function filterSelection(c) {
       }
     }
   }
+
+  let bookNum = $(`.${bookType}.card`).length;
+
+  //MODAL CODE
+  let modal = document.getElementById("myModal");
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  if ($(c).hasClass("active")) {
+    $(modal).find("p").text(`${bookNum} ${bookType} books shown`);
+  } else {
+    $(modal).find("p").text(`${bookNum} ${bookType} books hidden`);
+  }
+  modal.style.display = "block";
+  setTimeout(() => {
+    $(modal).fadeOut(200);
+  }, 3000);
 }
 
 //create script that creates Matches.json file
@@ -612,76 +633,86 @@ const matchTrendtoBooks = () => {
   }
 };
 
+let previousDiv;
 const showBooks = (e) => {
+  //start fresh
   $(".clickedTrend").removeClass("clickedTrend");
+
+  // add active state to just clicked element
   let selectedDiv = e.path[0];
   $(selectedDiv).addClass("clickedTrend");
 
+  //show all hidden elements
   let allBooks = $(".card");
   allBooks.removeClass("hide");
 
-  let desiredDiv = e.path[0];
-  let trendName = $(desiredDiv).attr("data-trendname");
-  let relatedBooks = matched[trendName];
-  let trendYear = $(desiredDiv).data("trendyear");
+  //get trendname of selectedDiv
+  let trendName = $(selectedDiv).attr("data-trendname");
 
+  let relatedBooks = matched[trendName];
+  let trendYear = $(selectedDiv).data("trendyear");
   let desiredBookList = [];
 
-  for (book in relatedBooks) {
-    let desiredBook = $(
-      `div[data-bookname="${relatedBooks[book]}"][data-bookyear="${trendYear}"]`
-    )[0];
+  if (previousDiv === selectedDiv) {
+    console.log("toggled");
+    $(".hide").toggleClass("hide");
+    $(selectedDiv).toggleClass("clickedTrend");
+    previousDiv = "";
+  } else {
+    for (book in relatedBooks) {
+      let desiredBook = $(
+        `div[data-bookname="${relatedBooks[book]}"][data-bookyear="${trendYear}"]`
+      )[0];
 
-    if (typeof desiredBook !== "undefined") {
-      desiredBookList.push(desiredBook);
+      if (typeof desiredBook !== "undefined") {
+        desiredBookList.push(desiredBook);
+      }
     }
-  }
 
-  //go through very book
-  for (let i = 0; i < allBooks.length; i++) {
-    if (typeof allBooks[i] === "object") {
-      // go through every positive book and chec if allBooks[i] matches
-      let found = false;
-      for (book in desiredBookList) {
-        if (allBooks[i] === desiredBookList[book]) {
-          found = true;
-          break;
+    //go through very book
+    for (let i = 0; i < allBooks.length; i++) {
+      if (typeof allBooks[i] === "object") {
+        // go through every positive book and chec if allBooks[i] matches
+        let found = false;
+        for (book in desiredBookList) {
+          if (allBooks[i] === desiredBookList[book]) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          $(allBooks[i]).addClass("hide");
         }
       }
-      if (!found) {
-        $(allBooks[i]).addClass("hide");
+    }
+    let desiredElement = $(allBooks).not(".hide")[0];
+    $(".bookList").animate(
+      {
+        scrollTop:
+          $(".bookList").scrollTop() + $(desiredElement).position().top + -50,
+      },
+      1000
+    );
+
+    //MODAL CODE
+
+    let modal = document.getElementById("myModal");
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
       }
+    };
+    if (desiredBookList.length > 1) {
+      $(modal).find("p").text(`${desiredBookList.length} Related Books`);
+    } else {
+      $(modal).find("p").text(`${desiredBookList.length} Related Book`);
     }
+    modal.style.display = "block";
+    setTimeout(() => {
+      $(modal).fadeOut(200);
+    }, 3000);
+    previousDiv = selectedDiv;
   }
-  let desiredElement = $(allBooks).not(".hide")[0];
-  $(".bookList").animate(
-    {
-      scrollTop:
-        $(".bookList").scrollTop() + $(desiredElement).position().top + -50,
-    },
-    1000
-  );
-
-  //MODAL CODE
-  // Get the modal
-  let modal = document.getElementById("myModal");
-
-  // Get the <span> element that closes the modal
-  // let span = document.getElementsByClassName("close")[0];
-  // span.onclick = function () {
-  //   modal.style.display = "none";
-  // };
-
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
-  $(modal).find("p").text(`${desiredBookList.length} Related Books`);
-  modal.style.display = "block";
-  setTimeout(() => {
-    $(modal).fadeOut(1000);
-  }, 3000);
 };
 
 const openAbout = () => {
@@ -701,4 +732,15 @@ const openAbout = () => {
   };
   // $(modal).find("p").text(`${desiredBookList.length} Related Books`);
   modal.style.display = "block";
+};
+
+const toTop = () => {
+  let desiredElement = $(`#2019`);
+  $(".bookList").animate(
+    {
+      scrollTop:
+        $(".bookList").scrollTop() + desiredElement.position().top + -50,
+    },
+    1000
+  );
 };
