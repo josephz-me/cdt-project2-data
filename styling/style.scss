@@ -338,7 +338,7 @@ h3 {
 
     .bookTitle {
       text-align: center;
-      vertical-align: middle;
+      // vertical-align: middle;
       // text-transform: uppercase;
       color: $lighter-color;
       display: table-cell;
@@ -526,7 +526,7 @@ h3 {
 /* The Close Button */
 .close {
   color: $darker-color;
-  float: right;
+  // float: right;
   font-size: 60px;
   font-weight: bold;
   line-height: 50px;
@@ -571,10 +571,27 @@ h3 {
   height: 80%;
   // animation-name: animatetop;
   // animation-duration: 0.2s;
-  font-family: $serif;
+  font-family: $sans;
   color: $darker-color;
   font-weight: 50;
   font-size: 16px;
+  overflow: scroll;
+}
+
+.about-modal-content:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.credits {
+  font-family: $serif;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 20px;
 }
 
 @keyframes animatetop {

@@ -76,33 +76,29 @@ sass --watch style.scss:style.css
     <div id="aboutModal" class="aboutModal">
       <!-- Modal content -->
       <div class="about-modal-content">
-        <span class="close">&times;</span>
-        <p>
-          What were Americans reading — during a pandemic, a financial crisis,
-          after an election? Do books serve as an escape from the present, a
-          source of information and education, or comfort? Do what Americans
-          search on the web reflect what books they read? And, how might we
-          foster an environment that encourages reading beyond the headlines? We
-          explore these questions through a synthesis of data from Google
-          Trends, New York Times Bestseller Lists, Google Books API, and Text
-          Classification API. Our process of designing the relationship between
-          current events and books began with a decision on the sources of data
-          that convey what books people are reading and searching on the web. We
-          created datasets from Google’s yearly trends and the New York Times
-          bestseller lists of fiction and non-fiction books from 2006 to
-          2019 — from the earliest publication of yearly data from Google trends
-          in the U.S. to the latest publication of yearly data from NYT
-          bestseller lists. We retrieved and stored additional information using
-          Google Books API, including author names and book descriptions. We
-          created an additional layer of information by generating classifying
-          keywords from each book using Text Classification API. The integration
-          required interpretations of data considering the multiple layers of
-          interaction. The mapping of trends to books was based on time and
-          relatedness: we created an array of related words for each trend and
-          returned books in which the trend and related words appeared in the
-          descriptions. The result fuses different sources of data to enable
-          users to explore the content by time, then by keywords.
-        </p>
+        <div class="column">
+          <h4>About</h4>
+          <p>
+            What were Americans reading  during a pandemic, a financial crisis, after an election? Do books serve as an escape from the present, a source of information and education, or comfort? Do what Americans search on the web reflect what books they read? And, how might we foster an environment that encourages reading beyond the headlines?
+            <br/><br/>
+            We explore these questions through a synthesis of data from Google Trends, New York Times Bestseller Lists, Google Books API, and Text Classification API.
+            <br/><br/><br/><br/><br/>
+            <span class='credits'>
+              Alice Fang<br/>
+              Taery Kim<br/>
+              Joseph Zhang<br/>
+            <br/>
+            Computational Design Thinking<br/>
+            with Kyuha Shim | Fall 2020</span>
+
+          </p>
+        </div>
+        <div class="column">
+          <h4>Process</h4>
+          <p>Our process of designing the relationship between current events and books began with a decision on the sources of data that convey what books people are reading and searching on the web. We created datasets from Google’s yearly trends and the New York Times bestseller lists of fiction and non-fiction books from 2006 to 2019 — from the earliest publication of yearly data from Google trends in the U.S. to the latest publication of yearly data from NYT bestseller lists. We retrieved and stored additional information using Google Books API, including author names and book descriptions. We created an additional layer of information by generating classifying keywords from each book using Text Classification API. <br><br>
+
+            The integration required interpretations of data considering the multiple layers of interaction. The mapping of trends to books was based on time and relatedness: we created an array of related words for each trend and returned books in which the trend and related words appeared in the descriptions. The result fuses different sources of data to enable users to explore the content by time, then by keywords.</p>
+        </div>
       </div>
     </div>
   </body>

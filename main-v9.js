@@ -127,6 +127,8 @@ const createTiles = (bookNames, bookType, bookYear) => {
   $(card).attr("data-bookName", bookNames);
   $(content).addClass("bookTitle");
   $(content).text(bookNames);
+
+  // $(content).text(twinTextWords[bookNames]);
   card.appendChild(content);
   $(".grid").append(card);
 
@@ -744,10 +746,10 @@ const openAbout = () => {
   let modal = document.getElementById("aboutModal");
 
   // Get the <span> element that closes the modal
-  let span = document.getElementsByClassName("close")[0];
-  span.onclick = function () {
-    modal.style.display = "none";
-  };
+  // let span = document.getElementsByClassName("close")[0];
+  // span.onclick = function () {
+  //   modal.style.display = "none";
+  // };
 
   window.onclick = function (event) {
     if (event.target == modal) {

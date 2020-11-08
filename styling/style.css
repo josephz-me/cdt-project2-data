@@ -291,7 +291,6 @@ h3 {
 }
 .grid .card .bookTitle {
   text-align: center;
-  vertical-align: middle;
   color: #ffbb7c;
   display: table-cell;
   padding: 10px;
@@ -459,7 +458,6 @@ h3 {
 /* The Close Button */
 .close {
   color: #182938;
-  float: right;
   font-size: 60px;
   font-weight: bold;
   line-height: 50px;
@@ -509,10 +507,27 @@ h3 {
   border: 1px solid #888;
   width: 80%;
   height: 80%;
-  font-family: "noto-serif";
+  font-family: "noto-sans";
   color: #182938;
   font-weight: 50;
   font-size: 16px;
+  overflow: scroll;
+}
+
+.about-modal-content:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.credits {
+  font-family: "noto-serif";
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 20px;
 }
 
 @keyframes animatetop {
