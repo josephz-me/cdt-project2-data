@@ -31,8 +31,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #182938;
-  color: #d6e0eb;
+  background: #1c2937;
+  color: #ffbb7c;
   font-family: "noto-sans";
   transition: 0.4s opacity;
   pointer-events: none;
@@ -44,36 +44,34 @@
   }
 }
 body {
-  background: #182938;
+  background: #1c2937;
 }
 
 .leftLabel {
-  height: 100%;
   position: fixed;
+  padding-top: 20px;
   z-index: 1;
-  top: 0;
-  left: 0;
+  background: #1c2937;
+  width: 22%;
+  padding-left: 0 !important;
+  padding-bottom: 20px;
   overflow-x: hidden;
-  text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #d6e0eb;
-}
-.leftLabel p {
-  transform: rotate(-90deg);
+  color: #ffbb7c;
   font-family: "noto-sans";
-  font-weight: 600;
+  font-weight: 400;
+  letter-spacing: 3px;
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 h1 {
-  margin-bottom: 20px;
   font-size: 18px;
 }
 
 h3 {
   margin-bottom: 10px;
-  margin-top: 20px;
+  margin-top: 30px;
   font-size: 20px;
   font-weight: 400;
   font-size: 18px;
@@ -90,12 +88,12 @@ h3 {
 .nav {
   margin-left: 60px;
   margin-right: 60px;
-  color: #d6e0eb;
+  color: #ffbb7c;
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   z-index: 1000;
-  background: #182938;
+  background: #1c2937;
   font-family: "noto-sans";
   align-items: center;
 }
@@ -114,7 +112,7 @@ h3 {
   text-transform: uppercase;
   grid-column: 2;
   justify-self: center;
-  font-size: 28px;
+  font-size: 27px;
   font-family: "noto-serif";
   margin-bottom: 0;
 }
@@ -132,7 +130,7 @@ h3 {
 }
 
 .nav-wrapper {
-  border-bottom: 1.5px solid #d6e0eb;
+  border-bottom: 1.5px solid #ffbb7c;
 }
 
 .year {
@@ -156,6 +154,7 @@ h3 {
 
 .clickedTrend {
   font-weight: 600;
+  text-decoration: underline;
 }
 
 .clickedTrend:hover {
@@ -181,24 +180,23 @@ h3 {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
-  color: #d6e0eb;
+  color: #ffbb7c;
 }
 .trendList p {
   display: block;
-  padding: 4px 0 4px 20px;
+  padding: 0px 0 0px 20px;
   font-size: 18px;
-  border-radius: 4px;
   cursor: pointer;
 }
 .trendList .year:hover,
 .trendList p:hover {
-  opacity: 20%;
+  opacity: 0.3;
 }
 
 /* Style the buttons */
 .btn {
-  padding: 8px 12px;
-  background: #182938;
+  padding: 4px 8px;
+  background: #1c2937;
   cursor: pointer;
   font-size: 14px;
   opacity: 30%;
@@ -206,16 +204,16 @@ h3 {
 }
 
 .nonfictionBtn {
-  border: 1.5px solid #81dab9;
+  border: 1.5px solid #ffbb7c;
   width: 120px;
-  color: #81dab9;
+  color: #ffbb7c;
 }
 
 .fictionBtn {
   width: 120px;
   margin-right: 10px;
-  color: #ffcece;
-  border: 1.5px solid #ffcece;
+  color: #ffbb7c;
+  border: 1.5px solid #ffbb7c;
 }
 
 /* Add a dark background to the active button */
@@ -259,16 +257,16 @@ h3 {
 
 .hoverCard.fiction {
   font-family: "noto-sans";
-  color: #81dab9;
-  border: 1.5px solid #81dab9;
-  background: #182938;
+  color: #ffbb7c;
+  border: 1.5px solid #ffbb7c;
+  background: #1c2937;
 }
 
 .hoverCard.nonfiction {
   font-family: "noto-serif";
-  color: #ffcece;
-  border: 1.5px solid #ffcece;
-  background: #182938;
+  color: #ffbb7c;
+  border: 1.5px solid #ffbb7c;
+  background: #1c2937;
 }
 
 .grid {
@@ -299,27 +297,27 @@ h3 {
 .grid .fiction {
   font-family: "noto-sans", san-serif;
   font-weight: 600;
-  color: #81dab9;
-  border: 1.5px solid #81dab9;
+  color: #ffbb7c;
+  border: 1.5px solid #ffbb7c;
 }
 .grid .nonfiction {
   font-family: "noto-serif", san-serif;
   font-weight: 600;
-  color: #ffcece;
-  border: 1.5px solid #ffcece;
+  color: #ffbb7c;
+  border: 1.5px solid #ffbb7c;
+}
+.grid .card:hover .bookTitle {
+  color: #1c2937;
 }
 .grid .card:hover {
+  border: 1.5px solid #ffbb7c;
+  background: #ffbb7c;
   cursor: pointer;
-  transform: rotate(2deg);
 }
 .grid .expand {
   grid-column: span 2;
   grid-row: span 2;
 }
-.grid .expand:hover {
-  transform: rotate(0deg);
-}
-
 .navFilterHide {
   opacity: 30%;
 }
@@ -330,13 +328,13 @@ h3 {
 }
 
 .hoverHide.fiction {
-  background: #182938;
+  background: #1c2937;
   border: 1px solid rgba(129, 218, 185, 0.3);
   color: rgba(129, 218, 185, 0.3);
 }
 
 .hoverHide.nonfiction {
-  background: #182938;
+  background: #1c2937;
   border: 1px solid rgba(255, 206, 206, 0.3);
   color: rgba(255, 206, 206, 0.3);
 }
@@ -355,7 +353,7 @@ h3 {
 .fiction .expanded-bookDescription,
 .fiction .expanded-bookURL {
   font-family: "noto-sans";
-  color: #81dab9;
+  color: #ffbb7c;
 }
 
 .nonfiction .expanded-bookYear,
@@ -364,7 +362,7 @@ h3 {
 .nonfiction .expanded-bookDescription,
 .nonfiction .expanded-bookURL {
   font-family: "noto-serif";
-  color: #ffcece;
+  color: #ffbb7c;
 }
 
 .expanded-bookYear {
@@ -426,7 +424,7 @@ h3 {
   top: 0px;
   left: 0px;
   padding: 10px 20px;
-  background: #182938;
+  background: #1c2937;
   width: 100%;
   height: 100%;
   z-index: 0;
@@ -455,15 +453,15 @@ h3 {
 
 /* Modal Content */
 .modal-content {
-  background-color: #182938;
+  background-color: #ffbb7c;
   margin: auto;
   padding: 10px 20px 10px 20px;
-  border: 1.5px solid #d6e0eb;
+  border: 1.5px solid #1c2937;
   width: 100%;
   animation-name: animatetop;
   animation-duration: 0.4s;
   font-family: "noto-sans";
-  color: #d6e0eb;
+  color: #1c2937;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 16px;
@@ -471,7 +469,7 @@ h3 {
 
 /* The Close Button */
 .close {
-  color: #182938;
+  color: #1c2937;
   font-size: 60px;
   font-weight: bold;
   line-height: 50px;
@@ -511,8 +509,8 @@ h3 {
 
 /* Modal Content */
 .about-modal-content {
-  background-color: #182938;
-  color: #d6e0eb;
+  background-color: #ffbb7c;
+  color: #1c2937;
   margin: auto;
   position: fixed;
   top: 50%;
@@ -520,7 +518,7 @@ h3 {
   transform: translate(-50%, -50%);
   padding: 10px 20px 10px 20px;
   border: 1px solid #888;
-  width: 85%;
+  width: 75%;
   height: 85%;
   font-family: "noto-sans";
   font-weight: 50;

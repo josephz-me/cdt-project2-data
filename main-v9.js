@@ -375,6 +375,7 @@ function setup() {
   // for (year in trends) {
   //   trends[year].render();
   // }
+  $(".trendList").append("<br><br/>");
   for (let i = Object.keys(trends).length - 1; i >= 0; i--) {
     trends[Object.keys(trends)[i]].render();
   }
@@ -698,6 +699,7 @@ const showBooks = (e) => {
       }
     }
     let desiredElement = $(allBooks).not(".hide")[0];
+
     $(".bookList").animate(
       {
         scrollTop:
