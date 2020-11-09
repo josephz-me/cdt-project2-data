@@ -291,6 +291,7 @@ h3 {
 }
 .grid .card .bookTitle {
   text-align: center;
+  vertical-align: middle;
   color: #ffbb7c;
   display: table-cell;
   padding: 10px;
