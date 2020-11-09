@@ -149,14 +149,7 @@ const createTiles = (bookNames, bookType, bookYear) => {
       $(hoverCard).addClass(`hoverCard ${bookType}`);
       $(hoverCategory).addClass(`hoverCategory`);
       $(hoverClassifiers).addClass(`hoverClassifiers`);
-
-      function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-
-      $(hoverCategory).text(
-        "Keywords (" + capitalizeFirstLetter(bookType) + ")"
-      );
+      $(hoverCategory).text("Keywords");
       $(hoverClassifiers).text(
         twinTextWords[bookName].split(",", 5).join(", ")
       );
@@ -169,13 +162,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
         $(hoverCard).removeClass("hoverHide");
       }
 
-      // $(card).hasClass("hide")
-      //   ? $(hoverCard).addClass("hoverHide")
-      //   : $(hoverCard).removeClass("hoverHide");
-
-      // $(card).hasClass("navFilterHide")
-      //   ? $(hoverCard).addClass("hoverHide")
-      //   : $(hoverCard).removeClass("hoverHide");
       $(hoverCard).addClass(`hoverCard ${bookType}`);
 
       $("body").append(hoverCard);
@@ -226,7 +212,7 @@ const createTiles = (bookNames, bookType, bookYear) => {
       //Create all elements
       var expandedYear = document.createElement("p");
       $(expandedYear).addClass("expanded-bookYear inner");
-      $(expandedYear).text(bkYear);
+      $(expandedYear).text(`${bkYear} • ${capitalizeFirstLetter(bkType)}`);
       var expandedTitle = document.createElement("h1");
       $(expandedTitle).addClass("expanded-bookTitle inner");
       $(expandedTitle).text(bkTitle);
@@ -296,7 +282,7 @@ const createTiles = (bookNames, bookType, bookYear) => {
           //Create all elements
           var expandedYear = document.createElement("p");
           $(expandedYear).addClass("expanded-bookYear inner");
-          $(expandedYear).text(bkYear);
+          $(expandedYear).text(`${bkYear} • ${capitalizeFirstLetter(bkType)}`);
           var expandedTitle = document.createElement("h1");
           $(expandedTitle).addClass("expanded-bookTitle inner");
           $(expandedTitle).text(bkTitle);
@@ -770,3 +756,7 @@ const toTop = () => {
     1000
   );
 };
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
