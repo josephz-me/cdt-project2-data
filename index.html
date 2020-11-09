@@ -38,8 +38,7 @@ sass --watch style.scss:style.css
           Reading_</span><span>Trends</span>
         </div>
         <div class="right">
-          <!-- <button class="btn active" onclick="filterSelection('all')">All</button> -->
-          <button
+          <!-- <button
             data-type="fiction"
             class="fictionBtn btn active"
             onclick="filterSelection(this)"
@@ -52,7 +51,17 @@ sass --watch style.scss:style.css
             onclick="filterSelection(this)"
           >
             Nonfiction
-          </button>
+          </button> -->
+          <label style="font-family:'noto-serif';" class="checkBoxContainer">Nonfiction
+            <input  data-type='fiction' class='fictionBtn' onclick='filterSelection(this)' type="checkbox" checked="checked">
+            <span class="checkmark"></span>
+          </label>
+
+          <label  class="checkBoxContainer">Fiction
+            <input data-type='nonfiction' class='nonfictionBtn' onclick='filterSelection(this)' type="checkbox" checked="checked">
+            <span class="checkmark"></span>
+          </label>
+          
         </div>
       </div>
     </div>

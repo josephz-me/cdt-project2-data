@@ -127,6 +127,7 @@ h3 {
 }
 .nav .right {
   grid-column: 3;
+  padding-top: 6px;
   justify-self: end;
   align-self: center;
 }
@@ -209,16 +210,12 @@ h3 {
 }
 
 .nonfictionBtn {
-  border: 1.5px solid #ffbb7c;
-  width: 120px;
   color: #ffbb7c;
 }
 
 .fictionBtn {
-  width: 120px;
   margin-right: 10px;
   color: #ffbb7c;
-  border: 1.5px solid #ffbb7c;
 }
 
 /* Add a dark background to the active button */
@@ -553,6 +550,72 @@ h3 {
   to {
     opacity: 1;
   }
+}
+.checkBoxContainer {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-left: 20px;
+  cursor: pointer;
+  font-size: 15px !important;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkBoxContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 23px;
+  width: 23px;
+  border: 1px solid #ffbb7c;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkBoxContainer input:checked ~ .checkmark {
+  background-color: #ffbb7c;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkBoxContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* On mouse-over, add a grey background color */
+.checkBoxContainer:hover input ~ .checkmark {
+  background-color: rgba(255, 187, 124, 0.9);
+}
+
+/* Style the checkmark/indicator */
+.checkBoxContainer .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #1c2937;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 /*# sourceMappingURL=style.css.map */

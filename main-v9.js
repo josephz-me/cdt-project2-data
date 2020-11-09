@@ -590,7 +590,8 @@ class TrendYear {
 
 function filterSelection(c) {
   let bookType = $(c).data("type");
-  $(c).toggleClass("active");
+  // console.log(c);
+  // $(c).addClass("active");
   let allBooks = $(".card");
 
   for (let i = 0; i < allBooks.length; i++) {
