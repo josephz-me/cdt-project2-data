@@ -7,7 +7,7 @@ $left-label-width: 60px;
 // $darker-color: #3547a4;
 $darker-color: #182938;
 $pink-color: #ffcece;
-$green-color: #98ffda;
+$green-color: #81dab9;
 $neutral-color: #d6e0eb;
 $serif: "noto-serif";
 $sans: "noto-sans";
@@ -48,8 +48,8 @@ $body-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $pink-color;
-  color: $darker-color;
+  background: $darker-color;
+  color: $neutral-color;
   font-family: $sans;
   transition: 0.4s opacity;
   pointer-events: none;
@@ -162,7 +162,7 @@ h3 {
   }
 }
 .nav-wrapper {
-  border-bottom: 1.5px solid $pink-color;
+  border-bottom: 1.5px solid $neutral-color;
 }
 
 .year {
@@ -399,15 +399,19 @@ h3 {
 }
 
 .hoverHide.fiction {
-  // background: #5f574f;
+  background: $darker-color;
   // color: #232d3a;
-  opacity: 0.3;
+  border: 1px solid rgb(129, 218, 185, 0.3);
+  color: rgb(129, 218, 185, 0.3);
+  // opacity: 0.3;
 }
 
 .hoverHide.nonfiction {
-  // background: #5f574f;
   // color: #232d3a;
-  opacity: 0.3;
+  background: $darker-color;
+  border: 1px solid rgb(255, 206, 206, 0.3);
+  color: rgb(255, 206, 206, 0.3);
+  // opacity: 0.3;
 }
 
 // –––––––– EXPANDED ————————
@@ -446,7 +450,8 @@ h3 {
 
   font-style: regular;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-top: 8px;
+  margin-bottom: 40px;
 }
 
 .expanded-bookTitle {
@@ -530,15 +535,15 @@ h3 {
 
 /* Modal Content */
 .modal-content {
-  background-color: $pink-color;
+  background-color: $darker-color;
   margin: auto;
   padding: 10px 20px 10px 20px;
-  border: 1px solid #888;
+  border: 1.5px solid $neutral-color;
   width: 100%;
   animation-name: animatetop;
   animation-duration: 0.4s;
   font-family: $sans;
-  color: $darker-color;
+  color: $neutral-color;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 16px;
@@ -580,7 +585,8 @@ h3 {
 
 /* Modal Content */
 .about-modal-content {
-  background-color: $pink-color;
+  background-color: $darker-color;
+  color: $neutral-color;
   margin: auto;
   position: fixed;
   top: 50%;
@@ -588,12 +594,12 @@ h3 {
   transform: translate(-50%, -50%);
   padding: 10px 20px 10px 20px;
   border: 1px solid #888;
-  width: 80%;
-  height: 80%;
+  width: 85%;
+  height: 85%;
   // animation-name: animatetop;
   // animation-duration: 0.2s;
   font-family: $sans;
-  color: $darker-color;
+
   font-weight: 50;
   font-size: 16px;
   overflow: scroll;
