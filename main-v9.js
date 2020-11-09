@@ -363,7 +363,6 @@ const wait = (amount = 0) =>
 
 let trendToKeywords = {};
 function setup() {
-  //trender trends in left column
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
     let key = keywordTable.getString(r, 0);
     let value = keywordTable.getString(r, 1).split(",");
@@ -371,10 +370,6 @@ function setup() {
   }
   csvToDict();
 
-  //in each year
-  // for (year in trends) {
-  //   trends[year].render();
-  // }
   $(".trendList").append("<br><br/>");
   for (let i = Object.keys(trends).length - 1; i >= 0; i--) {
     trends[Object.keys(trends)[i]].render();
@@ -557,7 +552,6 @@ class TrendYear {
     this.vals = d;
   }
   render() {
-    $(".trendList").append("<br><br/>");
     let year = this.id;
     $(".trendList").append(
       "<h1 class='year' onclick=scrollToYear(this) data-year=" +
@@ -567,21 +561,27 @@ class TrendYear {
         "</h1>"
     );
     for (let key of this.vals) {
-      $(".trendList").append("<h3 class='trendCategory'>" + key[0] + "</h3>");
+      let trendContainer = document.createElement("div");
+      $(trendContainer).addClass(`trendContainer`);
+      $(trendContainer).append(
+        "<h3 class='trendItem trendCategory'>" + key[0] + "</h3>"
+      );
       for (let value in key[1]) {
         //actual bookname
         // $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
         let trendName = key[1][value].name;
         let trendElement = document.createElement("p");
 
-        $(trendElement).addClass(`trend`);
+        $(trendElement).addClass(`trendItem trend`);
         $(trendElement).attr("data-trendname", trendName);
         $(trendElement).attr("data-trendyear", year);
         $(trendElement).text(`${trendName}`);
         trendElement.addEventListener("click", showBooks);
-        $(".trendList").append(trendElement);
+        $(trendContainer).append(trendElement);
       }
+      $(".trendList").append(trendContainer);
     }
+    // $(".trendItem").wrapAll("<div class='trendGroup'></div>");
   }
 }
 
