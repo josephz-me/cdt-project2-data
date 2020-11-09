@@ -551,6 +551,10 @@ h3 {
     opacity: 1;
   }
 }
+label {
+  font-weight: 600;
+}
+
 .checkBoxContainer {
   display: inline-block;
   position: relative;
