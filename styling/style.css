@@ -31,7 +31,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffbb7c;
+  background: #ffcece;
   color: #182938;
   font-family: "noto-sans";
   transition: 0.4s opacity;
@@ -58,9 +58,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #d6e0eb;
 }
 .leftLabel p {
-  color: #ffbb7c;
   transform: rotate(-90deg);
   font-family: "noto-sans";
   font-weight: 600;
@@ -69,7 +69,6 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: 18px;
-  color: #ffbb7c;
 }
 
 h3 {
@@ -78,7 +77,6 @@ h3 {
   font-size: 20px;
   font-weight: 400;
   font-size: 18px;
-  color: #ffbb7c;
 }
 
 .container {
@@ -92,14 +90,14 @@ h3 {
 .nav {
   margin-left: 60px;
   margin-right: 60px;
+  color: #d6e0eb;
   padding: 20px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   z-index: 1000;
-  background-color: #182938;
+  background: #182938;
   font-family: "noto-sans";
   align-items: center;
-  color: #ffbb7c;
 }
 .nav .left {
   grid-column: 1;
@@ -134,7 +132,7 @@ h3 {
 }
 
 .nav-wrapper {
-  border-bottom: 1.5px solid #ffbb7c;
+  border-bottom: 1.5px solid #ffcece;
 }
 
 .year {
@@ -183,11 +181,11 @@ h3 {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+  color: #d6e0eb;
 }
 .trendList p {
   display: block;
   padding: 4px 0 4px 20px;
-  color: #ffbb7c;
   font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
@@ -199,28 +197,29 @@ h3 {
 
 /* Style the buttons */
 .btn {
-  border: 1.5px solid #ffbb7c;
   padding: 8px 12px;
-  background-color: #182938;
+  background: #182938;
   cursor: pointer;
-  color: #ffbb7c;
   font-size: 14px;
   opacity: 30%;
   font-weight: 600;
 }
 
 .nonfictionBtn {
+  border: 1.5px solid #98ffda;
   width: 120px;
+  color: #98ffda;
 }
 
 .fictionBtn {
   width: 120px;
   margin-right: 10px;
+  color: #ffcece;
+  border: 1.5px solid #ffcece;
 }
 
 /* Add a dark background to the active button */
 .btn.active {
-  color: #ffbb7c;
   opacity: 1;
 }
 
@@ -251,22 +250,25 @@ h3 {
   pointer-events: none;
   width: auto;
   height: auto;
-  background: #ffbb7c;
   padding: 20px;
-  border: 1.5px solid #182938;
   font-size: 16px;
 }
 .hoverCard p {
   font-weight: bold;
-  color: #182938;
 }
 
 .hoverCard.fiction {
   font-family: "noto-sans";
+  color: #98ffda;
+  border: 1.5px solid #98ffda;
+  background: #182938;
 }
 
 .hoverCard.nonfiction {
   font-family: "noto-serif";
+  color: #ffcece;
+  border: 1.5px solid #ffcece;
+  background: #182938;
 }
 
 .grid {
@@ -287,36 +289,35 @@ h3 {
   display: table;
   position: relative;
   margin-bottom: 10px;
-  transition: 0.1s transform;
 }
 .grid .card .bookTitle {
   text-align: center;
   vertical-align: middle;
-  color: #ffbb7c;
   display: table-cell;
   padding: 10px;
 }
 .grid .fiction {
   font-family: "noto-sans", san-serif;
   font-weight: 600;
-  border: 1.5px solid #ffbb7c;
+  color: #98ffda;
+  border: 1.5px solid #98ffda;
 }
 .grid .nonfiction {
   font-family: "noto-serif", san-serif;
   font-weight: 600;
-  border: 1.5px solid #ffbb7c;
-}
-.grid .card:hover .bookTitle {
-  color: #182938;
+  color: #ffcece;
+  border: 1.5px solid #ffcece;
 }
 .grid .card:hover {
-  background: #ffbb7c;
   cursor: pointer;
+  transform: rotate(2deg);
 }
 .grid .expand {
   grid-column: span 2;
   grid-row: span 2;
-  background: #ffbb7c;
+}
+.grid .expand:hover {
+  transform: rotate(0deg);
 }
 
 .navFilterHide {
@@ -328,9 +329,12 @@ h3 {
   opacity: 30%;
 }
 
-.hoverHide {
-  background: #5f574f;
-  color: #232d3a;
+.hoverHide.fiction {
+  opacity: 0.3;
+}
+
+.hoverHide.nonfiction {
+  opacity: 0.3;
 }
 
 .expanded-bookYear,
@@ -338,7 +342,6 @@ h3 {
 .expanded-bookAuthor,
 .expanded-bookDescription,
 .expanded-bookYear {
-  color: #182938;
   pointer-events: none;
 }
 
@@ -348,6 +351,7 @@ h3 {
 .fiction .expanded-bookDescription,
 .fiction .expanded-bookURL {
   font-family: "noto-sans";
+  color: #98ffda;
 }
 
 .nonfiction .expanded-bookYear,
@@ -356,6 +360,7 @@ h3 {
 .nonfiction .expanded-bookDescription,
 .nonfiction .expanded-bookURL {
   font-family: "noto-serif";
+  color: #ffcece;
 }
 
 .expanded-bookYear {
@@ -393,9 +398,12 @@ h3 {
   font-size: 14px;
   vertical-align: bottom;
   font-weight: 400;
-  color: #182938;
   text-decoration: underline;
   font-style: italic;
+}
+
+.expanded-bookURL:hover {
+  opacity: 0.3;
 }
 
 .hidden {
@@ -413,7 +421,7 @@ h3 {
   top: 0px;
   left: 0px;
   padding: 10px 20px;
-  background: #ffbb7c;
+  background: #182938;
   width: 100%;
   height: 100%;
   z-index: 0;
@@ -442,7 +450,7 @@ h3 {
 
 /* Modal Content */
 .modal-content {
-  background-color: #ffbb7c;
+  background-color: #ffcece;
   margin: auto;
   padding: 10px 20px 10px 20px;
   border: 1px solid #888;
@@ -498,7 +506,7 @@ h3 {
 
 /* Modal Content */
 .about-modal-content {
-  background-color: #ffbb7c;
+  background-color: #ffcece;
   margin: auto;
   position: fixed;
   top: 50%;
