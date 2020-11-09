@@ -403,16 +403,16 @@ h3 {
 .hoverHide.fiction {
   background: $darker-color;
   // color: #232d3a;
-  border: 1px solid rgb(129, 218, 185, 0.3);
-  color: rgb(129, 218, 185, 0.3);
+  border: 1px solid rgba(255, 187, 124, 0.3);
+  color: rgba(255, 187, 124, 0.3);
   // opacity: 0.3;
 }
 
 .hoverHide.nonfiction {
   // color: #232d3a;
   background: $darker-color;
-  border: 1px solid rgb(255, 206, 206, 0.3);
-  color: rgb(255, 206, 206, 0.3);
+  border: 1px solid rgba(255, 187, 124, 0.3);
+  color: rgba(255, 187, 124, 0.3);
   // opacity: 0.3;
 }
 
@@ -595,7 +595,6 @@ h3 {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px 20px 10px 20px;
-  border: 1px solid #888;
   width: 75%;
   height: 85%;
   // animation-name: animatetop;

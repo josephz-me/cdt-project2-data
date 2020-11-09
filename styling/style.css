@@ -329,14 +329,14 @@ h3 {
 
 .hoverHide.fiction {
   background: #1c2937;
-  border: 1px solid rgba(129, 218, 185, 0.3);
-  color: rgba(129, 218, 185, 0.3);
+  border: 1px solid rgba(255, 187, 124, 0.3);
+  color: rgba(255, 187, 124, 0.3);
 }
 
 .hoverHide.nonfiction {
   background: #1c2937;
-  border: 1px solid rgba(255, 206, 206, 0.3);
-  color: rgba(255, 206, 206, 0.3);
+  border: 1px solid rgba(255, 187, 124, 0.3);
+  color: rgba(255, 187, 124, 0.3);
 }
 
 .expanded-bookYear,
@@ -517,7 +517,6 @@ h3 {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px 20px 10px 20px;
-  border: 1px solid #888;
   width: 75%;
   height: 85%;
   font-family: "noto-sans";
