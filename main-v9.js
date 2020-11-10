@@ -63,51 +63,50 @@ function preload() {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
+}
 
-  // convert books into data
-  $.getJSON("books/books.json", (data) => {
-    //NONFICTION
-    for (year in years) {
-      // booksInYears.push(data)
-      nonFicPerYear[years[year]] = data.nonfiction[years[year]].length;
-      FicPerYear[years[year]] = data.fiction[years[year]].length;
-    }
-  });
+// convert books into data
+$.getJSON("books/books.json", (data) => {
+  //NONFICTION
+  for (year in years) {
+    // booksInYears.push(data)
+    nonFicPerYear[years[year]] = data.nonfiction[years[year]].length;
+    FicPerYear[years[year]] = data.fiction[years[year]].length;
+  }
+});
 
+$.getJSON("books/twinTextBooks.json", (books) => {
+  for (book in books) {
+    let bookTitle = books[book].title;
+    let classifiers = books[book].classifiers;
+    twinTextWords[bookTitle] = classifiers;
+  }
   $.getJSON("books/book-description.json", (data) => {
     booksWithDescriptions = data;
     matchTrendtoBooks();
 
-    $.getJSON("books/twinTextBooks.json", (books) => {
-      for (book in books) {
-        let bookTitle = books[book].title;
-        let classifiers = books[book].classifiers;
-        twinTextWords[bookTitle] = classifiers;
+    for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
+      // for (let i = 0; i < booksWithDescriptions.length; i++) {
+      if (booksWithDescriptions[i]) {
+        let bookTitle = booksWithDescriptions[i].title;
+        let bookType = booksWithDescriptions[i].type;
+        let bookYear = booksWithDescriptions[i].year;
+        getRandomInt(1, 5, 2, bookYear);
+        createTiles(bookTitle, bookType, bookYear);
       }
-      for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
-        // for (let i = 0; i < booksWithDescriptions.length; i++) {
-        if (booksWithDescriptions[i]) {
-          let bookTitle = booksWithDescriptions[i].title;
-          let bookType = booksWithDescriptions[i].type;
-          let bookYear = booksWithDescriptions[i].year;
-          getRandomInt(1, 5, 2, bookYear);
-          createTiles(bookTitle, bookType, bookYear);
-        }
-      }
+    }
 
-      for (year in years) {
-        let firstYearElement = document.querySelector(
-          `[data-bookyear='${years[year]}']`
-        );
-        firstYearElement.id = `${years[year]}`;
-      }
-    });
+    for (year in years) {
+      let firstYearElement = document.querySelector(
+        `[data-bookyear='${years[year]}']`
+      );
+      firstYearElement.id = `${years[year]}`;
+    }
   });
-}
+});
 
 const hideLoading = () => {
   $(".loadingScreen").addClass("hideLoading");
-  console.log($(".loadingScreen"));
 };
 
 const getRandomInt = (min, max, target) => {
@@ -202,8 +201,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
     let bkTitle = $(currentElement).data("bookname");
     let bkYear = $(currentElement).data("bookyear");
 
-    console.log(currentElement);
-    console.log(previousExpandedTitle, bkTitle);
     //IF NO PREVIOUS CARD EXISTS (first click)
     if (!previousExpandedTitle) {
       let bkPos = searchForBookYear(bkYear);
@@ -266,7 +263,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
       //IF ANOTHER CARD IS CLICKED
       let URL = $(".expanded-bookURL")[0];
       //if books match
-      // console.log("running");
       if (typeof bkTitle !== "undefined") {
         if (previousExpandedTitle === bkTitle) {
           $(previousElement).toggleClass("expand");
@@ -340,8 +336,6 @@ const createTiles = (bookNames, bookType, bookYear) => {
             $(currentElement).append(expandedCard);
           }
         }
-      } else {
-        console.log(bkTitle);
       }
     }
   };
