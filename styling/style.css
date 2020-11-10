@@ -552,8 +552,11 @@ h3 {
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
 }
-.aboutModal a:visited {
+.aboutModal a {
   color: #1c2937;
+}
+.aboutModal a:visited {
+  color: #1c2937 !important;
 }
 .aboutModal a:hover {
   opacity: 0.6;
