@@ -105,6 +105,11 @@ function preload() {
   });
 }
 
+const hideLoading = () => {
+  $(".loadingScreen").addClass("hideLoading");
+  console.log($(".loadingScreen"));
+};
+
 const getRandomInt = (min, max, target) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -388,6 +393,7 @@ const wait = (amount = 0) =>
 
 let trendToKeywords = {};
 function setup() {
+  setTimeout(hideLoading, 500);
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
     let key = keywordTable.getString(r, 0);
     let value = keywordTable.getString(r, 1).split(",");
@@ -673,6 +679,7 @@ let previousDiv;
 const showBooks = (e) => {
   //start fresh
   $(".clickedTrend").removeClass("clickedTrend");
+  // $(".navFilterHide").removeClass("navFilterHide");
 
   // add active state to just clicked element
   let selectedDiv = e.composedPath()[0];

@@ -35,6 +35,31 @@ $body-size: 18px;
   // font-family: $sans, sans-serif;
 }
 
+.loadingScreen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $darker-color;
+  color: $neutral-color;
+  font-family: $serif;
+  font-style: italic;
+  font-size: 32px;
+  transition: 0.4s opacity;
+  pointer-events: none;
+}
+
+.hideLoading {
+  opacity: 0;
+}
+
 .browserWidthCatch {
   opacity: 0;
   height: 100%;
@@ -54,6 +79,7 @@ $body-size: 18px;
   transition: 0.4s opacity;
   pointer-events: none;
 }
+
 @media only screen and (max-width: 890px) {
   .browserWidthCatch {
     // visibility: visible;
@@ -119,7 +145,7 @@ h3 {
   margin-right: $left-label-width;
   color: $neutral-color;
 
-  padding: 20px 0 20px 0;
+  padding: 25px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   // align-items: center;
@@ -606,6 +632,14 @@ h3 {
   left: 0;
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+
+  a:visited {
+    color: $darker-color;
+  }
+
+  a:hover {
+    opacity: 0.6;
+  }
 }
 
 /* Modal Content */
@@ -636,7 +670,8 @@ h3 {
 }
 
 .credits {
-  font-family: $serif;
+  // font-family: $serif;
+  color: $darker-color;
 }
 
 .column {

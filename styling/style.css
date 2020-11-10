@@ -18,6 +18,31 @@
   overflow: hidden;
 }
 
+.loadingScreen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1c2937;
+  color: #ffbb7c;
+  font-family: "noto-serif";
+  font-style: italic;
+  font-size: 32px;
+  transition: 0.4s opacity;
+  pointer-events: none;
+}
+
+.hideLoading {
+  opacity: 0;
+}
+
 .browserWidthCatch {
   opacity: 0;
   height: 100%;
@@ -90,7 +115,7 @@ h3 {
   margin-left: 60px;
   margin-right: 60px;
   color: #ffbb7c;
-  padding: 20px 0 20px 0;
+  padding: 25px 0 20px 0;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   z-index: 1000;
@@ -527,6 +552,12 @@ h3 {
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
 }
+.aboutModal a:visited {
+  color: #1c2937;
+}
+.aboutModal a:hover {
+  opacity: 0.6;
+}
 
 /* Modal Content */
 .about-modal-content {
@@ -553,7 +584,7 @@ h3 {
 }
 
 .credits {
-  font-family: "noto-serif";
+  color: #1c2937;
 }
 
 .column {
