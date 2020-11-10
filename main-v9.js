@@ -618,6 +618,7 @@ function filterSelection(c) {
   let bookType = $(c).data("type");
   // $(c).addClass("active");
   let allBooks = $(".card");
+  $(c).toggleClass("active");
 
   for (let i = 0; i < allBooks.length; i++) {
     if (typeof allBooks[i] === "object") {
