@@ -277,7 +277,7 @@ h3 {
   padding-bottom: 200px;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, 159px);
+  grid-template-columns: repeat(auto-fill, 165px);
   grid-column-start: 0;
   grid-column-end: 2;
 }
@@ -286,15 +286,30 @@ h3 {
   min-height: 229px;
   width: 100%;
   height: 100%;
-  display: table;
   position: relative;
   margin-bottom: 10px;
-}
-.grid .card .bookTitle {
-  text-align: center;
-  vertical-align: middle;
-  display: table-cell;
   padding: 10px;
+}
+.grid .card .content {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  pointer-events: none;
+}
+.grid .card .content .bookTitle {
+  text-align: center;
+  width: 100%;
+  font-size: 16px;
+  pointer-events: none;
+}
+.grid .card .content .keywords {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  pointer-events: none;
 }
 .grid .fiction {
   font-family: "noto-sans", san-serif;
@@ -311,6 +326,9 @@ h3 {
 .grid .card:hover .bookTitle {
   color: #1c2937;
 }
+.grid .card:hover .keywords {
+  color: #1c2937;
+}
 .grid .card:hover {
   border: 1.5px solid #ffbb7c;
   background: #ffbb7c;
@@ -320,6 +338,7 @@ h3 {
   grid-column: span 2;
   grid-row: span 2;
 }
+
 .navFilterHide {
   opacity: 30%;
 }

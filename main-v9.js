@@ -77,28 +77,29 @@ function preload() {
   $.getJSON("books/book-description.json", (data) => {
     booksWithDescriptions = data;
     matchTrendtoBooks();
-    for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
-      // for (let i = 0; i < booksWithDescriptions.length; i++) {
-      if (booksWithDescriptions[i]) {
-        let bookTitle = booksWithDescriptions[i].title;
-        let bookType = booksWithDescriptions[i].type;
-        let bookYear = booksWithDescriptions[i].year;
-        getRandomInt(1, 5, 2, bookYear);
-        createTiles(bookTitle, bookType, bookYear);
-      }
-    }
 
-    for (year in years) {
-      let firstYearElement = document.querySelector(
-        `[data-bookyear='${years[year]}']`
-      );
-      firstYearElement.id = `${years[year]}`;
-    }
     $.getJSON("books/twinTextBooks.json", (books) => {
       for (book in books) {
         let bookTitle = books[book].title;
         let classifiers = books[book].classifiers;
         twinTextWords[bookTitle] = classifiers;
+      }
+      for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
+        // for (let i = 0; i < booksWithDescriptions.length; i++) {
+        if (booksWithDescriptions[i]) {
+          let bookTitle = booksWithDescriptions[i].title;
+          let bookType = booksWithDescriptions[i].type;
+          let bookYear = booksWithDescriptions[i].year;
+          getRandomInt(1, 5, 2, bookYear);
+          createTiles(bookTitle, bookType, bookYear);
+        }
+      }
+
+      for (year in years) {
+        let firstYearElement = document.querySelector(
+          `[data-bookyear='${years[year]}']`
+        );
+        firstYearElement.id = `${years[year]}`;
       }
     });
   });
@@ -116,100 +117,111 @@ const getRandomInt = (min, max, target) => {
   }
 };
 
-let previousExpandedCard;
-let previousCard;
+let previousExpandedTitle;
+let previousElement;
 let previousDataBookName;
+
 const createTiles = (bookNames, bookType, bookYear) => {
   let card = document.createElement("div");
-  var content = document.createElement("p");
+  var content = document.createElement("div");
+  $(content).addClass("content");
+  var title = document.createElement("p");
+  let keywords = document.createElement("p");
+  $(title).addClass("bookTitle");
+  $(title).text(bookNames);
+  content.append(title);
+  $(keywords).addClass("keywords");
+  // $(title).text(bookNames);
+  let desiredWords = twinTextWords[bookNames].split(",", 5).join(", ");
+
+  keywords.append(desiredWords);
+  content.append(keywords);
+
   $(card).addClass("card all " + bookType);
   $(card).attr("data-bookYear", bookYear);
   $(card).attr("data-bookName", bookNames);
-  $(content).addClass("bookTitle");
-  $(content).text(bookNames);
 
-  // $(content).text(twinTextWords[bookNames]);
+  //everything should go content
   card.appendChild(content);
   $(".grid").append(card);
 
-  $(card).hover(
-    function (e) {
-      let bookYear = $(e.currentTarget).data("bookyear");
-      let bookName = $(e.currentTarget).data("bookname");
+  // $(card).hover(
+  //   function (e) {
+  //     let bookYear = $(e.currentTarget).data("bookyear");
+  //     let bookName = $(e.currentTarget).data("bookname");
 
-      let bookType;
-      $(card).hasClass("nonfiction")
-        ? (bookType = "nonfiction")
-        : (bookType = "fiction");
+  //     let bookType;
+  //     $(card).hasClass("nonfiction")
+  //       ? (bookType = "nonfiction")
+  //       : (bookType = "fiction");
 
-      let hoverCard = document.createElement("div");
-      let hoverCategory = document.createElement("p");
-      let hoverClassifiers = document.createElement("p");
-      var currentMousePos = { x: -1, y: -1 };
-      $(hoverCard).addClass(`hoverCard ${bookType}`);
-      $(hoverCategory).addClass(`hoverCategory`);
-      $(hoverClassifiers).addClass(`hoverClassifiers`);
-      $(hoverCategory).text("Keywords");
-      $(hoverClassifiers).text(
-        twinTextWords[bookName].split(",", 5).join(", ")
-      );
-      hoverCard.appendChild(hoverCategory);
-      hoverCard.appendChild(hoverClassifiers);
+  //     let hoverCard = document.createElement("div");
+  //     let hoverCategory = document.createElement("p");
+  //     let hoverClassifiers = document.createElement("p");
+  //     var currentMousePos = { x: -1, y: -1 };
+  //     $(hoverCard).addClass(`hoverCard ${bookType}`);
+  //     $(hoverCategory).addClass(`hoverCategory`);
+  //     $(hoverClassifiers).addClass(`hoverClassifiers`);
+  //     $(hoverCategory).text("Keywords");
+  //     $(hoverClassifiers).text(
+  //       twinTextWords[bookName].split(",", 5).join(", ")
+  //     );
+  //     hoverCard.appendChild(hoverCategory);
+  //     hoverCard.appendChild(hoverClassifiers);
 
-      if ($(card).hasClass("hide") || $(card).hasClass("navFilterHide")) {
-        $(hoverCard).addClass("hoverHide");
-      } else {
-        $(hoverCard).removeClass("hoverHide");
-      }
+  //     if ($(card).hasClass("hide") || $(card).hasClass("navFilterHide")) {
+  //       $(hoverCard).addClass("hoverHide");
+  //     } else {
+  //       $(hoverCard).removeClass("hoverHide");
+  //     }
 
-      $(hoverCard).addClass(`hoverCard ${bookType}`);
+  //     $(hoverCard).addClass(`hoverCard ${bookType}`);
 
-      $("body").append(hoverCard);
+  //     $("body").append(hoverCard);
 
-      $(document).mousemove(function (event) {
-        currentMousePos.x = event.pageX;
-        currentMousePos.y = event.pageY;
-        $(".hoverCard").css({
-          top: `${currentMousePos.y + 30}px`,
-          left: `${currentMousePos.x + 30}px`,
-        });
-      });
-    },
-    function () {
-      $(".hoverCard").remove();
-    }
-  );
+  //     $(document).mousemove(function (event) {
+  //       currentMousePos.x = event.pageX;
+  //       currentMousePos.y = event.pageY;
+  //       $(".hoverCard").css({
+  //         top: `${currentMousePos.y + 30}px`,
+  //         left: `${currentMousePos.x + 30}px`,
+  //       });
+  //     });
+  //   },
+  //   function () {
+  //     $(".hoverCard").remove();
+  //   }
+  // );
   card.onclick = function (e) {
-    //div element just clicked
-    let currentElement = e.composedPath()[1];
-    //clicked book's data
-    let currentDataBookName = $(currentElement).data("bookname");
-    let bkTitle = currentElement.textContent;
+    let currentElement = e.composedPath()[0]; //clicked card
+    let bkTitle = $(currentElement).data("bookname");
     let bkYear = $(currentElement).data("bookyear");
+
+    console.log(currentElement);
+    console.log(previousExpandedTitle, bkTitle);
     //IF NO PREVIOUS CARD EXISTS (first click)
-    if (!previousCard) {
-      //THE SHITTY HEAVY COMPUTATION
+    if (!previousExpandedTitle) {
       let bkPos = searchForBookYear(bkYear);
       let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
       let arrayPos = findBook(bkPos, searchNum, bkTitle);
+
       let bkDescription =
         booksWithDescriptions[arrayPos].description.replace(
           /^(.{300}[^\s]*).*/,
           "$1"
         ) + "...";
+
       let bkAuthor = booksWithDescriptions[arrayPos].author;
-      let bkTitleElement = $(currentElement).find(".bookTitle");
       //add category class
       $(currentElement).hasClass("nonfiction")
         ? (bkType = "nonfiction")
         : (bkType = "fiction");
 
-      //create expanded card
+      //all the expanded card content
       $(currentElement).addClass("expand");
       let expandedCard = document.createElement("div");
       $(expandedCard).addClass("expanded-card");
-
-      //Create all elements
+      $(expandedCard).attr("data-bookname", bkTitle);
       var expandedYear = document.createElement("p");
       $(expandedYear).addClass("expanded-bookYear inner");
       $(expandedYear).text(`${bkYear} • ${capitalizeFirstLetter(bkType)}`);
@@ -239,83 +251,92 @@ const createTiles = (bookNames, bookType, bookYear) => {
       });
 
       //add card to screen
-      previousExpandedCard = expandedCard;
-      previousCard = currentElement;
-      previousDataBookName = $(currentElement).data("bookname");
+      previousExpandedTitle = bkTitle; //previous expandedCard
+      previousElement = currentElement;
       $(currentElement).append(expandedCard);
     }
 
-    //IF PREVIOUS CARD DOES EXIST
-    else if (previousCard) {
+    // //IF PREVIOUS CARD DOES EXIST
+    else if (previousExpandedTitle) {
       //IF ANOTHER CARD IS CLICKED
       let URL = $(".expanded-bookURL")[0];
-
-      if (previousDataBookName !== currentDataBookName) {
-        if (e.composedPath()[0] === URL) {
-          return;
-        } else {
-          // THE SHITTY HEAVY COMPUTATION
-          let bkPos = searchForBookYear(bkYear);
-          let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
-          let arrayPos = findBook(bkPos, searchNum, bkTitle);
-          let bkDescription =
-            booksWithDescriptions[arrayPos].description.replace(
-              /^(.{300}[^\s]*).*/,
-              "$1"
-            ) + "...";
-          let bkAuthor = booksWithDescriptions[arrayPos].author;
-          let bkTitleElement = $(currentElement).find(".bookTitle");
-          $(bkTitleElement).addClass("hidden");
-          $(previousCard).removeClass("expand");
-          let previousTitleElement = $(previousCard).find(".bookTitle");
+      //if books match
+      // console.log("running");
+      if (typeof bkTitle !== "undefined") {
+        if (previousExpandedTitle === bkTitle) {
+          $(previousElement).toggleClass("expand");
+          let previousTitleElement = $(previousElement).find(".bookTitle");
           $(previousTitleElement).removeClass("hidden");
-          $(previousExpandedCard).remove(); //remove previous card
-          //add category class
-          $(currentElement).hasClass("nonfiction")
-            ? (bkType = "nonfiction")
-            : (bkType = "fiction");
-          //create expanded card
-          $(currentElement).addClass("expand");
-          let expandedCard = document.createElement("div");
-          $(expandedCard).addClass("expanded-card");
+          $(".expanded-card").toggle();
+        } else if (previousExpandedTitle !== bkTitle) {
+          if (e.composedPath()[0] === URL) {
+            return;
+          } else {
+            // THE SHITTY HEAVY COMPUTATION
+            let bkPos = searchForBookYear(bkYear);
+            let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
+            let arrayPos = findBook(bkPos, searchNum, bkTitle);
+            let bkDescription =
+              booksWithDescriptions[arrayPos].description.replace(
+                /^(.{300}[^\s]*).*/,
+                "$1"
+              ) + "...";
+            let bkAuthor = booksWithDescriptions[arrayPos].author;
+            let bkTitleElement = $(currentElement).find(".bookTitle");
 
-          //Create all elements
-          var expandedYear = document.createElement("p");
-          $(expandedYear).addClass("expanded-bookYear inner");
-          $(expandedYear).text(`${bkYear} • ${capitalizeFirstLetter(bkType)}`);
-          var expandedTitle = document.createElement("h1");
-          $(expandedTitle).addClass("expanded-bookTitle inner");
-          $(expandedTitle).text(bkTitle);
-          var expandedAuthor = document.createElement("h2");
-          $(expandedAuthor).addClass("expanded-bookAuthor inner");
-          $(expandedAuthor).text(bkAuthor);
-          var expandedDescription = document.createElement("p");
-          $(expandedDescription).addClass("expanded-bookDescription inner");
-          $(expandedDescription).text(bkDescription);
+            $(".hidden").toggleClass("hidden");
 
-          expandedCard.appendChild(expandedYear);
-          expandedCard.appendChild(expandedTitle);
-          expandedCard.appendChild(expandedAuthor);
-          expandedCard.appendChild(expandedDescription);
+            $(bkTitleElement).addClass("hidden");
+            $(previousElement).removeClass("expand");
+            $(".expanded-card").remove(); //remove previous card
+            //add category class
+            $(currentElement).hasClass("nonfiction")
+              ? (bkType = "nonfiction")
+              : (bkType = "fiction");
+            //create expanded card
+            $(currentElement).addClass("expand");
+            let expandedCard = document.createElement("div");
+            $(expandedCard).addClass("expanded-card");
+            $(expandedCard).attr("data-bookname", bkTitle);
+            //Create all elements
+            var expandedYear = document.createElement("p");
+            $(expandedYear).addClass("expanded-bookYear inner");
 
-          let apiLink = `https://www.googleapis.com/books/v1/volumes?q='+${bkTitle}+${bkAuthor}`;
-          $.getJSON(apiLink, (data) => {
-            url = data.items[0].volumeInfo.infoLink;
-            if (url) {
-              $(expandedCard).append(
-                `<a target='blank' href=${url} class='expanded-bookURL inner'>Read More</a>`
-              );
-            }
-          });
-          //add card to screen
-          previousExpandedCard = expandedCard;
-          previousCard = currentElement;
-          previousDataBookName = $(currentElement).data("bookname");
-          $(currentElement).append(expandedCard);
+            $(expandedYear).text(
+              `${bkYear} • ${capitalizeFirstLetter(bkType)}`
+            );
+            var expandedTitle = document.createElement("h1");
+            $(expandedTitle).addClass("expanded-bookTitle inner");
+            $(expandedTitle).text(bkTitle);
+            var expandedAuthor = document.createElement("h2");
+            $(expandedAuthor).addClass("expanded-bookAuthor inner");
+            $(expandedAuthor).text(bkAuthor);
+            var expandedDescription = document.createElement("p");
+            $(expandedDescription).addClass("expanded-bookDescription inner");
+            $(expandedDescription).text(bkDescription);
+
+            expandedCard.appendChild(expandedYear);
+            expandedCard.appendChild(expandedTitle);
+            expandedCard.appendChild(expandedAuthor);
+            expandedCard.appendChild(expandedDescription);
+
+            let apiLink = `https://www.googleapis.com/books/v1/volumes?q='+${bkTitle}+${bkAuthor}`;
+            $.getJSON(apiLink, (data) => {
+              url = data.items[0].volumeInfo.infoLink;
+              if (url) {
+                $(expandedCard).append(
+                  `<a target='blank' href=${url} class='expanded-bookURL inner'>Read More</a>`
+                );
+              }
+            });
+            //add card to screen
+            previousExpandedTitle = bkTitle; //previous expandedCard
+            previousElement = currentElement;
+            $(currentElement).append(expandedCard);
+          }
         }
-      } else if (previousDataBookName === currentDataBookName) {
-        $(currentElement).toggleClass("expand");
-        $(".expanded-card").toggle();
+      } else {
+        console.log(bkTitle);
       }
     }
   };
@@ -324,15 +345,19 @@ const createTiles = (bookNames, bookType, bookYear) => {
 const findBook = (bkPos, searchNum, bkTitle) => {
   //search up
   let found = false;
-  for (i = bkPos; i < searchNum + bkPos; i++) {
-    if (booksWithDescriptions[i].title.includes(bkTitle)) {
-      return i;
+  for (i = bkPos; i < bkPos + searchNum; i++) {
+    if (typeof booksWithDescriptions[i] !== "undefined") {
+      if (booksWithDescriptions[i].title.includes(bkTitle)) {
+        return i;
+      }
     }
   }
 
-  for (i = bkPos; i < searchNum + bkPos; i--) {
-    if (booksWithDescriptions[i].title.includes(bkTitle)) {
-      return i;
+  for (i = bkPos; i > bkPos - searchNum; i--) {
+    if (typeof booksWithDescriptions[i] !== "undefined") {
+      if (booksWithDescriptions[i].title.includes(bkTitle)) {
+        return i;
+      }
     }
   }
 };
@@ -458,13 +483,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
   });
 });
 
-// $(window).resize(() => {
-//   $(".expanded-card").remove();
-// });
-
 const scrollToYear = (e) => {
   let allBooks = $(".card");
   allBooks.removeClass("hide");
+  $(".clickedTrend").removeClass("clickedTrend");
   let year = $(e).data("year");
   let desiredElement = $(`#${year}`);
   // let allBooks = $(".card");
@@ -494,7 +516,7 @@ const filterBooks = () => {
 
     if (desiredYearElement) {
       yearPos = desiredYearElement.getBoundingClientRect().top;
-      if (yearPos < 120 && yearPos > 90 && yearPos) {
+      if (yearPos < 120 + 60 && yearPos > 90 + 60 && yearPos) {
         yearDisplayed = yearString;
       }
     }
@@ -590,7 +612,6 @@ class TrendYear {
 
 function filterSelection(c) {
   let bookType = $(c).data("type");
-  // console.log(c);
   // $(c).addClass("active");
   let allBooks = $(".card");
 
