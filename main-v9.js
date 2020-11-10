@@ -102,6 +102,7 @@ $.getJSON("books/twinTextBooks.json", (books) => {
       );
       firstYearElement.id = `${years[year]}`;
     }
+    hideLoading();
   });
 });
 
@@ -387,7 +388,6 @@ const wait = (amount = 0) =>
 
 let trendToKeywords = {};
 function setup() {
-  setTimeout(hideLoading, 500);
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
     let key = keywordTable.getString(r, 0);
     let value = keywordTable.getString(r, 1).split(",");
