@@ -108,6 +108,10 @@ $.getJSON("books/twinTextBooks.json", (books) => {
 
 const hideLoading = () => {
   $(".loadingScreen").addClass("hideLoading");
+
+  setTimeout(() => {
+    $(".loadingScreen").remove();
+  }, 3000);
 };
 
 const getRandomInt = (min, max, target) => {
