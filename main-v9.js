@@ -63,48 +63,48 @@ function preload() {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
-}
 
-// convert books into data
-$.getJSON("books/books.json", (data) => {
-  //NONFICTION
-  for (year in years) {
-    // booksInYears.push(data)
-    nonFicPerYear[years[year]] = data.nonfiction[years[year]].length;
-    FicPerYear[years[year]] = data.fiction[years[year]].length;
-  }
-});
-
-$.getJSON("books/twinTextBooks.json", (books) => {
-  for (book in books) {
-    let bookTitle = books[book].title;
-    let classifiers = books[book].classifiers;
-    twinTextWords[bookTitle] = classifiers;
-  }
-  $.getJSON("books/book-description.json", (data) => {
-    booksWithDescriptions = data;
-    matchTrendtoBooks();
-
-    for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
-      // for (let i = 0; i < booksWithDescriptions.length; i++) {
-      if (booksWithDescriptions[i]) {
-        let bookTitle = booksWithDescriptions[i].title;
-        let bookType = booksWithDescriptions[i].type;
-        let bookYear = booksWithDescriptions[i].year;
-        getRandomInt(1, 5, 2, bookYear);
-        createTiles(bookTitle, bookType, bookYear);
-      }
-    }
-
+  // convert books into data
+  $.getJSON("books/books.json", (data) => {
+    //NONFICTION
     for (year in years) {
-      let firstYearElement = document.querySelector(
-        `[data-bookyear='${years[year]}']`
-      );
-      firstYearElement.id = `${years[year]}`;
+      // booksInYears.push(data)
+      nonFicPerYear[years[year]] = data.nonfiction[years[year]].length;
+      FicPerYear[years[year]] = data.fiction[years[year]].length;
     }
-    hideLoading();
   });
-});
+
+  $.getJSON("books/twinTextBooks.json", (books) => {
+    for (book in books) {
+      let bookTitle = books[book].title;
+      let classifiers = books[book].classifiers;
+      twinTextWords[bookTitle] = classifiers;
+    }
+    $.getJSON("books/book-description.json", (data) => {
+      booksWithDescriptions = data;
+      matchTrendtoBooks();
+
+      for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
+        // for (let i = 0; i < booksWithDescriptions.length; i++) {
+        if (booksWithDescriptions[i]) {
+          let bookTitle = booksWithDescriptions[i].title;
+          let bookType = booksWithDescriptions[i].type;
+          let bookYear = booksWithDescriptions[i].year;
+          getRandomInt(1, 5, 2, bookYear);
+          createTiles(bookTitle, bookType, bookYear);
+        }
+      }
+
+      for (year in years) {
+        let firstYearElement = document.querySelector(
+          `[data-bookyear='${years[year]}']`
+        );
+        firstYearElement.id = `${years[year]}`;
+      }
+      hideLoading();
+    });
+  });
+}
 
 const hideLoading = () => {
   $(".loadingScreen").addClass("hideLoading");
