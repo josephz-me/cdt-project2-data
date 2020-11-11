@@ -9,6 +9,7 @@ sass --watch style.scss:style.css
     <meta charset="UTF-8" />
     <title>Reading Trends</title>
     <link rel="stylesheet" href="styling/style.css" />
+    <link rel="icon" href="favicon.png" />
     <script
       src="https://code.jquery.com/jquery-3.5.1.js"
       integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -111,23 +112,18 @@ sass --watch style.scss:style.css
             search on the web reflect what books they read? And, how might we
             foster an environment that encourages reading beyond the headlines?
             <br /><br />
-            By sorting and synthesizing data from
+            By retrieving and synthesizing data from
             <a target="blank" href="https://trends.google.com/trends/?geo=US"
               >Google Trends</a
             >,
             <a target="blank" href="https://www.nytimes.com/books/best-sellers/"
               >New York Times Best Seller Lists</a
-            >,
+            >, and
             <a target="blank" href="https://developers.google.com/books"
               >Google Books API</a
-            >, and the
-            <a
-              href="https://www.twinword.com/api/text-classification.php"
-              target="blank"
-              >Twinword Text Classification API</a
             >, we created an interactive experience that visualizes correlations
-            between books on the NYT Best Seller List and Google Trends
-            throughout each year. <br /><br /><br /><br />
+            between books on the NYT Best Seller List and Google Trends based on
+            topic and year. <br /><br /><br /><br />
             <span class="credits">
               <a target="blank" href="https://www.alicefang.me/">Alice Fang</a>
               <br />
@@ -154,8 +150,12 @@ sass --watch style.scss:style.css
             bestseller lists. We retrieved and stored additional information
             using Google Books API, including author names and book
             descriptions. We created an additional layer of information by
-            generating classifying keywords from each book using Text
-            Classification API. <br /><br />
+            generating classifying keywords from each book using
+            <a
+              href="https://www.twinword.com/api/text-classification.php"
+              target="blank"
+              >Twinword Text Classification API</a
+            >. <br /><br />
 
             The integration required interpretations of data considering the
             multiple layers of interaction. The mapping of trends to books was
