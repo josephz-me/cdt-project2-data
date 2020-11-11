@@ -681,23 +681,23 @@ const showBooks = (e) => {
   // $(".navFilterHide").removeClass("navFilterHide");
 
   // add active state to just clicked element
-  let selectedDiv = e.composedPath()[0];
-  $(selectedDiv).addClass("clickedTrend");
+  let selectedTrend = e.composedPath()[0];
+  $(selectedTrend).addClass("clickedTrend");
 
   //show all hidden elements
   let allBooks = $(".card");
   allBooks.removeClass("hide");
 
-  //get trendname of selectedDiv
-  let trendName = $(selectedDiv).attr("data-trendname");
+  //get trendname of selectedTrend
+  let trendName = $(selectedTrend).attr("data-trendname");
 
   let relatedBooks = matched[trendName];
-  let trendYear = $(selectedDiv).data("trendyear");
+  let trendYear = $(selectedTrend).data("trendyear");
   let desiredBookList = [];
 
-  if (previousDiv === selectedDiv) {
+  if (previousDiv === selectedTrend) {
     $(".hide").toggleClass("hide");
-    $(selectedDiv).toggleClass("clickedTrend");
+    $(selectedTrend).toggleClass("clickedTrend");
     previousDiv = "";
   } else {
     for (book in relatedBooks) {
@@ -727,6 +727,7 @@ const showBooks = (e) => {
       }
     }
     let desiredElement = $(allBooks).not(".hide")[0];
+    console.log(allBooks);
 
     $(".bookList").animate(
       {
@@ -753,7 +754,7 @@ const showBooks = (e) => {
     setTimeout(() => {
       $(modal).fadeOut(200);
     }, 3000);
-    previousDiv = selectedDiv;
+    previousDiv = selectedTrend;
   }
 };
 
