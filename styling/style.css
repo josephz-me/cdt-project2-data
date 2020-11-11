@@ -137,14 +137,11 @@ h3 {
 .nav .logo {
   text-transform: uppercase;
   grid-column: 2;
-  justify-self: center;
   font-size: 27px;
   font-family: "noto-serif";
   margin-bottom: 0;
   font-weight: 600;
-}
-.nav .logo span {
-  font-family: "noto-sans";
+  transform: translateY(2px);
 }
 .nav .logo:hover {
   opacity: 30%;
@@ -574,6 +571,8 @@ h3 {
   padding: 10px 20px 10px 20px;
   width: 75%;
   height: 85%;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
   font-family: "noto-sans";
   font-weight: 50;
   font-size: 16px;

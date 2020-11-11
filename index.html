@@ -24,13 +24,11 @@ sass --watch style.scss:style.css
     <link rel="stylesheet" href="https://use.typekit.net/nnm0fpg.css" />
   </head>
   <body>
-    
     <div class="browserWidthCatch">
       <p>This project is designed for a wider browser width. ☺</p>
     </div>
 
-    <div class="loadingScreen">Loading...
-    </div>
+    <div class="loadingScreen">Loading...</div>
 
     <div class="nav-wrapper">
       <div class="nav">
@@ -38,7 +36,8 @@ sass --watch style.scss:style.css
           <a class="about" onclick="openAbout(this)">About</a>
         </div>
         <div class="logo" onclick="toTop()">
-          Reading_</span><span>Trends</span>
+          <!-- <span>Reading</span class='space'><span>_</span><span>Trends</span> -->
+          <img src="wordmark.svg" alt="logo" />
         </div>
         <div class="right">
           <!-- <button
@@ -56,16 +55,28 @@ sass --watch style.scss:style.css
             Nonfiction
           </button> -->
 
-
-          <label  class="checkBoxContainer">Fiction
-            <input data-type='nonfiction' class='nonfictionBtn active' onclick='filterSelection(this)' type="checkbox" checked="checked">
+          <label class="checkBoxContainer"
+            >Fiction
+            <input
+              data-type="nonfiction"
+              class="nonfictionBtn active"
+              onclick="filterSelection(this)"
+              type="checkbox"
+              checked="checked"
+            />
             <span class="checkmark"></span>
           </label>
-          <label style="font-family:'noto-serif';" class="checkBoxContainer">Nonfiction
-            <input  data-type='fiction' class='fictionBtn active' onclick='filterSelection(this)' type="checkbox" checked="checked">
+          <label style="font-family: 'noto-serif'" class="checkBoxContainer"
+            >Nonfiction
+            <input
+              data-type="fiction"
+              class="fictionBtn active"
+              onclick="filterSelection(this)"
+              type="checkbox"
+              checked="checked"
+            />
             <span class="checkmark"></span>
           </label>
-          
         </div>
       </div>
     </div>
@@ -94,28 +105,66 @@ sass --watch style.scss:style.css
         <div class="column">
           <h4>About</h4>
           <p>
-            What were Americans reading  during a pandemic, a financial crisis, after an election? Do books serve as an escape from the present, a source of information and education, or comfort? Do what Americans search on the web reflect what books they read? And, how might we foster an environment that encourages reading beyond the headlines?
-            <br/><br/>
-            By sorting and synthesizing data from <a target='blank' href='https://trends.google.com/trends/?geo=US'>Google Trends</a>, <a target='blank' href='https://www.nytimes.com/books/best-sellers/'>New York Times Best Seller Lists</a>, <a target='blank' href='https://developers.google.com/books'>Google Books API</a>, and the <a href='https://www.twinword.com/api/text-classification.php' target='blank'>Twinword Text Classification API</a>, we created an interactive experience that visualizes correlations between books on the NYT Best Seller List and Google Trends throughout each year.
-            <br/><br/><br/><br/>
-            <span class='credits'>
-              <a target='blank' href='https://www.alicefang.me/'>Alice Fang</a>
-              <br/>
-              <a target='blank' href='http://www.kimtaery.com/'>Taery Kim</a>
-              <br/>
-              <a target='blank' href='https://www.josephz.me'>Joseph Zhang</a>
-              <br/>
-            <br/>
-            Computational Design Thinking<br/>
-            with Kyuha Shim | Fall 2020</span>
-
+            What were Americans reading  during a pandemic, a financial crisis,
+            after an election? Do books serve as an escape from the present, a
+            source of information and education, or comfort? Do what Americans
+            search on the web reflect what books they read? And, how might we
+            foster an environment that encourages reading beyond the headlines?
+            <br /><br />
+            By sorting and synthesizing data from
+            <a target="blank" href="https://trends.google.com/trends/?geo=US"
+              >Google Trends</a
+            >,
+            <a target="blank" href="https://www.nytimes.com/books/best-sellers/"
+              >New York Times Best Seller Lists</a
+            >,
+            <a target="blank" href="https://developers.google.com/books"
+              >Google Books API</a
+            >, and the
+            <a
+              href="https://www.twinword.com/api/text-classification.php"
+              target="blank"
+              >Twinword Text Classification API</a
+            >, we created an interactive experience that visualizes correlations
+            between books on the NYT Best Seller List and Google Trends
+            throughout each year. <br /><br /><br /><br />
+            <span class="credits">
+              <a target="blank" href="https://www.alicefang.me/">Alice Fang</a>
+              <br />
+              <a target="blank" href="http://www.kimtaery.com/">Taery Kim</a>
+              <br />
+              <a target="blank" href="https://www.josephz.me">Joseph Zhang</a>
+              <br />
+              <br />
+              Computational Design Thinking<br />
+              with Kyuha Shim | Fall 2020</span
+            >
           </p>
         </div>
         <div class="column">
           <h4>Process</h4>
-          <p>Our process of designing the relationship between current events and books began with a decision on the sources of data that convey what books people are reading and searching on the web. We created datasets from Google’s yearly trends and the New York Times bestseller lists of fiction and non-fiction books from 2006 to 2019 — from the earliest publication of yearly data from Google trends in the U.S. to the latest publication of yearly data from NYT bestseller lists. We retrieved and stored additional information using Google Books API, including author names and book descriptions. We created an additional layer of information by generating classifying keywords from each book using Text Classification API. <br><br>
+          <p>
+            Our process of designing the relationship between current events and
+            books began with a decision on the sources of data that convey what
+            books people are reading and searching on the web. We created
+            datasets from Google’s yearly trends and the New York Times
+            bestseller lists of fiction and non-fiction books from 2006 to
+            2019 — from the earliest publication of yearly data from Google
+            trends in the U.S. to the latest publication of yearly data from NYT
+            bestseller lists. We retrieved and stored additional information
+            using Google Books API, including author names and book
+            descriptions. We created an additional layer of information by
+            generating classifying keywords from each book using Text
+            Classification API. <br /><br />
 
-            The integration required interpretations of data considering the multiple layers of interaction. The mapping of trends to books was based on time and relatedness: we created an array of related words for each trend and returned books in which the trend and related words appeared in the descriptions. The result fuses different sources of data to enable users to explore the content by time, then by keywords.</p>
+            The integration required interpretations of data considering the
+            multiple layers of interaction. The mapping of trends to books was
+            based on time and relatedness: we created an array of related words
+            for each trend and returned books in which the trend and related
+            words appeared in the descriptions. The result fuses different
+            sources of data to enable users to explore the content by time, then
+            by keywords.
+          </p>
         </div>
       </div>
     </div>
