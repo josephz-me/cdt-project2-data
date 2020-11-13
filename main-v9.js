@@ -250,7 +250,9 @@ const createTiles = (bookNames, bookType, bookYear) => {
       let apiLink = `https://www.googleapis.com/books/v1/volumes?q='+${bkTitle}+${bkAuthor}`;
       $.getJSON(apiLink, (data) => {
         url = data.items[0].volumeInfo.infoLink;
-        if (url) {
+
+        console.log(data.items[0].volumeInfo);
+        if (url.toLowerCase().indexOf("play.google") === -1) {
           $(expandedCard).append(
             `<a target='blank' href=${url} class='expanded-bookURL inner'>Read More</a>`
           );
@@ -329,7 +331,8 @@ const createTiles = (bookNames, bookType, bookYear) => {
             let apiLink = `https://www.googleapis.com/books/v1/volumes?q='+${bkTitle}+${bkAuthor}`;
             $.getJSON(apiLink, (data) => {
               url = data.items[0].volumeInfo.infoLink;
-              if (url) {
+              console.log(data.items[0].volumeInfo);
+              if (url.toLowerCase().indexOf("play.google") === -1) {
                 $(expandedCard).append(
                   `<a target='blank' href=${url} class='expanded-bookURL inner'>Read More</a>`
                 );
