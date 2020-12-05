@@ -3,6 +3,8 @@
 // https://developers.google.com/books/docs/v1/using#PerformingSearch
 
 // https://www.googleapis.com/books/v1/volumes?q=Ruthless%20American%20Marriage
+
+//jQuery toggleClass() Method
 let articleObjs = [];
 let articleList = [];
 let counter = 0;
@@ -11,42 +13,46 @@ let apikey = "dPxVkGTEZ2h4KpgLTnwr6TziqqeoQspR";
 let table;
 let tables = [];
 let years = [
-  2006,
-  2007,
-  2008,
-  2009,
-  2011,
-  2012,
-  2013,
-  2014,
-  2015,
-  2016,
-  2017,
-  2018,
   2019,
+  2018,
+  2017,
+  2016,
+  2015,
+  2014,
+  2013,
+  2012,
+  2011,
+  2009,
+  2008,
+  2007,
+  2006,
 ];
 
 let trends = {};
 let trendsLength;
 let csvs = [
-  "2006.csv",
-  "2007.csv",
-  "2008.csv",
-  "2009.csv",
-  "2011.csv",
-  "2012.csv",
-  "2013.csv",
-  "2014.csv",
-  "2015.csv",
-  "2016.csv",
-  "2017.csv",
-  "2018.csv",
   "2019.csv",
+  "2018.csv",
+  "2017.csv",
+  "2016.csv",
+  "2015.csv",
+  "2014.csv",
+  "2013.csv",
+  "2012.csv",
+  "2011.csv",
+  "2009.csv",
+  "2008.csv",
+  "2007.csv",
+  "2006.csv",
 ];
 
 let keywordTable;
 let books;
 let booksWithDescriptions;
+let nonFicPerYear = {};
+let FicPerYear = {};
+
+let twinTextWords = {};
 
 function preload() {
   //load trend-keywords
@@ -57,35 +63,56 @@ function preload() {
     table = loadTable("trends/" + csvs[i], "csv", "header");
     tables.push(table);
   }
+
   // convert books into data
   $.getJSON("books/books.json", (data) => {
-    // books = data;
-    // downloadBookData();
-    // for (let i = 0; i < 300; i++) {
-    //   getRandomInt(1, 3, 2);
-    //   createTiles("hello");
-    // }
+    //NONFICTION
+    for (year in years) {
+      // booksInYears.push(data)
+      nonFicPerYear[years[year]] = data.nonfiction[years[year]].length;
+      FicPerYear[years[year]] = data.fiction[years[year]].length;
+    }
   });
 
-  $.getJSON("books/book-description.json", (data) => {
-    booksWithDescriptions = data;
-
-    for (let i = 0; i < booksWithDescriptions.length; i++) {
-      let bookTitle = booksWithDescriptions[i].title.replace(",", "");
-      let bookType = booksWithDescriptions[i].type;
-      let bookYear = booksWithDescriptions[i].year;
-      getRandomInt(1, 5, 2, bookYear);
-      createTiles(bookTitle, bookType, bookYear);
+  $.getJSON("books/twinTextBooks.json", (books) => {
+    for (book in books) {
+      let bookTitle = books[book].title;
+      let classifiers = books[book].classifiers;
+      twinTextWords[bookTitle] = classifiers;
     }
+    $.getJSON("books/book-description.json", (data) => {
+      booksWithDescriptions = data;
+      matchTrendtoBooks();
 
-    for (year in years) {
-      let firstYearElement = document.querySelector(
-        `[data-bookyear='${years[year]}']`
-      );
-      firstYearElement.id = `${years[year]}`;
-    }
+      for (let i = booksWithDescriptions.length - 1; i >= 0; i--) {
+        // for (let i = 0; i < booksWithDescriptions.length; i++) {
+        if (booksWithDescriptions[i]) {
+          let bookTitle = booksWithDescriptions[i].title;
+          let bookType = booksWithDescriptions[i].type;
+          let bookYear = booksWithDescriptions[i].year;
+          getRandomInt(1, 5, 2, bookYear);
+          createTiles(bookTitle, bookType, bookYear);
+        }
+      }
+
+      for (year in years) {
+        let firstYearElement = document.querySelector(
+          `[data-bookyear='${years[year]}']`
+        );
+        firstYearElement.id = `${years[year]}`;
+      }
+      hideLoading();
+    });
   });
 }
+
+const hideLoading = () => {
+  $(".loadingScreen").addClass("hideLoading");
+
+  setTimeout(() => {
+    $(".loadingScreen").remove();
+  }, 3000);
+};
 
 const getRandomInt = (min, max, target) => {
   min = Math.ceil(min);
@@ -99,68 +126,275 @@ const getRandomInt = (min, max, target) => {
   }
 };
 
+let previousExpandedTitle;
+let previousElement;
+let previousDataBookName;
+
 const createTiles = (bookNames, bookType, bookYear) => {
   let card = document.createElement("div");
-  var content = document.createElement("p");
+  var content = document.createElement("div");
+  $(content).addClass("content");
+  var title = document.createElement("p");
+  let keywords = document.createElement("p");
+  $(title).addClass("bookTitle");
+  $(title).text(bookNames);
+  content.append(title);
+  $(keywords).addClass("keywords");
+  // $(title).text(bookNames);
+  let desiredWords = twinTextWords[bookNames].split(",", 5).join(", ");
+
+  keywords.append(desiredWords);
+  content.append(keywords);
+
   $(card).addClass("card all " + bookType);
   $(card).attr("data-bookYear", bookYear);
-  $(content).addClass("bookTitle");
-  $(content).text(bookNames);
+  $(card).attr("data-bookName", bookNames);
+
+  //everything should go content
   card.appendChild(content);
   $(".grid").append(card);
 
+  // $(card).hover(
+  //   function (e) {
+  //     let bookYear = $(e.currentTarget).data("bookyear");
+  //     let bookName = $(e.currentTarget).data("bookname");
+
+  //     let bookType;
+  //     $(card).hasClass("nonfiction")
+  //       ? (bookType = "nonfiction")
+  //       : (bookType = "fiction");
+
+  //     let hoverCard = document.createElement("div");
+  //     let hoverCategory = document.createElement("p");
+  //     let hoverClassifiers = document.createElement("p");
+  //     var currentMousePos = { x: -1, y: -1 };
+  //     $(hoverCard).addClass(`hoverCard ${bookType}`);
+  //     $(hoverCategory).addClass(`hoverCategory`);
+  //     $(hoverClassifiers).addClass(`hoverClassifiers`);
+  //     $(hoverCategory).text("Keywords");
+  //     $(hoverClassifiers).text(
+  //       twinTextWords[bookName].split(",", 5).join(", ")
+  //     );
+  //     hoverCard.appendChild(hoverCategory);
+  //     hoverCard.appendChild(hoverClassifiers);
+
+  //     if ($(card).hasClass("hide") || $(card).hasClass("navFilterHide")) {
+  //       $(hoverCard).addClass("hoverHide");
+  //     } else {
+  //       $(hoverCard).removeClass("hoverHide");
+  //     }
+
+  //     $(hoverCard).addClass(`hoverCard ${bookType}`);
+
+  //     $("body").append(hoverCard);
+
+  //     $(document).mousemove(function (event) {
+  //       currentMousePos.x = event.pageX;
+  //       currentMousePos.y = event.pageY;
+  //       $(".hoverCard").css({
+  //         top: `${currentMousePos.y + 30}px`,
+  //         left: `${currentMousePos.x + 30}px`,
+  //       });
+  //     });
+  //   },
+  //   function () {
+  //     $(".hoverCard").remove();
+  //   }
+  // );
   card.onclick = function (e) {
-    let allExpanded = document.getElementsByClassName("expand");
-    if (allExpanded.length > 0) {
-      let originalBookTitle = card.querySelector(".bookTitle");
-      $(originalBookTitle).removeClass("hidden");
-      for (expanded in allExpanded) {
-        if (typeof allExpanded[expanded] === "object") {
-          $(".hidden").removeClass("hidden");
+    let currentElement = e.composedPath()[0]; //clicked card
+    let bkTitle = $(currentElement).data("bookname");
+    let bkYear = $(currentElement).data("bookyear");
 
-          //   $(allExpanded[expanded]).removeClass(".expand");
-          //   console.log(allExpanded[expanded].classList);
-          allExpanded[expanded].classList.remove("expand");
+    //IF NO PREVIOUS CARD EXISTS (first click)
+    if (!previousExpandedTitle) {
+      let bkPos = searchForBookYear(bkYear);
+      let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
+      let arrayPos = findBook(bkPos, searchNum, bkTitle);
 
-          $(allExpanded[expanded]).remove(".card-container");
-          $(allExpanded[expanded]).remove(".inner");
+      let bkDescription =
+        booksWithDescriptions[arrayPos].description.replace(
+          /^(.{300}[^\s]*).*/,
+          "$1"
+        ) + "...";
+
+      let bkAuthor = booksWithDescriptions[arrayPos].author;
+      //add category class
+      $(currentElement).hasClass("nonfiction")
+        ? (bkType = "nonfiction")
+        : (bkType = "fiction");
+
+      //all the expanded card content
+      $(currentElement).addClass("expand");
+      let expandedCard = document.createElement("div");
+      $(expandedCard).addClass("expanded-card");
+      $(expandedCard).attr("data-bookname", bkTitle);
+      var expandedYear = document.createElement("p");
+      $(expandedYear).addClass("expanded-bookYear inner");
+      $(expandedYear).text(`${bkYear} • ${capitalizeFirstLetter(bkType)}`);
+      var expandedTitle = document.createElement("h1");
+      $(expandedTitle).addClass("expanded-bookTitle inner");
+      $(expandedTitle).text(bkTitle);
+      var expandedAuthor = document.createElement("h2");
+      $(expandedAuthor).addClass("expanded-bookAuthor inner");
+      $(expandedAuthor).text(bkAuthor);
+      var expandedDescription = document.createElement("p");
+      $(expandedDescription).addClass("expanded-bookDescription inner");
+      $(expandedDescription).text(bkDescription);
+
+      expandedCard.appendChild(expandedYear);
+      expandedCard.appendChild(expandedTitle);
+      expandedCard.appendChild(expandedAuthor);
+      expandedCard.appendChild(expandedDescription);
+
+      let apiLink = `https://www.googleapis.com/books/v1/volumes?q='+${bkTitle}+${bkAuthor}`;
+      $.getJSON(apiLink, (data) => {
+        url = data.items[0].volumeInfo.infoLink;
+
+        console.log(data.items[0].volumeInfo);
+        if (url.toLowerCase().indexOf("play.google") === -1) {
+          $(expandedCard).append(
+            `<a target='blank' href=${url} class='expanded-bookURL inner'>Read More</a>`
+          );
+        }
+      });
+
+      //add card to screen
+      previousExpandedTitle = bkTitle; //previous expandedCard
+      previousElement = currentElement;
+      $(currentElement).append(expandedCard);
+    }
+
+    // //IF PREVIOUS CARD DOES EXIST
+    else if (previousExpandedTitle) {
+      //IF ANOTHER CARD IS CLICKED
+      let URL = $(".expanded-bookURL")[0];
+      //if books match
+      if (typeof bkTitle !== "undefined") {
+        if (previousExpandedTitle === bkTitle) {
+          $(previousElement).toggleClass("expand");
+          let previousTitleElement = $(previousElement).find(".bookTitle");
+          $(previousTitleElement).removeClass("hidden");
+          $(".expanded-card").toggle();
+        } else if (previousExpandedTitle !== bkTitle) {
+          if (e.composedPath()[0] === URL) {
+            return;
+          } else {
+            // THE SHITTY HEAVY COMPUTATION
+            let bkPos = searchForBookYear(bkYear);
+            let searchNum = FicPerYear[bkYear] + nonFicPerYear[bkYear];
+            let arrayPos = findBook(bkPos, searchNum, bkTitle);
+            let bkDescription =
+              booksWithDescriptions[arrayPos].description.replace(
+                /^(.{300}[^\s]*).*/,
+                "$1"
+              ) + "...";
+            let bkAuthor = booksWithDescriptions[arrayPos].author;
+            let bkTitleElement = $(currentElement).find(".bookTitle");
+
+            $(".hidden").toggleClass("hidden");
+
+            $(bkTitleElement).addClass("hidden");
+            $(previousElement).removeClass("expand");
+            $(".expanded-card").remove(); //remove previous card
+            //add category class
+            $(currentElement).hasClass("nonfiction")
+              ? (bkType = "nonfiction")
+              : (bkType = "fiction");
+            //create expanded card
+            $(currentElement).addClass("expand");
+            let expandedCard = document.createElement("div");
+            $(expandedCard).addClass("expanded-card");
+            $(expandedCard).attr("data-bookname", bkTitle);
+            //Create all elements
+            var expandedYear = document.createElement("p");
+            $(expandedYear).addClass("expanded-bookYear inner");
+
+            $(expandedYear).text(
+              `${bkYear} • ${capitalizeFirstLetter(bkType)}`
+            );
+            var expandedTitle = document.createElement("h1");
+            $(expandedTitle).addClass("expanded-bookTitle inner");
+            $(expandedTitle).text(bkTitle);
+            var expandedAuthor = document.createElement("h2");
+            $(expandedAuthor).addClass("expanded-bookAuthor inner");
+            $(expandedAuthor).text(bkAuthor);
+            var expandedDescription = document.createElement("p");
+            $(expandedDescription).addClass("expanded-bookDescription inner");
+            $(expandedDescription).text(bkDescription);
+
+            expandedCard.appendChild(expandedYear);
+            expandedCard.appendChild(expandedTitle);
+            expandedCard.appendChild(expandedAuthor);
+            expandedCard.appendChild(expandedDescription);
+
+            let apiLink = `https://www.googleapis.com/books/v1/volumes?q='+${bkTitle}+${bkAuthor}`;
+            $.getJSON(apiLink, (data) => {
+              url = data.items[0].volumeInfo.infoLink;
+              console.log(data.items[0].volumeInfo);
+              if (url.toLowerCase().indexOf("play.google") === -1) {
+                $(expandedCard).append(
+                  `<a target='blank' href=${url} class='expanded-bookURL inner'>Read More</a>`
+                );
+              }
+            });
+            //add card to screen
+            previousExpandedTitle = bkTitle; //previous expandedCard
+            previousElement = currentElement;
+            $(currentElement).append(expandedCard);
+          }
         }
       }
     }
-    //add new content to each card
-    let originalBookTitle = card.querySelector(".bookTitle");
-    //remove original title
-    $(originalBookTitle).addClass("hidden");
-
-    var expandedTitle = document.createElement("h1");
-    $(expandedTitle).addClass("expanded-bookTitle inner");
-    $(expandedTitle).text("Into the Wild");
-
-    var expandedAuthor = document.createElement("h2");
-    $(expandedAuthor).addClass("expanded-bookAuthor inner");
-    $(expandedAuthor).text("John Z");
-
-    var expandedDescription = document.createElement("p");
-    $(expandedDescription).addClass("expanded-bookDescription inner");
-    $(expandedDescription).text(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec feugiat felis in sem vestibulum, in maximus justo sodales. Integer efficitur non quam eget molestie. Interdum et malesuada fames ac ante"
-    );
-    card.appendChild(expandedTitle);
-    card.appendChild(expandedAuthor);
-    card.appendChild(expandedDescription);
-    $(".inner").wrapAll("<div class='card-container'></div>");
-
-    card.classList.add("expand");
   };
+};
+
+const findBook = (bkPos, searchNum, bkTitle) => {
+  //search up
+  let found = false;
+  for (i = bkPos; i < bkPos + searchNum; i++) {
+    if (typeof booksWithDescriptions[i] !== "undefined") {
+      if (booksWithDescriptions[i].title.includes(bkTitle)) {
+        return i;
+      }
+    }
+  }
+
+  for (i = bkPos; i > bkPos - searchNum; i--) {
+    if (typeof booksWithDescriptions[i] !== "undefined") {
+      if (booksWithDescriptions[i].title.includes(bkTitle)) {
+        return i;
+      }
+    }
+  }
+};
+
+const searchForBookYear = (bkYear) => {
+  let firstIndex = 0,
+    lastIndex = booksWithDescriptions.length - 1,
+    middleIndex = Math.floor((lastIndex + firstIndex) / 2);
+
+  //get book year
+  while (
+    booksWithDescriptions[middleIndex].year != bkYear &&
+    firstIndex < lastIndex
+  ) {
+    if (bkYear < booksWithDescriptions[middleIndex].year) {
+      lastIndex = middleIndex - 1;
+    } else if (bkYear > booksWithDescriptions[middleIndex].year) {
+      firstIndex = middleIndex + 1;
+    }
+    middleIndex = Math.floor((lastIndex + firstIndex) / 2);
+  }
+
+  return booksWithDescriptions[middleIndex].year != bkYear ? -1 : middleIndex;
 };
 
 const wait = (amount = 0) =>
   new Promise((resolve) => setTimeout(resolve, amount));
 
 let trendToKeywords = {};
-
 function setup() {
-  //trender trends in left column
   for (let r = 0; r < keywordTable.getRowCount(); r++) {
     let key = keywordTable.getString(r, 0);
     let value = keywordTable.getString(r, 1).split(",");
@@ -168,12 +402,10 @@ function setup() {
   }
   csvToDict();
 
-  //in each year
-  for (year in trends) {
-    trends[year].render();
+  $(".trendList").append("<br><br/>");
+  for (let i = Object.keys(trends).length - 1; i >= 0; i--) {
+    trends[Object.keys(trends)[i]].render();
   }
-  $(".trendList").append("<br><br/>");
-  $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
   $(".trendList").append("<br><br/>");
 }
@@ -256,16 +488,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
   $(".trendList").scroll(function () {
     filterBooks();
   });
-  //   $(".bookList").scroll(function () {
-  //     // let desiredElement = $("#2007");
-  //   });
-
-  //   document.querySelectorAll(".card").addEventListener("click", function () {
-  //   });
 });
 
-const scrollToPos = () => {
-  let desiredElement = $("#2006");
+const scrollToYear = (e) => {
+  let allBooks = $(".card");
+  allBooks.removeClass("hide");
+  $(".clickedTrend").removeClass("clickedTrend");
+  let year = $(e).data("year");
+  let desiredElement = $(`#${year}`);
+  // let allBooks = $(".card");
+  // allBooks.removeClass("hide");
   $(".bookList").animate(
     {
       scrollTop:
@@ -278,6 +510,7 @@ const scrollToPos = () => {
 let yearDisplayed = 2006;
 let previousDisplayed = [];
 let count;
+
 const filterBooks = () => {
   let years = document.getElementsByClassName("year");
   let yearPos;
@@ -290,7 +523,7 @@ const filterBooks = () => {
 
     if (desiredYearElement) {
       yearPos = desiredYearElement.getBoundingClientRect().top;
-      if (yearPos < 120 && yearPos > 90 && yearPos) {
+      if (yearPos < 120 + 60 && yearPos > 90 + 60 && yearPos) {
         yearDisplayed = yearString;
       }
     }
@@ -299,6 +532,8 @@ const filterBooks = () => {
   if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
     previousDisplayed.push(yearDisplayed);
     let desiredElement = $(`#${yearDisplayed}`);
+    let allBooks = $(".card");
+    allBooks.removeClass("hide");
     $(".bookList").animate(
       {
         scrollTop:
@@ -307,27 +542,6 @@ const filterBooks = () => {
       1000
     );
   }
-
-  //   targetBooks = document.querySelectorAll(`[data-bookyear='${yearDisplayed}']`);
-  //   //hides books by year
-  //   for (book in targetBooks) {
-  //     if (typeof targetBooks[book] === "object") {
-  //       targetBooks[book].classList.remove("hide");
-  //     }
-  //   }
-  //   if (previousDisplayed[previousDisplayed.length - 1] !== yearDisplayed) {
-  //     // selects all books that need to be removed
-  //     let removedBooks = document.querySelectorAll(
-  //       `[data-bookyear='${previousDisplayed[previousDisplayed.length - 1]}']`
-  //     );
-
-  //     for (book in removedBooks) {
-  //       if (typeof removedBooks[book] === "object") {
-  //         removedBooks[book].classList.add("hide");
-  //       }
-  //     }
-  //     previousDisplayed.push(yearDisplayed);
-  //   }
 };
 
 function csvToDict() {
@@ -335,7 +549,7 @@ function csvToDict() {
     table = tables[h];
     let cols = table.findRow().table.columns;
     let dict = new Map(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
-    let key = new Map();
+
     for (let i = 0; i < cols.length; i++) {
       let trendNameArr = table.getColumn(cols[i]);
       let trendArr = [];
@@ -367,17 +581,36 @@ class TrendYear {
     this.vals = d;
   }
   render() {
-    $(".trendList").append("<br><br/>");
     let year = this.id;
     $(".trendList").append(
-      "<h1 class='year' data-year=" + year + ">" + year + "</h1>"
+      "<h1 class='year' onclick=scrollToYear(this) data-year=" +
+        year +
+        ">" +
+        year +
+        "</h1>"
     );
     for (let key of this.vals) {
-      $(".trendList").append("<h3>" + key[0] + "</h3>");
+      let trendContainer = document.createElement("div");
+      $(trendContainer).addClass(`trendContainer`);
+      $(trendContainer).append(
+        "<h3 class='trendItem trendCategory'>" + key[0] + "</h3>"
+      );
       for (let value in key[1]) {
-        $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
+        //actual bookname
+        // $(".trendList").append("<p> __ " + key[1][value].name + "</p>");
+        let trendName = key[1][value].name;
+        let trendElement = document.createElement("p");
+
+        $(trendElement).addClass(`trendItem trend`);
+        $(trendElement).attr("data-trendname", trendName);
+        $(trendElement).attr("data-trendyear", year);
+        $(trendElement).text(`${trendName}`);
+        trendElement.addEventListener("click", showBooks);
+        $(trendContainer).append(trendElement);
       }
+      $(".trendList").append(trendContainer);
     }
+    // $(".trendItem").wrapAll("<div class='trendGroup'></div>");
   }
 }
 
@@ -385,50 +618,179 @@ class TrendYear {
 //https://www.w3schools.com/howto/howto_js_filter_elements.asp
 
 function filterSelection(c) {
-  var x, i;
-  x = document.getElementsByClassName(c);
-  if (c == "all") c = "";
-  // Add the "hide" class (display:block) to the filtered elements, and remove the "hide" class from the elements that are not selected
-  for (i = 0; i < x.length; i++) {
-    showCard(x[i], "hide");
-    if (x[i].className.indexOf(c) > -1) hideCard(x[i], "hide");
-  }
-}
+  let bookType = $(c).data("type");
+  // $(c).addClass("active");
+  let allBooks = $(".card");
+  $(c).toggleClass("active");
 
-// hide filtered elements
-function hideCard(element, name) {
-  var i, arr1, arr2;
-  arr1 = element.className.split(" ");
-  arr2 = name.split(" ");
-  for (i = 0; i < arr2.length; i++) {
-    if (arr1.indexOf(arr2[i]) == -1) {
-      element.className += " " + arr2[i];
+  for (let i = 0; i < allBooks.length; i++) {
+    if (typeof allBooks[i] === "object") {
+      if (!$(allBooks[i]).hasClass(bookType)) {
+        $(allBooks[i]).toggleClass("navFilterHide");
+      }
     }
   }
+
+  let bookNum = $(`.${bookType}.card`).length;
+
+  //MODAL CODE
+  let modal = document.getElementById("myModal");
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  if ($(c).hasClass("active")) {
+    $(modal).find("p").text(`${bookNum} ${bookType} books shown`);
+  } else {
+    $(modal).find("p").text(`${bookNum} ${bookType} books hidden`);
+  }
+  modal.style.display = "block";
+  setTimeout(() => {
+    $(modal).fadeOut(200);
+  }, 3000);
 }
 
-// Hide elements that are not selected
-function showCard(element, name) {
-  var i, arr1, arr2;
-  arr1 = element.className.split(" ");
+//create script that creates Matches.json file
 
-  // gets hide class
-  arr2 = name.split(" ");
-  for (i = 0; i < arr2.length; i++) {
-    while (arr1.indexOf(arr2[i]) > -1) {
-      arr1.splice(arr1.indexOf(arr2[i]), 1);
+let matched = {};
+const matchTrendtoBooks = () => {
+  //go through every trend
+  let trendsLength = Object.keys(trendToKeywords).length;
+  for (let i = 0; i < trendsLength; i++) {
+    let individualTrend = Object.keys(trendToKeywords)[i];
+    matched[individualTrend] = [];
+    let trendWords = trendToKeywords[individualTrend];
+    //search for each word in trendWords in every single book description
+    for (words in trendWords) {
+      //word needing to be searched
+      let searchedWord = trendWords[words];
+      for (book in booksWithDescriptions) {
+        // every individual book description
+        let individualDescription = booksWithDescriptions[book].description;
+        if (individualDescription.includes(searchedWord)) {
+          matched[individualTrend].push(booksWithDescriptions[book].title);
+        }
+      }
     }
   }
-  element.className = arr1.join(" ");
-}
+};
 
-// Add active class to the current control button (highlight it)
-var btnContainer = document.getElementsByClassName("right")[0];
-var btns = btnContainer.getElementsByClassName("btn");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function () {
-    var current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-  });
+let previousDiv;
+const showBooks = (e) => {
+  //start fresh
+  $(".clickedTrend").removeClass("clickedTrend");
+  // $(".navFilterHide").removeClass("navFilterHide");
+
+  // add active state to just clicked element
+  let selectedTrend = e.composedPath()[0];
+  $(selectedTrend).addClass("clickedTrend");
+
+  //show all hidden elements
+  let allBooks = $(".card");
+  allBooks.removeClass("hide");
+
+  //get trendname of selectedTrend
+  let trendName = $(selectedTrend).attr("data-trendname");
+
+  let relatedBooks = matched[trendName];
+  let trendYear = $(selectedTrend).data("trendyear");
+  let desiredBookList = [];
+
+  if (previousDiv === selectedTrend) {
+    $(".hide").toggleClass("hide");
+    $(selectedTrend).toggleClass("clickedTrend");
+    previousDiv = "";
+  } else {
+    for (book in relatedBooks) {
+      let desiredBook = $(
+        `div[data-bookname="${relatedBooks[book]}"][data-bookyear="${trendYear}"]`
+      )[0];
+
+      if (typeof desiredBook !== "undefined") {
+        desiredBookList.push(desiredBook);
+      }
+    }
+
+    //go through very book
+    for (let i = 0; i < allBooks.length; i++) {
+      if (typeof allBooks[i] === "object") {
+        // go through every positive book and chec if allBooks[i] matches
+        let found = false;
+        for (book in desiredBookList) {
+          if (allBooks[i] === desiredBookList[book]) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          $(allBooks[i]).addClass("hide");
+        }
+      }
+    }
+    let desiredElement = $(allBooks).not(".hide")[0];
+    console.log(allBooks);
+
+    $(".bookList").animate(
+      {
+        scrollTop:
+          $(".bookList").scrollTop() + $(desiredElement).position().top + -50,
+      },
+      1000
+    );
+
+    //MODAL CODE
+
+    let modal = document.getElementById("myModal");
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+    if (desiredBookList.length > 1) {
+      $(modal).find("p").text(`${desiredBookList.length} Related Books`);
+    } else {
+      $(modal).find("p").text(`${desiredBookList.length} Related Book`);
+    }
+    modal.style.display = "block";
+    setTimeout(() => {
+      $(modal).fadeOut(200);
+    }, 3000);
+    previousDiv = selectedTrend;
+  }
+};
+
+const openAbout = () => {
+  // Get the modal
+  let modal = document.getElementById("aboutModal");
+
+  // Get the <span> element that closes the modal
+  // let span = document.getElementsByClassName("close")[0];
+  // span.onclick = function () {
+  //   modal.style.display = "none";
+  // };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+  // $(modal).find("p").text(`${desiredBookList.length} Related Books`);
+  modal.style.display = "block";
+};
+
+const toTop = () => {
+  let desiredElement = $(`#2019`);
+  $(".bookList").animate(
+    {
+      scrollTop:
+        $(".bookList").scrollTop() + desiredElement.position().top + -50,
+    },
+    1000
+  );
+};
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
